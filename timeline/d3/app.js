@@ -10,7 +10,7 @@ var multiple = Multiple();
 // var single50 = Single("leitung50");
 
 
-d3.csv("data/breitband1-refined.csv")
+d3.csv("data/all.csv")
   .get(function(error, data) {
 
     data.forEach(function(d){

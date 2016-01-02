@@ -135,7 +135,7 @@ function Compare(){
 
   var y = d3.scale.linear()
       .range([height, 0])
-      .domain([-15,100])
+      .domain([0,100])
 
   var color = d3.scale.category20();
 
