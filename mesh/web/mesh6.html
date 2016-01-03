@@ -164,7 +164,7 @@ var scene = new THREE.Scene();
 scene.add( new THREE.HemisphereLight( 0x443333, 0x222233 ) );
 
 var light = new THREE.DirectionalLight( 0xffff00, 1 );
-light.position.set( 1, 1, 1);
+light.position.set( 1, 1, 300);
 scene.add( light );
 
 
@@ -298,96 +298,86 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 	})
 
 
-	
 
-
-	//console.log(xyMap);
-
-	
 
 	console.log(data[0], data.length)
 	console.log(projection([ data[0].longitude, data[0].latitude ]))
 
 	
-	var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
-	// var delaunay = d3.geom.delaunay(selection.map(function(d){ return [d.x, d.y]; }))
-	var delaunay = d3.geom.voronoi().x(function(d) { return d.x; }).y(function(d) { return d.y; })
-	var links = delaunay.links(selection);
-	var triangles = delaunay.triangles(selection);
-	console.log(triangles,links);
 
-	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
+	function makeMesh(selection){
+		var triangles = delaunay.triangles(selection);
+		var geometryMesh = new THREE.Geometry();
 
-	// svg = svg.append("g").attr("transform", "translate("+window.width/2+","+window.height/2+")");
-	// svg.append("g").selectAll("path")
-	// 	.data(triangles.map(function(d) { return "M" + d.map(function(d){ return [d.x,d.y];}).join("L") + "Z"; }), String)
-	// 	.enter()
-	// 	.append("path").attr("d", String);
+		selection.forEach(function(d,i){ d.id = i; })
 
-	// svg.append("g").selectAll("circle")
-	// 	.data(selection)
-	// 	.enter()
-	// 	.append("circle")
-	// 	.attr("cx", function(d){ return d.x; })
-	// 	.attr("cy", function(d){ return d.y; })
-	// 	.attr("r", 2)
-	// 	.attr("fill", "red")
+		geometryMesh.vertices = selection.map(function(d){ return new THREE.Vector3(d.x,d.y,d.z); });
 
+		triangles.forEach(function(d){
+			var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+			var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+			if(xdist > 20 || ydist > 20) return; // hacky oh boy
 
-	var geometryMesh = new THREE.Geometry();
-
-	selection.forEach(function(d,i){ d.id = i; })
-
-	geometryMesh.vertices = selection.map(function(d){ return new THREE.Vector3(d.x,d.y,d.z); });
-
-	triangles.forEach(function(d){
-		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
-		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
-		if(xdist > 20 || ydist > 20) return; // hacky oh boy
-
-		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
-	});
-
-	geometryMesh.computeFaceNormals();
-	geometryMesh.computeVertexNormals();
-	geometryMesh.computeMorphNormals();		
-	geometryMesh.computeBoundingSphere();
-
-	var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
-
-	setupAttributes( geometry );
-
-	var materialMesh = new THREE.MeshBasicMaterial({
-			color: new THREE.Color( 0xFFFFFF ),
-			side: THREE.DoubleSide
-			// wireframe:true,
-			// transparent: true,
-			// opacity: 0.2
+			geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
 		});
 
-	var materialSmooth = new THREE.MeshPhongMaterial( {
-			color: 0xffffff,
-			morphTargets: true,
-			morphNormals: true,
-			transparent: false,
-			opacity: 0.7,
-			vertexColors: THREE.FaceColors,
-			shading: THREE.SmoothShading,
-			side: THREE.DoubleSide
+		geometryMesh.computeFaceNormals();
+		// geometryMesh.computeVertexNormals();
+		// geometryMesh.computeMorphNormals();		
+		geometryMesh.computeBoundingSphere();
+
+		var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
+
+		setupAttributes( geometry );
+
+		var materialMesh = new THREE.MeshLambertMaterial({
+				color: new THREE.Color( 0xFFFFFF ),
+				side: THREE.BackSide,
+				wireframe:false
+				//transparent: true,
+				//opacity: 0.6
+			});
+
+		var materialSmooth = new THREE.MeshPhongMaterial( {
+				color: 0xffffff,
+				morphTargets: true,
+				morphNormals: true,
+				transparent: false,
+				opacity: 0.7,
+				vertexColors: THREE.FaceColors,
+				shading: THREE.SmoothShading,
+				side: THREE.BackSide
+			} );
+
+		var materialShader = new THREE.ShaderMaterial( {
+			uniforms: {},
+			vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			derivatives: true,
+			side: THREE.BackSide,
+			transparent: true
 		} );
 
-	var materialShader = new THREE.ShaderMaterial( {
-		uniforms: {},
-		vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-		derivatives: true,
-		side: THREE.DoubleSide,
-		transparent: true
-	} );
+		var mesh = new THREE.Mesh( geometry, materialMesh );
 
-	var mesh = new THREE.Mesh( geometry, materialSmooth );
+		geoGroup.add(mesh);
 
-	geoGroup.add(mesh);
+	}
+
+
+	var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
+	var delaunay = d3.geom.voronoi().x(function(d) { return d.x; }).y(function(d) { return d.y; })
+
+	makeMesh(selection);
+	
+	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
+	
+
+	
+
+	
+
+	
 
 	// edges = new THREE.FaceNormalsHelper( mesh, 2, 0x00ff00, 1 );
 	// geoGroup.add(edges);
@@ -395,40 +385,7 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 	// edges = new THREE.VertexNormalsHelper( mesh, 2, 0xffff00, 1 );
 	// geoGroup.add(edges);
 
-	function makeMesh(){
-		var vertices = selection.map(function(d){ return new THREE.Vector3( d.x,  d.y, z(d.percentage) ); });
-		var holes = [];
-
-		var triangles, mesh;
-		var geometry = new THREE.Geometry();
-		var material = new THREE.MeshBasicMaterial();
-		var material = new THREE.MeshLambertMaterial({
-			color: new THREE.Color( 0xFFFFFF ),
-			wireframe:true
-		});
-
-		geometry.vertices = vertices;
-
-		triangles = THREE.Shape.Utils.triangulateShape ( vertices, holes );
-
-		for( var i = 0; i < triangles.length; i++ ){
-
-			var distance = 
-		    geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
-
-		}
-
-		mesh = new THREE.Mesh( geometry, material );
-
-		scene.add(mesh);
-	}
-
-	//makeMesh();
-	// var plane = new THREE.Mesh(
-	// 			new THREE.PlaneGeometry(geometry.boundingBox.max.x*2, geometry.boundingBox.max.y*2, 100, 100), 
-	// 			new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: false }));
-	// plane.rotation.x = Math.PI;
-	// scene.add( plane );
+	
 
 	var axes = new THREE.AxisHelper(500);
 		axes.position.set( 0,0,0 );
