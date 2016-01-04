@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta charset='UTF-8'/>
 		<!-- jQuery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<!-- Bootstrap -->
@@ -13,14 +14,59 @@
 		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.js'></script>
 		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.css' type='text/css' />
 		<!-- Breitband CSS -->
+		<link rel='stylesheet' href='css/fonts.css' type='text/css' />
 		<link rel='stylesheet' href='css/main.css' type='text/css' />
 	</head>
 	<body>
-		<div id="map"></div>
-		<div id="footer">
+		<div id="companies" class="container">
+			<div class="col col-xs-12 col-sm-5 red"></div>
+			<div class="col col-xs-12 col-sm-7">
+				<div id="companies-vis"></div>
+			</div>
+		</div>
 
+		<div class="container">
+			<div class="row">
+				<div class="col col-xs-12">
+					<div id="map-headline">
+						<div class="blue storer-box">
+							<h2>Der aktuelle Stand</h2>
+							<p>Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.<br />Stand: Mitte 2015</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<div id="map"></div>
+
+		<div id="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-4">
+						<img src="images/tsbx2.png" width="160" height="160" alt="Technologie Stiftung Berlin" />
+					</div>
+					<div class="col col-xs-12 col-sm-4 scnd-col">
+						Kontakt TSB
+					</div>
+					<div class="col col-xs-12 col-sm-4 scnd-col">
+						Partner Vislab &amp; Co.
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- Breitband Scripts -->
 		<script src='js/map.js'></script>
+		<script src='js/d3.company.js'></script>
+		<script type="text/javascript">
+			//Initiate scripts
+			
+			var company = d3_company();
+				d3.select('#companies-vis').call(company);
+
+
+		</script>
 	</body>
 </html>
