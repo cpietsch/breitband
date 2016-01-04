@@ -136,6 +136,7 @@ svg {
 <script type="x-shader/x-fragment" id="fragmentShader">
 
 	varying vec3 vCenter;
+	uniform vec3 myColor;
 
 	float edgeFactorTri() {
 
@@ -147,7 +148,7 @@ svg {
 
 	void main() {
 
-		gl_FragColor.rgb = mix( vec3( 1.0 ), vec3( 0.2 ), edgeFactorTri() );
+		gl_FragColor.rgb = mix( myColor, vec3( 0.2 ), edgeFactorTri() );
 		gl_FragColor.a = 0.8;
 	}
 
@@ -374,6 +375,18 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 		setupAttributes( geometry );
 
+		var uniforms = {  
+		  myColor: { type: "c", value: new THREE.Color().setStyle(color) },
+		};
+
+		var materialShader = new THREE.ShaderMaterial( {
+			uniforms: uniforms,
+			vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			derivatives: true,
+			side: THREE.BackSide,
+			transparent: true
+		} );
 
 		var materialLambert = new THREE.MeshLambertMaterial({
 				color: new THREE.Color().setStyle(color),
@@ -384,7 +397,7 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 			});
 
 		
-		var mesh = new THREE.Mesh( geometry, materialLambert );
+		var mesh = new THREE.Mesh( geometry, materialShader );
 
 		mesh.position.z = i*100; 
 
