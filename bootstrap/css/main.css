@@ -22,11 +22,20 @@ div.grey{
 	color:#000;
 }
 
+div.white{
+	background-color:#fff;
+	color:#000;
+}
+
 h2{
 	font-family: "ClanOT-Medium";
     margin: 0 0 0.3em 0;
     font-size: 2.5em;
     line-height: 1.2em;
+}
+
+h3{
+	font-family: "ClanOT-Medium";
 }
 
 .storer-box{
@@ -49,6 +58,14 @@ h2{
 
 #companies{
 	width:100%;
+	background-image:url('../images/red_split.gif');
+	background-position: center;
+	background-size: 100% 100%;
+}
+
+#companies .container{
+	width:100%;
+	margin:0;
 }
 
 #companies-vis{
@@ -78,11 +95,54 @@ h2{
 	font-size:18px;
 }
 
-#companies-vis svg{
-	margin: 50px 0;
+#companies-vis text.master-headline{
+	font-family: "ClanOT-Medium";
+	font-size:24px;
 }
 
-/*-------- Map headline --------*/
+#companies-vis svg{
+	margin: 50px auto;
+}
+
+#companies .red{
+	padding-top:60px;
+}
+
+#companies .red h3,
+#companies .red p{
+	width:100%;
+	max-width:400px;
+	margin:0 auto;
+}
+
+#satellite-logos{
+	background-color:#fff;
+	width:100%;
+	max-width:400px;
+	margin:30px auto 0 auto;
+}
+
+#satellite-logos ul li{
+	list-style: none;
+	margin:20px 20px 0;
+	padding:0;
+	float:left;
+}
+
+#satellite-logos ul li img{
+	width:70px;
+	height:auto;
+}
+
+#satellite-logos hr{
+	clear:both;
+	visibility: hidden;
+	margin:0;
+	padding:0;
+	height:30px;
+}
+
+/*-------- Image headline --------*/
 
 #map-headline{
 	width:100%;
@@ -93,9 +153,63 @@ h2{
 	margin-bottom:40px;
 }
 
+/*-------- Map headline --------*/
+
+ul#legend, ul#legend li{
+	list-style: none;
+	margin:0;
+	padding:0;
+}
+
+ul#legend li{
+	width:45%;
+	float:left;
+	padding-bottom:8px;
+	max-width: 220px;
+}
+
+ul#legend span{
+	display: block;
+	width:20px;
+	height:20px;
+	float:left;
+	margin-right:5px;
+	background-color:#fff;
+	border:2px solid #000;
+}
+
+ul#legend span span{
+	margin:0;
+	border:none;
+	width:16px;
+	height:16px;
+}
+
+#map-intro strong{
+	padding-top:24px;
+	display: block;
+	font-family: "ClanOT-Medium";
+}
+
+@media (min-width: 996px){
+	#map-intro .scnd-col{
+		padding-left:10%;
+	}
+}
+
+#map-intro span.small{
+	float:left;
+	clear:both;
+	padding-top:10px;
+}
+
+#map-intro{
+	padding:50px 0;
+}
+
 #map{
 	border-top:1px solid rgba(0,0,0,0.8);
-	height:500px;
+	height:600px;
 	width:100%;
 }
 

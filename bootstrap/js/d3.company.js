@@ -316,7 +316,7 @@ function d3_company(){
 					}
 
 					svg.append('path')
-						.attr('class', companies[i].con[c].type)
+						.attr('class', companies[i].con[c].type + " " + i)
 						.datum(companies[i].con[c].path)
 						.attr('d', line);
 
@@ -331,18 +331,21 @@ function d3_company(){
 							iy += companies[i].offset.y;
 						}
 
-						var img_class = '';
+						var img_class = i;
 						for(var cc in companies[i].con){
-							img_class += companies[i].con[cc].type+" ";
+							img_class += " "+companies[i].con[cc].type;
 						}
 
 						svg.append('image')
 							.attr('class', img_class)
+							.attr('data-type', i)
 							.attr('xlink:href', 'images/companies/'+companies[i].img)
 							.attr('width', 80)
 							.attr('height', ih)
 							.attr('x', -100)
-							.attr('y', iy);
+							.attr('y', iy)
+							.on('mouseover', function(){ company.highlightComp(d3.select(this).attr('data-type')); })
+							.on('mouseout', function(){ company.deHighlight(); });
 
 						first = false;
 					}
@@ -371,18 +374,24 @@ function d3_company(){
 				.attr('y', y(3)-65);
 
 			svg.append('text')
+				.text('Berliner Breitband Provider')
+				.attr('class', 'master-headline')
+				.attr('x', -100)
+				.attr('y', -20);
+
+			svg.append('text')
 				.text('Drahtlos')
 				.attr('class', 'headline')
 				.attr('text-anchor', 'end')
-				.attr('x', width+55)
-				.attr('y', -37);
+				.attr('x', width)
+				.attr('y', -14);
 
 			svg.append('text')
 				.text('Kabelgebunden')
 				.attr('class', 'headline')
 				.attr('text-anchor', 'end')
-				.attr('x', width+55)
-				.attr('y', y(21+o)-13);
+				.attr('x', width)
+				.attr('y', y(21+o)+10);
 
 			svg.append('image')
 				.attr('class', 'technology')
@@ -404,6 +413,21 @@ function d3_company(){
 	}
 
 	company.highlight = function(t){
+		d3.selectAll('image')
+			.style('opacity', 0.3);
+
+		d3.selectAll('image.technology')
+			.style('opacity', 1);
+
+		d3.selectAll('path.'+t)
+			.style('stroke-width','4px')
+			.style('stroke','rgba(30,55,145,1)');
+
+		d3.selectAll('image.'+t)
+			.style('opacity', 1);
+	}
+
+	company.highlightComp = function(t){
 		d3.selectAll('image')
 			.style('opacity', 0.3);
 
