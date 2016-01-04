@@ -161,47 +161,20 @@ var width = 1000,
 var scene = new THREE.Scene();
 	//scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
 
-// scene.add( new THREE.HemisphereLight( 0x443333, 0x222233 ) );
+scene.add( new THREE.HemisphereLight( 0x443333, 0x222233 ) );
 
-// var light = new THREE.DirectionalLight( 0xffff00, 1 );
-// light.position.set( 1, 100, 300);
-// light.castShadow = true;
-// light.shadowMapWidth = 1024*2;
-// light.shadowMapHeight = 1024*2;
-// // light.shadowCameraVisible = true;
-// scene.add( light );
+var light = new THREE.DirectionalLight( 0xffffff, 1 );
+light.position.set( 1, 100, 300);
 
-var light;
+scene.add( light );
 
-    light = new THREE.DirectionalLight(0xffff00, 1.75);
-    light.position.set(1, 400, 100);
-    light.position.multiplyScalar(1.3);
-
-    light.castShadow = true;
-    light.shadowCameraVisible = false;
-
-    light.shadowMapWidth = 512*3;
-    light.shadowMapHeight = 512*3;
-
-    var d = 5000;
-
-    light.shadowCameraLeft = -d;
-    light.shadowCameraRight = d;
-    light.shadowCameraTop = d;
-    light.shadowCameraBottom = -d;
-
-    light.shadowCameraFar = 4000;
-    light.shadowDarkness = 0.6;
-
-    scene.add(light);
 
 var particleSystem;
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 	//renderer.setClearColor( scene.fog.color, 1 );
 	//renderer.setClearColor( 0xb0b0b0 );
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.shadowMapEnabled = true;
-    renderer.shadowMapSoft = true;
+
 	// renderer.shadowMapCullFace = THREE.CullFaceBack;
 
 
@@ -212,14 +185,6 @@ var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHe
 	camera.position.z = 300;
 	camera.lookAt(scene.position);	
 
-	renderer.shadowCameraNear = 3;
-	renderer.shadowCameraFar = camera.far;
-	renderer.shadowCameraFov = 50;
-
-	renderer.shadowMapBias = 0.0039;
-	renderer.shadowMapDarkness = 0.5;
-	renderer.shadowMapWidth = 1024;
-	renderer.shadowMapHeight = 1024;
 
 var controls = new THREE.TrackballControls( camera );
 	controls.target.set( 0, 0, 0 );
@@ -236,7 +201,6 @@ var controls = new THREE.TrackballControls( camera );
 
 	controls.keys = [ 65, 83, 68 ];
 	controls.addEventListener( 'change', render );
-	controls.addEventListener( 'change', adjustLight );
 
 // var light = new THREE.PointLight( 0xffffff, 0.5, 5000 );
 // 	light.position.set( 0, 0, 1000 );
@@ -257,7 +221,7 @@ var stats = new Stats();
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
-var z = d3.scale.linear().range([1,50]);
+var z = d3.scale.linear();
 
 
 var projection = d3.geo.mercator()
@@ -277,21 +241,11 @@ function animate() {
 
 }
 
-function adjustLight(){
-	light.position.set(camera.position.x,camera.position.y,camera.position.z)
-	light.lookAt(scene);
-}
 
 function render() {
 
 	var time = Date.now() * 0.001;
-	// console.log(light.position, camera.position);
 
-
-	
-	//particleSystem.rotation.z = time * 0.25;
-	//particleSystem.rotation.y = time * 0.5;
-	//composer.render();
 	renderer.render( scene, camera );
 
 }
@@ -329,30 +283,71 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 	// 	extrudeSvg(geoGroup, shape, 20, new THREE.Color( 0x00EEAA ))
 	// })
 
-	console.log(geoGroup)
+	console.log("DATA0", data[0])
 
-	//data = data.slice(0,100);
-	z.domain([0, 5]);
+	z.range([1,50]).domain([0, 5]);
+
+	data = data.filter(function(d){
+		return d.image_group == "Verf_300" && parseInt(d.image_speed) >= 16 && d.percentage != "0";
+	});
 
 	data.forEach(function(d,i){
 		p = projection([d.longitude, d.latitude])
-		d.x = parseInt(p[0])+Math.random();
-		d.y = -parseInt(p[1])+Math.random();
+		d.x = parseInt(p[0]);
+		d.y = -parseInt(p[1]);
+		d.xr = d.x+Math.random();
+		d.yr = d.y+Math.random();
 		d.percentage = parseInt(d.percentage);
 		d.z = z(d.percentage);
 		d.image_group = d.image_group +"-"+ d.image_speed;
 		
 	})
 
+	var categories = d3.nest().key(function(d) { return d.image_group; }).entries(data).sort(function(a,b){
+		return b.values.length - a.values.length;
+	})
+	console.log(categories)
+	var catNames = categories.map(function(d){ return d.key; });
+	console.log(catNames)
 
+	d3.select('#interface').selectAll("div")
+		.data(categories)
+		.enter()
+		.append("div")
+		.each(function(d){
+			d3.select(this).append("span")
+				.attr("class","color")
+				.style("background", function(d){ return fill(d.key); })
+			d3.select(this).append("span")
+				.attr("class","name")
+				.text(function(d){ return d.key; })
+			d3.select(this).append("span")
+				.attr("class","num")
+				.text(function(d){ return d.values.length; })
+		})
+		.on("click", function(d){
+			
+			
+		})
 
 
 	console.log(data[0], data.length)
 	console.log(projection([ data[0].longitude, data[0].latitude ]))
 
 	
+	//var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
+	var delaunay = d3.geom.voronoi().x(function(d) { return d.xr; }).y(function(d) { return d.yr; })
 
-	function makeMesh(selection){
+	//makeMesh(selection);
+	
+	categories.forEach(function(d,i){
+		makeMesh(d.values, fill(d.key), i);
+	})
+
+	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
+	
+
+	function makeMesh(selection, color, i){
 		var triangles = delaunay.triangles(selection);
 		var geometryMesh = new THREE.Geometry();
 
@@ -379,75 +374,27 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 		setupAttributes( geometry );
 
-		var materialMesh = new THREE.MeshNormalMaterial({
-				color: new THREE.Color( 0xFFFFFF ),
-				side: THREE.BackSide,
-				wireframe:true,
-				transparent: true,
-				opacity: 0.3
-			});
 
 		var materialLambert = new THREE.MeshLambertMaterial({
-				color: new THREE.Color( 0xFFFFFF ),
+				color: new THREE.Color().setStyle(color),
 				side: THREE.BackSide,
-				wireframe:false
+				wireframe:true
 				// transparent: true,
 				// opacity: 0.6
 			});
 
-
-		var materialSmooth = new THREE.MeshPhongMaterial( {
-				color: 0xffffff,
-				morphTargets: true,
-				morphNormals: true,
-				transparent: false,
-				opacity: 0.7,
-				vertexColors: THREE.FaceColors,
-				shading: THREE.SmoothShading,
-				side: THREE.BackSide
-			} );
-
-		var materialShader = new THREE.ShaderMaterial( {
-			uniforms: {},
-			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-			derivatives: true,
-			side: THREE.BackSide,
-			transparent: true
-		} );
-
 		
-
-
 		var mesh = new THREE.Mesh( geometry, materialLambert );
 
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
+		mesh.position.z = i*100; 
 
 		geoGroup.add(mesh);
 
 	}
 
 
-	var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
-	var delaunay = d3.geom.voronoi().x(function(d) { return d.x; }).y(function(d) { return d.y; })
-
-	makeMesh(selection);
-	
-	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
-	
 
 	
-
-	
-
-	
-
-	// edges = new THREE.FaceNormalsHelper( mesh, 2, 0x00ff00, 1 );
-	// geoGroup.add(edges);
-
-	// edges = new THREE.VertexNormalsHelper( mesh, 2, 0xffff00, 1 );
-	// geoGroup.add(edges);
 
 	
 
