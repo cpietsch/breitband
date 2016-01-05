@@ -8,6 +8,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<!-- D3 -->
 		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 		<!-- Mapbox -->
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.css' rel='stylesheet' />
@@ -18,21 +19,6 @@
 		<link rel='stylesheet' href='css/main.css' type='text/css' />
 	</head>
 	<body>
-
-	<!--
-		<div class="container">
-			<div class="row">
-				<div class="col col-xs-12">
-					<div id="map-headline">
-						<div class="blue storer-box">
-							<h2>Der aktuelle Stand</h2>
-							<p><br />Stand: Mitte 2015</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	-->
 
 		<div id="map-intro" class="grey">
 			<div class="container">
@@ -62,10 +48,29 @@
 
 		<div id="map"></div>
 
+		<div id="technologien" class="grey">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-4 col-lg-4">
+						<h3>Die nächsten Schritte</h3>
+						<p>
+							Im Rahmen der Initiative be.digital-berlin soll der Ausbau des Breitbandnetzes in Berlin weiter vorangetrieben werden. Hierzu wurde extra ein Punkt in die Agenada aufgenommen der sich sowohl auf das kabelgebunene, als auch das mobile Breitbandnetz bezieht.
+						</p>
+					</div>
+					<div class="col hide-sm col-lg-2"></div>
+					<div class="col col-xs-12 col-sm-8 col-lg-8 scnd-col">
+						<div id="d3_technologie"></div>
+						<div class="info"><p>Prozentuale Verteilung der in Berlin verfügbaren Breitband-Technologien, abhängig von der maximal zur Verfügung stehenden Geschwindigkeit.</p></div>
+   						<div class="data"><p>Datenquelle:BMVI</p></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="companies">
 			<div class="container">
 				<div class="row">
-					<div class="col col-xs-12 col-sm-5 white frst">
+					<div class="col col-xs-12 col-sm-6 white frst">
 						<h3>Breitband in Berlin</h3>
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
 						<div id="company-help" class="red">
@@ -95,10 +100,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="col col-xs-12 col-sm-7 white">
+					<div class="col col-xs-12 col-sm-6 white">
 						<div id="companies-vis"></div>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		<div class="container" id="final">
+			<div class="blue storer-box">
+				<h2>A final quote?!</h2>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
 			</div>
 		</div>
 
@@ -118,13 +130,18 @@
 			</div>
 		</div>
 		<!-- Breitband Scripts -->
+		<script src='js/main.js'></script>
 		<script src='js/map.js'></script>
 		<script src='js/d3.company.js'></script>
+		<script src='js/d3.technologie.js'></script>
 		<script type="text/javascript">
 			//Initiate scripts
 			
 			var company = d3_company();
 				d3.select('#companies-vis').call(company);
+
+			var technologie = d3_technologie();
+				d3.select('#d3_technologie').call(technologie);
 
 
 		</script>
