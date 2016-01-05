@@ -407,41 +407,41 @@ function d3_company(){
 	};
 
 	company.deHighlight = function(){
-		d3.selectAll('path')
+		d3.selectAll('#companies path')
 			.style('stroke-width','2px')
 			.style('stroke','rgba(110,205,245,1)');
 
-		d3.selectAll('image')
+		d3.selectAll('#companies image')
 			.style('opacity', 1);
 	}
 
 	company.highlight = function(t){
-		d3.selectAll('image')
+		d3.selectAll('#companies image')
 			.style('opacity', 0.3);
 
-		d3.selectAll('image.technology')
+		d3.selectAll('#companies image.technology')
 			.style('opacity', 1);
 
-		d3.selectAll('path.'+t)
+		d3.selectAll('#companies path.'+t)
 			.style('stroke-width','4px')
 			.style('stroke','rgba(30,55,145,1)');
 
-		d3.selectAll('image.'+t)
+		d3.selectAll('#companies image.'+t)
 			.style('opacity', 1);
 	}
 
 	company.highlightComp = function(t){
-		d3.selectAll('image')
+		d3.selectAll('#companies image')
 			.style('opacity', 0.3);
 
-		d3.selectAll('image.technology')
+		d3.selectAll('#companies image.technology')
 			.style('opacity', 1);
 
-		d3.selectAll('path.'+t)
+		d3.selectAll('#companies path.'+t)
 			.style('stroke-width','4px')
 			.style('stroke','rgba(30,55,145,1)');
 
-		d3.selectAll('image.'+t)
+		d3.selectAll('#companies image.'+t)
 			.style('opacity', 1);
 	}
 
