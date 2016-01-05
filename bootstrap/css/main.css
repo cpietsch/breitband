@@ -37,9 +37,19 @@ div.white{
 .triangle.right{
 	border-width: 15px 0 15px 26px;
 }
+
 .triangle.right.red{
 	background-color:transparent;
 	border-color: transparent transparent transparent rgb(230,0,50);
+}
+
+.triangle.bottom{
+	border-width: 26px 15px 0 15px ;
+}
+
+.triangle.bottom.red{
+	background-color:transparent;
+	border-color: rgb(230,0,50) transparent transparent transparent;
 }
 
 h2{
@@ -239,20 +249,28 @@ h3{
 	margin:0 auto;
 }
 
-#company-help{
+.company-help{
 	width:100%;
 	max-width:400px;
 	margin:30px auto 0 auto;
 	height:175px;
 }
 
-#company-help .triangle{
+.company-help .triangle.right{
 	float:right;
 	margin-right:-15px;
 	margin-top:-77px;
 }
 
-#company-help img{
+.company-help.visible-xs{
+	margin-top:50px;
+}
+
+.company-help .triangle.bottom{
+	margin:20px auto 0 auto;
+}
+
+.company-help img{
 	float:left;
 	width:40px;
 	margin-top:5px;
@@ -261,14 +279,14 @@ h3{
 	height:auto;
 }
 
-#company-help strong{
+.company-help strong{
 	font-family: "ClanOT-Medium";
 	font-size:16px;
 	padding:20px 15px 10px 15px;
 	display: block;
 }
 
-#company-help p{
+.company-help p{
 	display: block;
 	padding:10px 15px;
 	font-style: italic;

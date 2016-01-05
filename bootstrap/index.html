@@ -30,7 +30,6 @@
 						</p>
 						<span class="small">Stand: Mitte 2015</span>
 					</div>
-					<div class="col hide-sm col-lg-2"></div>
 					<div class="col col-xs-12 col-sm-7 col-lg-8 scnd-col">
 						<p><strong>Anteil der Haushalte mit 50Mbit/s Breitband</strong></p>
 						<ul id="legend">
@@ -73,7 +72,7 @@
 					<div class="col col-xs-12 col-sm-6 white frst">
 						<h3>Breitband in Berlin</h3>
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-						<div id="company-help" class="red">
+						<div class="hidden-xs red company-help">
 							<strong>Wer stellt welche Technologie zur Verfügung?</strong>
 							<p><img src="images/noun_145047_cc_white.svg" alt="" />Finden Sie heraus welcher Anbieter für welche Technologie zuständig ist. Fahren Sie einfach mit der Maus über die interaktive Grafik um mehr zu erfahren &raquo;</p>
 							<div class="triangle right red"></div>
@@ -98,6 +97,11 @@
 									</tr>
 								</table>
 							</div>
+						</div>
+						<div class="red company-help visible-xs">
+							<strong>Wer stellt welche Technologie zur Verfügung?</strong>
+							<p><img src="images/noun_145047_cc_white.svg" alt="" />Finden Sie heraus welcher Anbieter für welche Technologie zuständig ist. Fahren Sie einfach mit der Maus über die interaktive Grafik um mehr zu erfahren &raquo;</p>
+							<div class="triangle bottom red"></div>
 						</div>
 					</div>
 					<div class="col col-xs-12 col-sm-6 white">
@@ -143,6 +147,22 @@
 			var technologie = d3_technologie();
 				d3.select('#d3_technologie').call(technologie);
 
+			function debouncer( func , timeout ) {
+				var timeoutID , timeout = timeout || 200;
+				return function () {
+					var scope = this , args = arguments;
+					clearTimeout( timeoutID );
+					timeoutID = setTimeout( function () {
+						func.apply( scope , Array.prototype.slice.call( args ) );
+					} , timeout );
+				}
+			}
+
+
+			$(window).resize(debouncer(function(e){
+				technologie.resize();
+				company.resize();
+			}));
 
 		</script>
 	</body>
