@@ -268,6 +268,9 @@ function d3_company(){
 			//Get current Size
 			var bb = sel.node().getBoundingClientRect();
 			fullwidth = bb.width-30;
+			if(fullwidth > 450){
+				fullwidth = 450;
+			}
 			fullheight = bb.height-100;
 			width = fullwidth-200;
 			height = fullheight-50;
@@ -373,11 +376,11 @@ function d3_company(){
 				.attr('x', width-20)
 				.attr('y', y(3)-65);
 
-			svg.append('text')
+			/*svg.append('text')
 				.text('Berliner Breitband Provider')
 				.attr('class', 'master-headline')
 				.attr('x', -100)
-				.attr('y', -20);
+				.attr('y', -20);*/
 
 			svg.append('text')
 				.text('Drahtlos')

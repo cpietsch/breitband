@@ -27,6 +27,21 @@ div.white{
 	color:#000;
 }
 
+.triangle{
+	width: 0;
+	height: 0;
+	border-style: solid;
+	-webkit-transform:rotate(360deg);
+}
+
+.triangle.right{
+	border-width: 15px 0 15px 26px;
+}
+.triangle.right.red{
+	background-color:transparent;
+	border-color: transparent transparent transparent rgb(230,0,50);
+}
+
 h2{
 	font-family: "ClanOT-Medium";
     margin: 0 0 0.3em 0;
@@ -58,9 +73,10 @@ h3{
 
 #companies{
 	width:100%;
-	background-image:url('../images/red_split.gif');
+	/*background-image:url('../images/red_split.gif');
 	background-position: center;
-	background-size: 100% 100%;
+	background-size: 100% 100%;*/
+	margin-top:50px;
 }
 
 #companies .container{
@@ -101,45 +117,95 @@ h3{
 }
 
 #companies-vis svg{
-	margin: 50px auto;
+	margin: 0 auto;
+	display: block;
 }
 
-#companies .red{
+#companies .frst{
 	padding-top:60px;
 }
 
-#companies .red h3,
-#companies .red p{
+#companies .frst h3,
+#companies .frst p{
 	width:100%;
 	max-width:400px;
 	margin:0 auto;
 }
 
-#satellite-logos{
-	background-color:#fff;
+#company-help{
 	width:100%;
 	max-width:400px;
 	margin:30px auto 0 auto;
+	height:175px;
 }
 
-#satellite-logos ul li{
-	list-style: none;
-	margin:20px 20px 0;
-	padding:0;
+#company-help .triangle{
+	float:right;
+	margin-right:-15px;
+	margin-top:-77px;
+}
+
+#company-help img{
 	float:left;
-}
-
-#satellite-logos ul li img{
-	width:70px;
+	width:40px;
+	margin-top:5px;
+	margin-right:15px;
+	margin-bottom:15px;
 	height:auto;
 }
 
-#satellite-logos hr{
+#company-help strong{
+	font-family: "ClanOT-Medium";
+	font-size:16px;
+	padding:20px 15px 10px 15px;
+	display: block;
+}
+
+#company-help p{
+	display: block;
+	padding:10px 15px;
+	font-style: italic;
+}
+
+#satellite-container{
+	width:100%;
+	max-width:400px;
+	margin:70px auto 0 auto;
+}
+
+.satellite-icn{
+	float:left;
+	width:20%;
+	height:auto;
+	margin-right:5%;
+}
+
+.satellite-text{
+	float:left;
+	width:75%;
+}
+
+#satellite-logos{
 	clear:both;
-	visibility: hidden;
-	margin:0;
-	padding:0;
-	height:30px;
+	display: block;
+	padding-top:30px;
+}
+
+#satellite-logos table{
+	width:100%;
+}
+
+#satellite-logos img{
+	width:100px;
+	max-width: 90%;
+	display: block;
+	height:auto;
+	margin: 0 auto;
+}
+
+#satellite-logos td{
+	vertical-align: middle;
+	text-align: center;
 }
 
 /*-------- Image headline --------*/
