@@ -1,0 +1,189 @@
+<html>
+	<head>
+		<meta charset='UTF-8'/>
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!-- D3 -->
+		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+		<!-- Mapbox -->
+		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
+		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.css' rel='stylesheet' />
+		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.js'></script>
+		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.css' type='text/css' />
+		<!-- Breitband CSS -->
+		<link rel='stylesheet' href='css/fonts.css' type='text/css' />
+		<link rel='stylesheet' href='css/main.css' type='text/css' />
+	</head>
+	<body>
+
+		<div id="pulse" class="white">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<h3><img src="images/noun_27272_cc.svg" alt="Puls der Stadt">Puls der Stadt</h3>
+						<p>
+							Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.
+						</p>
+					</div>
+					<div class="col col-xs-12 col-sm-7 col-lg-8 scnd-col">
+						<div id="d3_pulse"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="map-intro" class="grey">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<h3>Stand des Ausbaus</h3>
+						<p>
+							Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.
+						</p>
+						<span class="small">Stand: Mitte 2015</span>
+					</div>
+					<div class="col col-xs-12 col-sm-7 col-lg-8 scnd-col">
+						<p><strong>Anteil der Haushalte mit 50Mbit/s Breitband</strong></p>
+						<ul id="legend">
+							<li><span><span style="background-color:rgba(0,0,0,0.1);"></span></span> Keine Daten</li>
+							<li><span><span style="background-color:rgba(255,255,178,0.8);"></span></span> 0 - 10%</li>
+							<li><span><span style="background-color:rgba(254,204,92,0.8);"></span></span> >10 - 50%</li>
+							<li><span><span style="background-color:rgba(253,141,60,0.8);"></span></span> >50 - 75%</li>
+							<li><span><span style="background-color:rgba(240,59,32,0.8);"></span></span> >75 - 95%</li>
+							<li><span><span style="background-color:rgba(189,0,38,0.8);"></span></span> >95% </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="map"></div>
+
+		<div id="technologien" class="grey">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-4 col-lg-4">
+						<h3>Die nächsten Schritte</h3>
+						<p>
+							Im Rahmen der Initiative be.digital-berlin soll der Ausbau des Breitbandnetzes in Berlin weiter vorangetrieben werden. Hierzu wurde extra ein Punkt in die Agenada aufgenommen der sich sowohl auf das kabelgebunene, als auch das mobile Breitbandnetz bezieht.
+						</p>
+					</div>
+					<div class="col hide-sm col-lg-2"></div>
+					<div class="col col-xs-12 col-sm-8 col-lg-8 scnd-col">
+						<div id="d3_technologie"></div>
+						<div class="info"><p>Prozentuale Verteilung der in Berlin verfügbaren Breitband-Technologien, abhängig von der maximal zur Verfügung stehenden Geschwindigkeit.</p></div>
+   						<div class="data"><p>Datenquelle:BMVI</p></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="companies">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-6 white frst">
+						<h3>Breitband in Berlin</h3>
+						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+						<div class="hidden-xs red company-help">
+							<strong>Wer stellt welche Technologie zur Verfügung?</strong>
+							<p><img src="images/noun_145047_cc_white.svg" alt="" />Finden Sie heraus welcher Anbieter für welche Technologie zuständig ist. Fahren Sie einfach mit der Maus über die interaktive Grafik um mehr zu erfahren &raquo;</p>
+							<div class="triangle right red"></div>
+						</div>
+						<div id="satellite-container">
+							<img src="images/companies/noun_123123_cc.svg" class="satellite-icn" />
+							<div class="satellite-text">
+								<h3>Satelliten Internet</h3>
+								<p>Neben kabelgebundenen und mobilen Breitbandanbindungen gibt es mittlerweile auch eine Reihe von Anbietern die satellitengestütztes Internet in Berliner Häuser bringen.</p>
+							</div>
+							<div id="satellite-logos">
+								<table>
+									<tr>
+										<td><img src="images/companies/eusanet.png" alt="" /></td>
+										<td><img src="images/companies/tooway.gif" alt="" /></td>
+										<td><img src="images/companies/filiago.png" alt="" /></td>
+									</tr>
+									<tr>
+										<td><img src="images/companies/satinternet.png" alt="" /></td>
+										<td><img src="images/companies/skydsl.png" alt="" /></td>
+										<td><img src="images/companies/stardsl.png" alt="" /></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="red company-help visible-xs">
+							<strong>Wer stellt welche Technologie zur Verfügung?</strong>
+							<p><img src="images/noun_145047_cc_white.svg" alt="" />Finden Sie heraus welcher Anbieter für welche Technologie zuständig ist. Fahren Sie einfach mit der Maus über die interaktive Grafik um mehr zu erfahren &raquo;</p>
+							<div class="triangle bottom red"></div>
+						</div>
+					</div>
+					<div class="col col-xs-12 col-sm-6 white">
+						<div id="companies-vis"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="final">
+			<div class="blue storer-box">
+				<h2>A final quote?!</h2>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+			</div>
+		</div>
+
+		<div id="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-4">
+						<img src="images/tsbx2.png" width="160" height="160" alt="Technologie Stiftung Berlin" />
+					</div>
+					<div class="col col-xs-12 col-sm-4 scnd-col">
+						Kontakt TSB
+					</div>
+					<div class="col col-xs-12 col-sm-4 scnd-col">
+						Partner Vislab &amp; Co.
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Breitband Scripts -->
+		<script src='js/main.js'></script>
+		<script src='js/map.js'></script>
+		<script src='js/d3.company.js'></script>
+		<script src='js/d3.technologie.js'></script>
+		<script src='js/d3.pulse.js'></script>
+		<script type="text/javascript">
+			//Initiate scripts
+			
+			var company = d3_company();
+				d3.select('#companies-vis').call(company);
+
+			var technologie = d3_technologie();
+				d3.select('#d3_technologie').call(technologie);
+
+			var pulse = d3_pulse();
+				d3.select('#d3_pulse').call(pulse);
+
+			function debouncer( func , timeout ) {
+				var timeoutID , timeout = timeout || 200;
+				return function () {
+					var scope = this , args = arguments;
+					clearTimeout( timeoutID );
+					timeoutID = setTimeout( function () {
+						func.apply( scope , Array.prototype.slice.call( args ) );
+					} , timeout );
+				}
+			}
+
+
+			$(window).resize(debouncer(function(e){
+				technologie.resize();
+				company.resize();
+			}));
+
+		</script>
+	</body>
+</html>
