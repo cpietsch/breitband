@@ -200,18 +200,63 @@ h3{
 }
 
 #d3_pulse{
+	margin-top:50px;
 	width:100%;
-	height:600px;
+	height:550px;
+}
+
+#d3_circular{
+	width:100%;
+	height:300px;
+	margin-top:50px;
+}
+
+#d3_circular circle{
+	stroke:transparent;
+	fill:#000000;
+}
+
+#d3_circular line{
+	stroke:rgba(0,0,0,0.1);
+}
+
+#d3_circular path{
+	stroke:rgba(0,0,0,1);
+	fill:transparent;
+}
+
+#d3_circular circle.web,
+#d3_circular path.web{
+	display: none;
+}
+
+#d3_circular circle.web.active,
+#d3_circular path.web.active{
+	display: block !important;
+}
+
+#d3_circular .grid circle{
+	stroke:rgba(0,0,0,0.08);
+	fill:transparent;
+}
+
+text.timetext{
+	font-family: "ClanOT-Medium";
+	font-size:20px;
+}
+
+text.octext{
+	font-family: "ClanOT-Book";
+	font-size:9px;
 }
 
 svg#timemap{
 	width:100%;
-	height:500px;
+	height:550px;
 }
 svg#timeline{
 	width:100%;
-	height:75px;
-	margin:50px auto 0 auto;
+	height:300px;
 }
 
 path.trendline{
