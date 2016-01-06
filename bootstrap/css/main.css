@@ -185,6 +185,78 @@ h3{
 	font-size:16px;
 }
 
+/*-------- Pulse --------*/
+
+#pulse{
+	padding-top:50px;
+	padding-bottom:100px;
+}
+
+#pulse h3 img{
+	width:30px;
+	height:auto;
+	margin:5px 10px 0 0;
+	float:left;
+}
+
+#d3_pulse{
+	width:100%;
+	height:600px;
+}
+
+svg#timemap{
+	width:100%;
+	height:500px;
+}
+svg#timeline{
+	width:100%;
+	height:75px;
+	margin:50px auto 0 auto;
+}
+
+path.trendline{
+	fill:none;
+	stroke-width:3px;
+	stroke-linejoin:round;
+	stroke-linecap:round;
+}
+
+path.trendline.cix{
+	stroke:rgba(230,0,50,1);
+}
+path.trendline.instagram{
+	stroke:rgba(30,55,145,1);
+}
+path.trendline.twitter{
+	stroke:rgba(0,115,125,1);
+}
+
+path.trendarea{
+	stroke:none;
+}
+
+path.trendarea.cix{
+	fill:rgba(230,0,50,0.2);
+}
+path.trendarea.twitter{
+	fill:rgba(0,115,125,0.2);
+}
+path.trendarea.instagram{
+	fill:rgba(30,55,145,0.2);
+}
+
+rect.bg-pattern{
+	stroke:none;
+}
+
+rect.bg-pattern.odd{ opacity:0.01; }
+rect.bg-pattern.even{ opacity:0.03; }
+
+.bottomline{
+	stroke:#555;
+	stroke-width:2px;
+}
+
 /*-------- Companies --------*/
 
 #companies{

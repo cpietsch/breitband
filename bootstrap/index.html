@@ -20,6 +20,22 @@
 	</head>
 	<body>
 
+		<div id="pulse" class="white">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<h3><img src="images/noun_27272_cc.svg" alt="Puls der Stadt">Puls der Stadt</h3>
+						<p>
+							Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.
+						</p>
+					</div>
+					<div class="col col-xs-12 col-sm-7 col-lg-8 scnd-col">
+						<div id="d3_pulse"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="map-intro" class="grey">
 			<div class="container">
 				<div class="row">
@@ -138,6 +154,7 @@
 		<script src='js/map.js'></script>
 		<script src='js/d3.company.js'></script>
 		<script src='js/d3.technologie.js'></script>
+		<script src='js/d3.pulse.js'></script>
 		<script type="text/javascript">
 			//Initiate scripts
 			
@@ -146,6 +163,9 @@
 
 			var technologie = d3_technologie();
 				d3.select('#d3_technologie').call(technologie);
+
+			var pulse = d3_pulse();
+				d3.select('#d3_pulse').call(pulse);
 
 			function debouncer( func , timeout ) {
 				var timeoutID , timeout = timeout || 200;

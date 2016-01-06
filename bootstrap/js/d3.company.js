@@ -382,19 +382,19 @@ function d3_company(){
 				.attr('x', -100)
 				.attr('y', -20);*/
 
-			svg.append('text')
+			/*svg.append('text')
 				.text('Drahtlos')
 				.attr('class', 'headline')
 				.attr('text-anchor', 'end')
 				.attr('x', width)
-				.attr('y', -14);
+				.attr('y', -14);*/
 
-			svg.append('text')
+			/*svg.append('text')
 				.text('Kabelgebunden')
 				.attr('class', 'headline')
 				.attr('text-anchor', 'end')
 				.attr('x', width)
-				.attr('y', y(21+o)+10);
+				.attr('y', y(21+o)+10);*/
 
 			svg.append('image')
 				.attr('class', 'technology')
