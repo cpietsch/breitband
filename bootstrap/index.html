@@ -9,6 +9,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<!-- D3 -->
 		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="//d3js.org/topojson.v1.min.js"></script>
 		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 		<!-- Mapbox -->
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
@@ -72,16 +73,30 @@
 		<div id="minimap" class="white">
 			<div class="container">
 				<div class="row">
-					<div class="col col-xs-12">
-						<div class="mapswitch-head msh-cb">Leitungsgebunden</div>
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div class="mapswitch-head">
+							<h3>Entwicklung des Breitbandausbaus</h3>
+							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col col-xs-12 col-sm-6">
-						<div class="mapswitch ms-cb-16">16Mbit/s</div>
-					</div>
-					<div class="col col-xs-12 col-sm-6">
-						<div class="mapswitch ms-cb-50">50Mbit/s</div>
+					<div class="col col-xs-12 col-sm-1 col-lg-3"></div>
+					<div class="col col-xs-12 col-sm-6 col-lg-5">
+						<div class="row switchrow">
+							<div class="col col-xs-12 red company-help">
+								<img src="images/noun_145047_cc_white.svg" alt="" /><strong>2011 - 2015</strong>
+								<p>Während der Ausbau im unteren Breitbandbereich schon weit fortgeschritten ist, gibt es im >50Mbit/s Bereich noch unterversorgte Bereiche.</p>
+							</div>
+						</div>
+						<div class="row switchrow">
+							<div class="col col-xs-12 col-sm-6" data-speed="16">
+								<div class="mapswitch blue">16Mbit/s</div>
+								<div class="triangle bottom red" style="display:none;"></div>
+							</div>
+							<div class="col col-xs-12 col-sm-6" data-speed="50">
+								<div class="mapswitch red">50Mbit/s</div>
+								<div class="triangle bottom red"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -99,9 +114,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col col-xs-12">
-
+					<div class="datacol col col-xs-12">
+						<span class="small">Note</span>
 					</div>
+				</div>
 			</div>
 		</div>
 
@@ -223,7 +239,7 @@
 		</div>
 		<!-- Breitband Scripts -->
 		<script src='js/main.js'></script>
-		<script src='js/map.js'></script>
+		<!--<script src='js/map.js'></script>-->
 		<script src='js/d3.company.js'></script>
 		<script src='js/d3.technologie.js'></script>
 		<script src='js/d3.pulse.js'></script>
