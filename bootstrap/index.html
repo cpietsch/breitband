@@ -69,6 +69,42 @@
 			</div>
 		</div>
 
+		<div id="minimap" class="white">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12">
+						<div class="mapswitch-head msh-cb">Leitungsgebunden</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xs-12 col-sm-6">
+						<div class="mapswitch ms-cb-16">16Mbit/s</div>
+					</div>
+					<div class="col col-xs-12 col-sm-6">
+						<div class="mapswitch ms-cb-50">50Mbit/s</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2011" data-year="2011"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2012" data-year="2012"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2013" data-year="2013"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2015" data-year="2015"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xs-12">
+
+					</div>
+			</div>
+		</div>
+
 		<div id="map-intro" class="grey">
 			<div class="container">
 				<div class="row">
@@ -187,10 +223,11 @@
 		</div>
 		<!-- Breitband Scripts -->
 		<script src='js/main.js'></script>
-		<!--<script src='js/map.js'></script>-->
+		<script src='js/map.js'></script>
 		<script src='js/d3.company.js'></script>
 		<script src='js/d3.technologie.js'></script>
 		<script src='js/d3.pulse.js'></script>
+		<script src='js/d3.minimap.js'></script>
 		<script type="text/javascript">
 			//Initiate scripts
 			
@@ -202,6 +239,9 @@
 
 			var pulse = d3_pulse();
 				d3.select('#d3_pulse').call(pulse);
+
+			var minimap = d3_minimap();
+				d3.selectAll('.minimap').call(minimap);
 
 			function debouncer( func , timeout ) {
 				var timeoutID , timeout = timeout || 200;
