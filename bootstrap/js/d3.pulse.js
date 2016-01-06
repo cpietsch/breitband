@@ -141,6 +141,16 @@ function d3_pulse(){
 				.attr('y2', function(d){ var l_xy = xy(d, 0, function(d){return d;}); return l_xy[1]; })
 				.style('stroke', function(d, i){ return 'rgba(0,0,0,'+(0.3/24*i+0.1)+')' });
 
+			var arc = d3.svg.arc()
+				.innerRadius(min_r)
+				.outerRadius(max_r)
+				.startAngle(function(d){ return Math.PI/12 * d; })
+				.endAngle(function(d){ return Math.PI/12 * (d+1); });
+
+			grid.selectAll('path.bg-pattern').data(hours).enter().append("path")
+				.attr('class', function(d, i){ var r = 'bg-'+i+' bg-pattern'; if(i % 2 == true){ r += ' odd'; }else{ r += ' even'; } return r; })
+				.attr("d", arc);
+
 			for(var i = 0; i<steps_r; i++){
 				grid.append('circle')
 					.attr('cx', 0)
@@ -434,17 +444,17 @@ function d3_pulse(){
 			hour = 0;
 		}
 
-		/*d3.selectAll('rect.bg-pattern.odd').style('opacity',0.01);
-		d3.selectAll('rect.bg-pattern.even').style('opacity',0.03);
+		d3.selectAll('path.bg-pattern.odd').style('opacity',0.01);
+		d3.selectAll('path.bg-pattern.even').style('opacity',0.03);
 
 		var mh1 = hour-2; if(mh1<0){mh1 += 24;}
 		var mh2 = hour-3; if(mh2<0){mh2 += 24;}
 		var mh3 = hour-4; if(mh3<0){mh3 += 24;}
 
-		d3.select('rect.bg-'+(mh1)).style('opacity', 0.2);
-		d3.select('rect.bg-'+(mh2)).style('opacity', 0.1);
-		d3.select('rect.bg-'+(mh3)).style('opacity', 0.05);
-		d3.select('rect.bg-'+(hour-1)).style('opacity', 0.3);*/
+		d3.select('path.bg-'+(mh1)).style('opacity', 0.2);
+		d3.select('path.bg-'+(mh2)).style('opacity', 0.1);
+		d3.select('path.bg-'+(mh3)).style('opacity', 0.05);
+		d3.select('path.bg-'+(hour-1)).style('opacity', 0.3);
 
 		d3.select('.timetext').text(hour);
 		

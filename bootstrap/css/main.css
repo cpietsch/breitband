@@ -290,12 +290,13 @@ path.trendarea.instagram{
 	fill:rgba(30,55,145,0.2);
 }
 
-rect.bg-pattern{
+#d3_circular path.bg-pattern{
 	stroke:none;
+	fill:#000;
 }
 
-rect.bg-pattern.odd{ opacity:0.01; }
-rect.bg-pattern.even{ opacity:0.03; }
+#d3_circular path.bg-pattern.odd{ opacity:0.01; }
+#d3_circular path.bg-pattern.even{ opacity:0.03; }
 
 .bottomline{
 	stroke:#555;
