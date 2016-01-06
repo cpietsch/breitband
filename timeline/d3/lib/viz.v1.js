@@ -10,6 +10,7 @@ function Single(key){
       .range([0, width]);
 
   var y = d3.scale.linear()
+      .domain([0,25,50,70,85,95,100])
       .range([height, 0]);
 
   var color = d3.scale.category10();
@@ -63,7 +64,7 @@ function Single(key){
     // console.log(data[0], data.length);
 
   x.domain(d3.extent(data, function(d){ return d.jahr; }));
-  y.domain(d3.extent(data, function(c) { return c.value; }));
+  // y.domain(d3.extent(data, function(c) { return c.value; }));
 
   var nest = d3.nest()
     .key(function(d) { return d.ortsteil; })
@@ -133,9 +134,14 @@ function Compare(){
       .range([0, width])
       .domain([2011,2015])
 
+  var scaleDomain = [0,25,50,70,85,95,100],
+        scaleStep = height/scaleDomain.length,
+        scaleRange = [scaleStep*6, scaleStep*5, scaleStep*4, scaleStep*3, scaleStep*2, scaleStep, 0];
+        
   var y = d3.scale.linear()
-      .range([height, 0])
-      .domain([0,100])
+      .range(scaleRange)
+      .domain(scaleDomain)
+
 
   var color = d3.scale.category20();
 

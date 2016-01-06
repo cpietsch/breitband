@@ -341,9 +341,12 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 	//makeMesh(selection);
 	
-	categories.forEach(function(d,i){
-		makeMesh(d.values, fill(d.key), i);
-	})
+	// categories.forEach(function(d,i){
+	// 	makeMesh(d.values, fill(d.key), i);
+	// })
+
+	var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
+	makeMesh(selection, fill("Verf_300-50"), 0);
 
 	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
 	
@@ -391,13 +394,13 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 		var materialLambert = new THREE.MeshLambertMaterial({
 				color: new THREE.Color().setStyle(color),
 				side: THREE.BackSide,
-				wireframe:true
+				wireframe:false
 				// transparent: true,
 				// opacity: 0.6
 			});
 
 		
-		var mesh = new THREE.Mesh( geometry, materialShader );
+		var mesh = new THREE.Mesh( geometry, materialLambert );
 
 		mesh.position.z = i*100; 
 
