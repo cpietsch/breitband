@@ -91,9 +91,29 @@ h3{
 
 /*-------- Technologien --------*/
 
+#tech-legend{
+	padding-top:30px;
+	font-style:italic;
+}
+
+#tech-legend span{
+	display: block;
+	width:30px;
+	height:30px;
+	float:left;
+	margin:3px 10px 0 0;
+	background-image:url('../images/pattern.png');
+	border:2px solid rgba(255,0,0,0.5);
+}
+
 #technologien{
 	padding-top:50px;
 	padding-bottom:50px;
+}
+
+#technologien path.missing{
+	stroke:none;
+	fill:url('#missing_pattern');
 }
 
 #technologien path{
@@ -487,7 +507,8 @@ path.trendarea.instagram{
 	padding:0;
 	background-image:url('../images/cable_1.jpg');
 	background-position: center;
-	background-size:auto 100%;
+	/*background-size:auto 100%;*/
+	background-size:cover;
 }
 
 #final .storer-box{

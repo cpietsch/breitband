@@ -130,6 +130,26 @@ function d3_technologie(){
 				'translate('+(x((data[4].speeds.length-1))+width+100+5)+' '+(y(data[4].speeds[(data[4].speeds.length-1)])+50+4)+')' 
 			];
 
+			cabel_svg.append('defs').append('pattern')
+				.attr('id', 'missing_pattern')
+				.attr('width', 44)
+				.attr('height', 44)
+				.attr('patternUnits', 'userSpaceOnUse')
+					.append('image')
+						.attr('width', 44)
+						.attr('height', 44)
+						.attr('x', 0)
+						.attr('y', 0)
+						.attr('xlink:href', 'images/pattern.png');
+
+			cabel_svg.append('path')
+				.attr('class', 'missing')
+				.attr("d", line(data[0].speeds)+"L"+x(data[0].speeds.length-1)+",0Z");
+
+			mobile_svg.append('path')
+				.attr('class', 'missing')
+				.attr("d", line(data[3].speeds)+"L"+(x(data[3].speeds.length-1))+",0Z");
+
 			data.forEach(function(d, index, array){
 				if(d.type=="mobile"){
 					var color = 'rgba('+colorPalletes.green[greenCount][0]+','+colorPalletes.green[greenCount][1]+','+colorPalletes.green[greenCount][2]+',1)'
