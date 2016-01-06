@@ -122,9 +122,23 @@ function d3_pulse(){
 			var max_r = line_width/2-line_pad-5;
 			var steps_r = 5;
 
+			var l_width = 60;
+			var l_height = 30;
+			var l_min_r = 5;
+			var l_max_r = 15;
+
 			var xy = function(h, r, v){
 				var theta = 2 * Math.PI / 24;
 				var tr = min_r + v(r)*(max_r - min_r);
+				return [
+					(tr * Math.cos(h * theta - Math.PI/2.0)),
+					(tr * Math.sin(h * theta - Math.PI/2.0))
+				];
+			};
+
+			var l_xy = function(h, r, v){
+				var theta = 2 * Math.PI / 24;
+				var tr = l_min_r + v(r)*(l_max_r - l_min_r);
 				return [
 					(tr * Math.cos(h * theta - Math.PI/2.0)),
 					(tr * Math.sin(h * theta - Math.PI/2.0))
@@ -216,6 +230,8 @@ function d3_pulse(){
 			var species_p = {};
 			//d3 scales
 			var species_s = {};
+			//Legends
+			var species_l = {cix:null,instagram:null,twitter:null};
 
 			var species = {
 				cix:[],
@@ -244,6 +260,14 @@ function d3_pulse(){
 				species_g[s] = line_svg.append('g').attr('transform', 'translate('+(line_width/2)+','+(line_height/2)+')');
 				species_p[s] = line_svg.append('g').attr('transform', 'translate('+(line_width/2)+','+(line_height/2)+')');
 				species_s[s] = d3.scale.linear().range([0,1]);
+
+				species_l[s] = d3.select('#legend_'+s+' div').append('svg').attr('height',l_height);
+				if(s!='cix'){
+					species_l[s].attr('width', l_width);
+				}else{
+					species_l[s].attr('width', l_width/2);
+				}
+				
 			}
 
 			d3.json('http://tsb.sebastianmeier.eu/static/info.json', function(err, info_data){
@@ -286,12 +310,48 @@ function d3_pulse(){
 						.x(function(d, i){ var c_xy = xy(d.x, d.y, species_s[s]); return c_xy[0]; })
 						.y(function(d, i){ var c_xy = xy(d.x, d.y, species_s[s]); return c_xy[1]; });
 
+					var l_line = d3.svg.line()
+						.x(function(d, i){ var c_xy = l_xy(d.x, d.y, species_s[s]); return c_xy[0]; })
+						.y(function(d, i){ var c_xy = l_xy(d.x, d.y, species_s[s]); return c_xy[1]; });
+
 					species_p[s].append('path')
 						.attr('d', function(){ return line(species[s])+' Z'; })
 						.style('stroke', line_colors[s])
 						.style('fill', line_fill_colors[s])
 						.attr('mask', 'url(#hole)')
 						.attr('class', s);
+
+					species_l[s].append('path')
+						.attr('d', function(){ return l_line(species[s])+' Z'; })
+						.style('stroke', line_colors[s])
+						.style('fill', line_fill_colors[s])
+						.attr('transform', 'translate('+l_height/2+' '+l_height/2+')');
+
+					species_l[s].append('circle')
+						.attr('cx', 0)
+						.attr('cy', 0)
+						.attr('r', l_min_r-2)
+						.style('stroke', line_colors[s])
+						.style('fill', '#fff')
+						.attr('transform', 'translate('+l_height/2+' '+l_height/2+')');
+
+					if(s!="cix"){
+						species_l[s].append('line')
+							.attr('x1', l_width/2)
+							.attr('x2', l_width/2)
+							.attr('y1', 0)
+							.attr('y2', l_height)
+							.attr('stroke', 'rgba(0,0,0,0.2)');
+
+						for(var i = 0; i<6; i++){
+							species_l[s].append('circle')
+								.attr('cx', (l_width-l_height+10)+Math.random()*(l_width-l_height-12))
+								.attr('cy', Math.random()*(l_height-4) + 2)
+								.attr('r', 2)
+								.style('fill', line_colors[s])
+								.style('stroke', 'none');
+						}
+					}
 				}
 
 			});

@@ -43,6 +43,11 @@ div.white{
 	border-color: transparent transparent transparent rgb(230,0,50);
 }
 
+.triangle.right.blue{
+	background-color:transparent;
+	border-color: transparent transparent transparent rgb(30,55,145);
+}
+
 .triangle.bottom{
 	border-width: 26px 15px 0 15px ;
 }
@@ -50,6 +55,11 @@ div.white{
 .triangle.bottom.red{
 	background-color:transparent;
 	border-color: rgb(230,0,50) transparent transparent transparent;
+}
+
+.triangle.bottom.blue{
+	background-color:transparent;
+	border-color: rgb(30,55,145) transparent transparent transparent;
 }
 
 h2{
@@ -303,6 +313,23 @@ path.trendarea.instagram{
 	stroke-width:2px;
 }
 
+.company-help.pulse-help{
+	height:135px;
+}
+
+.company-help.pulse-help strong{
+	font-size:18px;
+	padding:15px 20px 5px 20px;
+}
+
+.company-help.pulse-help p{
+	padding:0 20px;
+}
+
+.company-help.pulse-help .triangle.right{
+	margin-top:-65px;
+}
+
 /*-------- Companies --------*/
 
 #companies{
@@ -474,20 +501,74 @@ path.trendarea.instagram{
 	border-bottom:2px solid rgba(0,0,0,0.8);
 }
 
-ul#legend, ul#legend li{
+#map-legend{
+	height:50px;
+	width:100%;
+}
+
+#map-legend ul{
+	margin:0;
+	padding:0;
+}
+
+#map-legend ul li{
+	list-style:none;
+	margin:0;
+	padding:0;
+	float:left;
+	display: block;
+	height:45px;
+	width:300px;
+	font-weight:bold;
+}
+
+#map-legend ul li#legend_instagram{ color:rgba(30,55,145,1);}
+#map-legend ul li#legend_twitter{ color:rgba(0,115,125,1);}
+#map-legend ul li#legend_cix{
+	color:rgba(230,0,50,1);
+	width:100%;
+}
+
+#map-legend .data{
+	width:100%;
+	clear:both;
+	margin:0;
+	padding:0;
+}
+
+#map-legend ul li svg{
+	float:left;
+	margin-right:7px;
+	margin-top:-4px;
+}
+
+#small-legend{
+	float:right;
+	margin-top:-600px;
+	font-size:11px;
+}
+
+ul.legend, ul.legend li{
 	list-style: none;
 	margin:0;
 	padding:0;
 }
 
-ul#legend li{
+ul.legend li{
 	width:45%;
 	float:left;
 	padding-bottom:8px;
 	max-width: 220px;
 }
 
-ul#legend span{
+#small-legend ul.legend li{
+	width:100%;
+	float:none;
+	padding-bottom:2px;
+	font-size:10px;
+}
+
+ul.legend span{
 	display: block;
 	width:20px;
 	height:20px;
@@ -497,11 +578,24 @@ ul#legend span{
 	border:2px solid #000;
 }
 
-ul#legend span span{
+#small-legend ul.legend span{
+	margin-top:2px;
+	border: 1px solid rgba(0,0,0,0.3);
+	width:10px;
+	height:10px;
+}
+
+ul.legend span span{
 	margin:0;
 	border:none;
 	width:16px;
 	height:16px;
+}
+
+#small-legend ul.legend span span{
+	margin-top:0px;
+	width:8px;
+	height:8px;
 }
 
 #map-intro strong{
