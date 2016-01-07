@@ -3,8 +3,8 @@ function Timeline(){
   var chart = {};
 
   var margin = {top: 30, right:30, bottom: 30, left: 30},
-      width = 400 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+      width = 400 - (margin.left*2) - margin.right,
+      height = 550 - margin.top - margin.bottom;
 
 
   var x = d3.scale.linear()
@@ -245,7 +245,7 @@ function Timeline(){
       .data(nest)
       .enter()
       .append("g")
-      .attr("transform", function(d,i){  return "translate(" + (i*width + i*margin.left) + ",0)"})
+      .attr("transform", function(d,i){  return "translate(" + (i*width + i*(margin.left*2)) + ",0)"})
 
     
     var title = { leitung16: "> 16Mbit", leitung50: "> 50Mbit"}

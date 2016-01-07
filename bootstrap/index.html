@@ -144,6 +144,24 @@
 			</div>
 		</div>
 
+		<div id="compare">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div class="red company-help pulse-help">
+							<strong>Stadtteile im Detail</strong>
+							<p><img src="images/noun_145047_cc_white.svg" alt="" />Klicken Sie auf einen der Stadtteile in der Legende um mehr über diesen Stadtteil zu erfahren.</p>
+							<div class="triangle bottom red"></div>
+						</div>
+						<div id="compare-legend"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div id="compare-container"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="map-intro" class="grey">
 			<div class="container">
 				<div class="row">
@@ -279,6 +297,8 @@
 		<script src='js/d3.technologie.js'></script>
 		<script src='js/d3.pulse.js'></script>
 		<script src='js/d3.minimap.js'></script>
+		<script src='js/d3.timeline.js'></script>
+		<script src='js/d3.compare.js'></script>
 		<script type="text/javascript">
 			//Initiate scripts
 			
@@ -296,6 +316,9 @@
 
 			var minimap = d3_minimap();
 				d3.selectAll('.minimap').call(minimap);
+
+			var compare = d3_compare();
+				d3.selectAll('#compare-container').call(compare);
 
 			function debouncer( func , timeout ) {
 				var timeoutID , timeout = timeout || 200;

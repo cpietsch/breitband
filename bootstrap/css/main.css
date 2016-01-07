@@ -599,6 +599,79 @@ path.trendarea.instagram{
 	margin-top:230px;
 }
 
+/*-------- Comparison --------*/
+
+#compare{
+	height:700px;
+}
+
+#compare-container{
+	margin-top:35px;
+}
+
+#compare text{
+	font-size:10px;
+}
+
+#compare .menu {
+	padding: 20px;
+	float: left;
+	width: 100%;
+	font-size:12px;
+	color:#000;
+}
+
+#compare .menu .entry {
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+	clear: left;
+}
+
+#compare .menu .color {
+	/*color: #FFF;
+	font-weight: bold;
+	text-shadow: none;*/
+	padding: 3px;
+	margin: 3px;
+	float: left;
+}
+
+#compare .menu .label {
+	padding: 6px 3px 0px 3px;
+	margin: 3px;
+	float: left;
+	color:#000;
+	font-size:12px;
+}
+
+#compare .menu .close {
+	padding: 3px;
+	margin: 3px;
+	float: left;
+	opacity: 0;
+}
+
+
+.line {
+	fill:none;
+}
+
+.axis path {
+  display: none;
+}
+
+.axis line {
+  shape-rendering: crispEdges;
+  stroke: #A0A0A0;
+
+}
+
+.axis .minor line {
+  stroke: #BFBFBF;
+  stroke-dasharray: 2,2;
+}
+
 /*-------- Map headline --------*/
 
 #map{
