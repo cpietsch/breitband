@@ -22,7 +22,26 @@
 		
 	</div>
 
-	<script type="text/javascript" src="lib/viz.v1.js"></script>	
-	<script type="text/javascript" src="app.js"></script>			
+	<script type="text/javascript" src="lib/timeline.js"></script>	
+	<script type="text/javascript">
+
+		
+		var timeline = Timeline();
+		
+		d3.csv("data/all.csv")
+		  .get(function(error, data) {
+
+		    data.forEach(function(d){
+		      d.jahr *= 1;
+		      d.leitung50 *= 1;
+		      d.leitung16 *= 1;
+		    });
+
+		    timeline.load(data);
+
+		  });
+
+
+	</script>			
     </body>
 </html>
