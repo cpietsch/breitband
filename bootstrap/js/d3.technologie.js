@@ -61,13 +61,7 @@ function d3_technologie(){
 				x_axis_mobile = d3.svg.axis()
 					.scale(x_alt_mobile)
 					.orient("bottom")
-					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; if(d==3){ r += " Mbit/s";} return r;}),
-				tip = d3.tip()
-					.attr('class', 'd3-tip')
-					.offset([-10, 0])
-					.html(function(d) {
-						return "<strong>"+d3.select(this).attr("data-short")+"</strong><br />mit einer Geschwindigkeit von<br /> bis zu "+labels[(parseInt(d3.select(this).attr("data-speed")))]+" Mbit/s ist in "+d+"%<br /> von Berlin verfügbar.";
-				});
+					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; if(d==3){ r += " Mbit/s";} return r;});
 
 			var cabel_svg = svg.append('g').attr('transform', 'translate(50, 50)');
 				cabel_svg.append("text").attr("class", "headline").text("Leitungsgebunden").attr("transform", "translate(-5, -25)");
@@ -83,8 +77,6 @@ function d3_technologie(){
 					.attr('y1', y(d))
 					.attr('y2', y(d));
 			});
-
-			svg.call(tip);
 
 			var data = [{
 				short:"DSL",
@@ -179,12 +171,19 @@ function d3_technologie(){
 
 				layer.selectAll("circle")
 					.data(d.speeds).enter().append("circle")
-						.on('mouseover', tip.show)
-						.on('mouseout', tip.hide)
+						.on('mouseover', function(){ 
+							var o = d3.select(this); 
+							tooltip.content("<strong>"+o.attr("data-short")+"</strong><br />mit einer Geschwindigkeit von<br /> bis zu "+labels[(parseInt(o.attr("data-speed")))]+" Mbit/s ist in "+o.attr("data-d")+"%<br /> von Berlin verfügbar.");
+							tooltip.position([d3.event.pageX, d3.event.pageY]);
+							tooltip.show(); 
+						})
+						.on('mouseout', tooltip.hide())
 						.attr("r", 3)
 						.attr("data-type", d.type)
 						.attr("data-short", d.short)
 						.attr("data-long", d.long)
+						.attr("data-d", function(d){ return d; })
+						.attr("data-i", function(d){ return i; })
 						.attr("data-speed", function(d,i){ return i; })
 						.attr("data-description", d.description)
 						.style('fill', color)

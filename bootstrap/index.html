@@ -10,7 +10,6 @@
 		<!-- D3 -->
 		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 		<script src="//d3js.org/topojson.v1.min.js"></script>
-		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 		<!-- Mapbox -->
 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.css' rel='stylesheet' />
@@ -240,6 +239,7 @@
 		<!-- Breitband Scripts -->
 		<script src='js/main.js'></script>
 		<script src='js/map.js'></script>
+		<script src='js/d3.tooltip.js'></script>
 		<script src='js/d3.company.js'></script>
 		<script src='js/d3.technologie.js'></script>
 		<script src='js/d3.pulse.js'></script>
@@ -247,6 +247,9 @@
 		<script type="text/javascript">
 			//Initiate scripts
 			
+			var tooltip = d3_tooltip();
+				d3.select('body').call(tooltip);
+
 			var company = d3_company();
 				d3.select('#companies-vis').call(company);
 

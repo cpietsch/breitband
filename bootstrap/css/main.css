@@ -222,10 +222,11 @@ h3{
 /*-------- D3 Tooltip --------*/
 
 .d3-tip {
+	position: absolute;
 	font-size:12px;
 	line-height: 16px;
 	font-weight: bold;
-	padding: 8px 10px;
+	padding: 8px 10px 0 10px;
 	background: rgba(0, 0, 0, 0.8);
 	color: #fff;
 	border:2px solid rgba(0,0,0,0.8);
@@ -241,8 +242,10 @@ h3{
 	line-height: 1;
 	color: rgba(0, 0, 0, 0.8);
 	content: "\25BC";
-	position: absolute;
+	position: relative;
 	text-align: center;
+	bottom:-11px;
+	left:50%;
 }
 
 /* Style northward tooltips differently */

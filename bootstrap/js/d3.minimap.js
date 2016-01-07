@@ -15,14 +15,7 @@ function d3_minimap(){
     		.projection(projection),
     	color_scale = d3.scale.linear()
     		.domain([100, 95, 75, 50, 10, 0])
-    		.range([{r:189,g:0,b:38,a:0.8},{r:240,g:59,b:32,a:0.8},{r:253,g:141,b:60,a:0.8},{r:254,g:204,b:92,a:0.8},{r:255,g:255,b:178,a:0.8},{r:0,g:0,b:0,a:0.8}])
-    	tip = d3.tip()
-			.attr('class', 'd3-tip')
-			.offset([100,10])
-			.html(function(d) {
-				var year = d3.select(this).attr('data-year');
-				return "<strong>"+d.properties.name+"</strong><br />Netz mit einer Geschwindigkeit von<br /> bis zu "+speed+" Mbit/s ist zu "+(districts[d.properties.name][year]["leitung"+speed]/districts[d.properties.name][year].count).toFixed(2)+"% verfügbar.";
-			});
+    		.range([{r:189,g:0,b:38,a:0.8},{r:240,g:59,b:32,a:0.8},{r:253,g:141,b:60,a:0.8},{r:254,g:204,b:92,a:0.8},{r:255,g:255,b:178,a:0.8},{r:0,g:0,b:0,a:0.8}]);
 
 	function minimap(sel){
 		selection = sel;
@@ -64,15 +57,20 @@ function d3_minimap(){
 				.attr('viewBox', '0 0 '+width+' '+height)
 				.attr('preserveAspectRatio', 'xMidYMid meet');
 
-			svg.call(tip);
-
 			var year = sel.attr('data-year');
 
 			svg.selectAll('path').data(topojson.feature(geo_data, geo_data.objects.berlin_bezirke).features).enter().append("path")
 				.attr("d", path)
 				.attr('data-year', year)
-				.on('mouseover', tip.show)
-				.on('mouseout', tip.hide);
+				.on('mouseover', function(){ 
+					var o = d3.select(this);
+					var d = o.data()[0];
+					tooltip.content("<strong>"+d.properties.name+"</strong><br />Netz mit einer Geschwindigkeit von<br /> bis zu "+speed+" Mbit/s ist zu "+(districts[d.properties.name][year]["leitung"+speed]/districts[d.properties.name][year].count).toFixed(2)+"% verfügbar.");
+					tooltip.position([d3.event.pageX, d3.event.pageY]);
+					tooltip.show(); 
+				})
+				.on('mousemove', function(){ tooltip.position([d3.event.pageX, d3.event.pageY]); })
+				.on('mouseout', tooltip.hide());
 
 			svg.append('text').text(year).attr('x',width/2).attr('y',height/2+130).attr('text-anchor', 'middle');
 		});
