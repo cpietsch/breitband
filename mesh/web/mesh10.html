@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+	color: #cccccc;
+	font-family:Monospace;
+
+	background-color: #050505;
+	margin: 0px;
+	overflow: hidden;
+}
+
+#info {
+	position: absolute;
+	top: 0px; width: 100%;
+	padding: 5px;
+}
+
+a {
+
+	color: #0080ff;
+}
+
+svg {
+	font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	fill:none;
+	stroke:#000;
+	shape-rendering: crispEdges;
+}
+
+.line {
+	fill: none;
+	stroke-width: 1px;
+	opacity: 0.6;
+}
+.bars {
+	opacity: 0.8;
+}
+
+#interface {
+	background: rgba(0, 0, 0, 0.6);
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 100;
+	font-size: 10px;
+	overflow-y:scrolls;
+	height:100%;
+
+}
+
+#interface>div {
+	padding: 3px;
+	margin: 3px;
+	clear: both;
+	cursor: pointer;
+}
+
+#interface .color {
+	float: left;
+	width: 10px;
+	height: 10px;
+	margin-top: 2px;
+	margin-right: 6px;
+}
+#interface .name {
+	float: left;
+	padding-right: 30px;
+}
+#interface .num {
+	float: right;
+}
+
+
+svg {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 100;
+	top:0;
+}
+
+
+ 
+</style>
+<body>
+
+<div id="container"></div>
+<div id="interface"></div>
+
+<script src="js/d3.v3.min.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/stats.min.js"></script>
+<script src="js/TrackballControls.js"></script>
+<script src="js/d3-threeD.js"></script>
+<script src="js/queue.v1.min.js"></script>
+<script src="js/THREEx.GeometryUtils.js"></script>
+<script src="js/colorbrewer.js"></script>
+
+
+<script src="js/shaders/CopyShader.js"></script>
+<script src="js/shaders/DotScreenShader.js"></script>
+<script src="js/shaders/VignetteShader.js"></script>
+
+<script src="js/postprocessing/EffectComposer.js"></script>
+<script src="js/postprocessing/RenderPass.js"></script>
+<script src="js/postprocessing/MaskPass.js"></script>
+<script src="js/postprocessing/ShaderPass.js"></script>
+
+
+
+<script type="x-shader/x-vertex" id="vertexShader">
+
+	attribute vec3 center;
+	varying vec3 vCenter;
+
+	void main() {
+
+		vCenter = center;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+	}
+
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentShader">
+
+	varying vec3 vCenter;
+	uniform vec3 myColor;
+
+	float edgeFactorTri() {
+
+		vec3 d = fwidth( vCenter.xyz );
+		vec3 a3 = smoothstep( vec3( 0.0 ), d * 1.0, vCenter.xyz );
+		return min( min( a3.x, a3.y ), a3.z );
+
+	}
+
+	void main() {
+
+		gl_FragColor.rgb = mix( myColor, vec3( 0.2 ), edgeFactorTri() );
+		gl_FragColor.a = 0.8;
+	}
+
+</script>
+
+<script>
+
+var width = 1000,
+	height = 700;
+
+var scene = new THREE.Scene();
+	//scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
+
+// scene.add( new THREE.HemisphereLight( 0xffffff, 0xffffff ) );
+scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
+
+var light = new THREE.DirectionalLight( 0xffffff, 1 );
+light.position.set( 1, 100, 300);
+
+scene.add( light );
+
+
+var particleSystem;
+var renderer = new THREE.WebGLRenderer( { antialias: true } );
+	//renderer.setClearColor( scene.fog.color, 1 );
+	// renderer.setClearColor( 0xffffff );
+	renderer.setClearColor( 0x1E3791 );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	// renderer.shadowMapCullFace = THREE.CullFaceBack;
+
+
+var geometry = new THREE.BufferGeometry();
+var mesh;
+var container = document.getElementById( 'container' );
+var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
+	camera.position.z = 300;
+	camera.lookAt(scene.position);	
+
+
+var controls = new THREE.TrackballControls( camera );
+	controls.target.set( 0, 0, 0 );
+
+	controls.rotateSpeed = 0.4;
+	controls.zoomSpeed = 0.4;
+	controls.panSpeed = 0.4;
+
+	controls.noZoom = false;
+	controls.noPan = false;
+
+	controls.staticMoving = false;
+	controls.dynamicDampingFactor = 0.05;
+
+	controls.keys = [ 65, 83, 68 ];
+	controls.addEventListener( 'change', render );
+
+// var light = new THREE.PointLight( 0xffffff, 0.5, 5000 );
+// 	light.position.set( 0, 0, 1000 );
+// 	scene.add( light );
+
+// 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+// 	scene.add( light );
+
+// postprocessing
+var composer;
+
+var stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	container.appendChild( stats.domElement );
+
+
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
+var z = d3.scale.linear();
+
+
+var projection = d3.geo.mercator()
+var geoPath = d3.geo.path()
+	.projection(projection);
+//var obj = initSVGObject();
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	controls.update();
+
+
+	render();
+	stats.update();
+
+}
+
+
+function render() {
+
+	var time = Date.now() * 0.001;
+
+	renderer.render( scene, camera );
+
+}
+
+queue()
+	.defer(d3.csv, 'data/image_data.csv')
+	.defer(d3.json, 'data/berlin.geojson')
+	.defer(d3.json, 'data/berliner-bezirke.geojson')
+	.await(dataLoaded);
+
+function dataLoaded(error, data, dataBerlin, dataBezirke) {
+	var svg = d3.select("body").append("svg")
+	    .attr("width", window.innerWidth)
+	    .attr("height", window.innerHeight)
+
+	centerCoord = [  13.394900, 52.522376 ];
+	projection.center(centerCoord).scale(200000);
+
+	console.log(centerCoord, projection(centerCoord))
+	console.log(dataBerlin)
+
+	var geoGroup = new THREE.Object3D();
+		geoGroup.position.x = -projection(centerCoord)[0];
+		geoGroup.position.y = projection(centerCoord)[1];
+		geoGroup.position.z = 0.0;
+		scene.add( geoGroup );
+
+	// var berlinShape = $d3g.transformSVGPath( geoPath(dataBerlin.features[0]) )
+	// extrudeSvg(geoGroup, berlinShape, 10, new THREE.Color( 0xFFFFFF ))
+
+	console.log(dataBezirke.features)
+
+	// dataBezirke.features.forEach(function(d){
+	// 	var shape = $d3g.transformSVGPath( geoPath(d) )
+	// 	extrudeSvg(geoGroup, shape, 20, new THREE.Color( 0x00EEAA ))
+	// })
+
+	console.log("DATA0", data[0])
+
+	z.range([1,50]).domain([0, 5]);
+
+	data = data.filter(function(d){
+		return d.image_group == "Verf_300" && parseInt(d.image_speed) >= 16;
+	});
+
+	data.forEach(function(d,i){
+		p = projection([d.longitude, d.latitude])
+		d.x = parseInt(p[0]);
+		d.y = -parseInt(p[1]);
+		d.xr = d.x+Math.random();
+		d.yr = d.y+Math.random();
+		d.percentage = parseInt(d.percentage);
+		d.z = z(d.percentage);
+		d.image_group = d.image_group +"-"+ d.image_speed;
+		
+	})
+
+	var categories = d3.nest().key(function(d) { return d.image_group; }).entries(data).sort(function(a,b){
+		return b.values.length - a.values.length;
+	})
+	console.log(categories)
+	var catNames = categories.map(function(d){ return d.key; });
+	console.log(catNames)
+
+	// d3.select('#interface').selectAll("div")
+	// 	.data(categories)
+	// 	.enter()
+	// 	.append("div")
+	// 	.each(function(d){
+	// 		d3.select(this).append("span")
+	// 			.attr("class","color")
+	// 			.style("background", function(d){ return fill(d.key); })
+	// 		d3.select(this).append("span")
+	// 			.attr("class","name")
+	// 			.text(function(d){ return d.key; })
+	// 		d3.select(this).append("span")
+	// 			.attr("class","num")
+	// 			.text(function(d){ return d.values.length; })
+	// 	})
+	// 	.on("click", function(d){
+			
+			
+	// 	})
+
+
+	console.log(data[0], data.length)
+	console.log(projection([ data[0].longitude, data[0].latitude ]))
+
+	
+	//var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
+	var delaunay = d3.geom.voronoi().x(function(d) { return d.xr; }).y(function(d) { return d.yr; })
+
+	//makeMesh(selection);
+	
+	// categories.forEach(function(d,i){
+	// 	makeMesh(d.values, fill(d.key), i);
+	// })
+
+	var selection = data.filter(function(d){ return d.image_group == "Verf_300-50";})
+	makeMesh(selection, fill("Verf_300-50"), 0);
+
+	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
+	
+
+	function makeMesh(selection, color, i){
+		var triangles = delaunay.triangles(selection);
+		var geometryMesh = new THREE.Geometry();
+
+		selection.forEach(function(d,i){ d.id = i; })
+
+		geometryMesh.vertices = selection.map(function(d){ return new THREE.Vector3(d.x,d.y,d.z); });
+
+		triangles.forEach(function(d){
+			var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+			var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+			if(xdist > 20 || ydist > 20) return; // hacky oh boy
+
+			geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
+		});
+
+		geometryMesh.computeFaceNormals();
+		// geometryMesh.computeVertexNormals();
+		// geometryMesh.computeMorphNormals();		
+		geometryMesh.computeBoundingSphere();
+
+
+		
+		var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
+
+		setupAttributes( geometry );
+
+		var uniforms = {  
+		  myColor: { type: "c", value: new THREE.Color().setStyle(color) },
+		};
+
+		var materialShader = new THREE.ShaderMaterial( {
+			uniforms: uniforms,
+			vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			derivatives: true,
+			side: THREE.BackSide,
+			transparent: true
+		} );
+
+		var materialLambert = new THREE.MeshLambertMaterial({
+				// color: new THREE.Color().setStyle(color),
+				// color: new THREE.Color().setRGB(30,55,145),
+				color: new THREE.Color().setStyle("rgb(110,205,245)"),
+				// color: 0xffffff,
+				side: THREE.BackSide,
+				wireframe:false
+				// transparent: true,
+				// opacity: 0.6
+			});
+
+		
+		var mesh = new THREE.Mesh( geometry, materialLambert );
+
+		mesh.position.z = i*100; 
+
+		geoGroup.add(mesh);
+
+	}
+
+
+
+	var axes = new THREE.AxisHelper(500);
+		axes.position.set( 0,0,0 );
+		// scene.add(axes);
+
+	// var grid = new THREE.GridHelper(1000, 10);
+	// 	grid.position.set( 0,0,0 );
+	// 	grid.rotation.x = Math.PI/2;
+	// 	grid.setColors( new THREE.Color(0x7f7f7f), new THREE.Color(0x7f7f7f) );
+	// 	scene.add(grid);
+
+	console.log("geometry",geometry)
+
+	container.appendChild( renderer.domElement );
+	// composer = new THREE.EffectComposer( renderer );
+	// composer.addPass( new THREE.RenderPass( scene, camera ) );
+
+	// var effect = new THREE.ShaderPass( THREE.VignetteShader );
+	// 			effect.uniforms[ "darkness" ].value = 2.0;
+	// composer.addPass( effect );
+	// effect.renderToScreen = true;
+	animate();
+
+};
+
+function setupAttributes( geometry ) {
+
+	// TODO: Bring back quads
+
+	var vectors = [
+		new THREE.Vector3( 1, 0, 0 ),
+		new THREE.Vector3( 0, 1, 0 ),
+		new THREE.Vector3( 0, 0, 1 )
+	];
+
+	var position = geometry.attributes.position;
+	var centers = new Float32Array( position.count * 3 );
+
+	for ( var i = 0, l = position.count; i < l; i ++ ) {
+
+		vectors[ i % 3 ].toArray( centers, i * 3 );
+
+	}
+
+	geometry.addAttribute( 'center', new THREE.BufferAttribute( centers, 3 ) );
+
+}
+
+</script>
