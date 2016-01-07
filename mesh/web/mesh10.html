@@ -185,9 +185,17 @@ var geometry = new THREE.BufferGeometry();
 var mesh;
 var container = document.getElementById( 'container' );
 var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 300;
+	// camera.position.z = 300;
+
+	camera.position.x = -82.395202473358;
+	camera.position.y = -1848.1744106468157;
+	camera.position.z = 818.9660356783556;
+
+	camera.aspect = 1.8770614692653673;
 	camera.lookAt(scene.position);	
 
+	// light.position.set(1,camera.position.y,camera.position.z)
+	// light.lookAt(scene);
 
 var controls = new THREE.TrackballControls( camera );
 	controls.target.set( 0, 0, 0 );
@@ -197,14 +205,18 @@ var controls = new THREE.TrackballControls( camera );
 	controls.panSpeed = 0.4;
 
 	controls.noZoom = false;
-	controls.noPan = false;
+	controls.noPan = true;
 
 	controls.staticMoving = false;
 	controls.dynamicDampingFactor = 0.05;
 
 	controls.keys = [ 65, 83, 68 ];
 	controls.addEventListener( 'change', render );
+	// controls.addEventListener( 'change', log );
 
+function log(){
+	console.log(camera)
+}
 // var light = new THREE.PointLight( 0xffffff, 0.5, 5000 );
 // 	light.position.set( 0, 0, 1000 );
 // 	scene.add( light );
@@ -232,6 +244,31 @@ var geoPath = d3.geo.path()
 	.projection(projection);
 //var obj = initSVGObject();
 
+centerCoord = [  13.413215, 52.521918 ];
+projection.center(centerCoord).scale(200000);
+
+console.log(centerCoord, projection(centerCoord))
+
+
+var geoGroup = new THREE.Object3D();
+	// geoGroup.position.x = -projection(centerCoord)[0];
+	// geoGroup.position.y = projection(centerCoord)[1];
+	// geoGroup.position.z = 0.0;
+	// geoGroup.position.x = -projection(centerCoord)[0];
+	// geoGroup.position.y = projection(centerCoord)[1];
+	scene.add( geoGroup );
+
+// var geometry = new THREE.BoxGeometry( 10, 10, 200 );
+// geometry.computeBoundingSphere()
+// geometry.center();
+
+// var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+// var mesh = new THREE.Mesh( geometry, material );
+// mesh.position.x = projection(centerCoord)[0];
+// mesh.position.y = -projection(centerCoord)[1];
+// console.log(mesh.position);
+
+// geoGroup.add( mesh );
 
 function animate() {
 
@@ -244,10 +281,13 @@ function animate() {
 
 }
 
+var rotation = 0;
 
 function render() {
 
-	var time = Date.now() * 0.001;
+	var time = Date.now() * 0.00001;
+
+	geoGroup.rotation.z += 0.001;
 
 	renderer.render( scene, camera );
 
@@ -264,17 +304,10 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 	    .attr("width", window.innerWidth)
 	    .attr("height", window.innerHeight)
 
-	centerCoord = [  13.394900, 52.522376 ];
-	projection.center(centerCoord).scale(200000);
 
-	console.log(centerCoord, projection(centerCoord))
 	console.log(dataBerlin)
 
-	var geoGroup = new THREE.Object3D();
-		geoGroup.position.x = -projection(centerCoord)[0];
-		geoGroup.position.y = projection(centerCoord)[1];
-		geoGroup.position.z = 0.0;
-		scene.add( geoGroup );
+	
 
 	// var berlinShape = $d3g.transformSVGPath( geoPath(dataBerlin.features[0]) )
 	// extrudeSvg(geoGroup, berlinShape, 10, new THREE.Color( 0xFFFFFF ))
@@ -352,7 +385,7 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 	data.forEach(function(d,i){ d.x = parseInt(d.x); d.y = parseInt(d.y); }); //return to normal -voronoi hack end
 	
-
+	var box;
 	function makeMesh(selection, color, i){
 		var triangles = delaunay.triangles(selection);
 		var geometryMesh = new THREE.Geometry();
@@ -373,8 +406,16 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 		// geometryMesh.computeVertexNormals();
 		// geometryMesh.computeMorphNormals();		
 		geometryMesh.computeBoundingSphere();
+		geometryMesh.computeBoundingBox();
+		geometryMesh.center();
+		// box = geometryMesh.boundingBox.clone();
 
+		console.log(geometryMesh);
 
+		var center = geometryMesh.boundingSphere.center;
+
+		// geoGroup.position.x -= center.x;
+		// geoGroup.position.y -= center.y;
 		
 		var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
 
@@ -410,20 +451,20 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 		mesh.position.z = i*100; 
 
 		geoGroup.add(mesh);
-
+		// geoGroup.computeBoundingSphere();
 	}
 
 
 
-	var axes = new THREE.AxisHelper(500);
-		axes.position.set( 0,0,0 );
-		// scene.add(axes);
+	// var axes = new THREE.AxisHelper(500);
+	// 	axes.position.set( 0,0,0 );
+	// 	scene.add(axes);
 
 	// var grid = new THREE.GridHelper(1000, 10);
 	// 	grid.position.set( 0,0,0 );
 	// 	grid.rotation.x = Math.PI/2;
 	// 	grid.setColors( new THREE.Color(0x7f7f7f), new THREE.Color(0x7f7f7f) );
-	// 	scene.add(grid);
+	// 	geoGroup.add(grid);
 
 	console.log("geometry",geometry)
 
