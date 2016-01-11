@@ -200,6 +200,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
 var z = d3.scale.linear();
+var zSocial = d3.scale.linear();
 var centerCoord = [13.413215, 52.521918];
 var projection = d3.geo.mercator()
 	.scale(200000)
@@ -309,11 +310,14 @@ function render() {
 queue()
 	.defer(d3.csv, 'data/50mbit.csv')
 	.defer(d3.json, 'data/berliner-bezirke.geojson')
+	.defer(d3.csv, 'data/data.csv')
 	.await(dataLoaded);
 
-function dataLoaded(error, data, bezirke) {
+function dataLoaded(error, data, bezirke, social) {
 
 	z.range([1,50]).domain([0, 5]);
+
+	var xymap = [];
 
 	data.forEach(function(d,i){
 		p = projection([d.longitude, d.latitude])
@@ -324,10 +328,28 @@ function dataLoaded(error, data, bezirke) {
 		d.percentage = parseInt(d.percentage);
 		d.z = z(d.percentage);
 		d.id = i;
+		d.xx = parseInt(d.xx);
+		d.yy = parseInt(d.yy);
+
+		if(!xymap[d.xx]) xymap[d.xx]=[];
+		xymap[d.xx][d.yy] = d;
 	})
 
+	social.forEach(function(d){
+		var dd = xymap[d.xx][d.yy];
+		d.x = dd.x;
+		d.y = dd.y;
+		d.xr = dd.xr;
+		d.yr = dd.yr;
+		d.instagram *= 1;
+		d.twitter *= 1;
+		d.hour *= 1;
+	})
 
-	console.log(data[0], data.length)
+	zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
+	console.log(zSocial.domain());
+
+	console.log(data[0], social[0])
 	console.log(projection([ data[0].longitude, data[0].latitude ]))
 
 	console.log("bezirke", bezirke)
@@ -336,11 +358,20 @@ function dataLoaded(error, data, bezirke) {
 	var dataBezirke = d3.nest()
 		.key(function(d){ return d.bezirk; })
 		.entries(data);
-	console.log(dataBezirke);
 
 	dataBezirke.forEach(function(d){
 		makeMesh(d);
 	});
+
+	var socialHours = d3.nest()
+		.key(function(d){ return d.hour; })
+		.entries(social);
+
+	socialHours.forEach(function(d){
+		makeMeshGitter(d);
+	});
+
+	// makeMeshGitter(socialHours[0]);
 
 	// makeMesh(data);
 	makeCenters(bezirke);
@@ -437,6 +468,49 @@ function toScreenXY(mesh){
 }
 
 
+function makeMeshGitter(hour){
+	var selection = hour.values;
+	var triangles = delaunay.triangles(selection);
+	var geometryMesh = new THREE.Geometry();
+
+	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,zSocial(d.instagram)); });
+
+	triangles.forEach(function(d){
+		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+		if(xdist > 50 || ydist > 50) return; // hacky oh boy
+
+		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
+	});
+
+	geometryMesh.computeFaceNormals();
+	// geometryMesh.computeVertexNormals();
+	// geometryMesh.computeMorphNormals();		
+	// geometryMesh.computeBoundingSphere();
+	// geometryMesh.computeBoundingBox();
+	//geometryMesh.center();
+	// box = geometryMesh.boundingBox.clone();
+
+
+	// var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
+	// setupAttributes( geometry );
+
+	var materialLambert = new THREE.MeshLambertMaterial({
+		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
+		color: 0xffffff,
+		side: THREE.BackSide,
+		wireframe:false,
+		transparent: true,
+		opacity: 0.6
+	});
+
+	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
+	// mesh.bezirk = bezirk.key;
+	mesh.position.z = 100;
+
+	scene.add(mesh);
+}
+
 function makeMesh(bezirk){
 	var selection = bezirk.values;
 	var triangles = delaunay.triangles(selection);
@@ -478,6 +552,7 @@ function makeMesh(bezirk){
 
 	scene.add(mesh);
 }
+
 
 
 function setupAttributes( geometry ) {
