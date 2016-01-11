@@ -99,86 +99,56 @@ svg {
 <div id="interface"></div>
 
 <script src="js/d3.v3.min.js"></script>
-<script src="js/three.min.js"></script>
-<script src="js/stats.min.js"></script>
-<script src="js/TrackballControls.js"></script>
-<script src="js/d3-threeD.js"></script>
 <script src="js/queue.v1.min.js"></script>
-<script src="js/THREEx.GeometryUtils.js"></script>
+
+<script src="js/three/three.min.js"></script>
+<script src="js/three/THREEx.GeometryUtils.js"></script>
+<script src="js/three/TrackballControls.js"></script>
+<script src="js/three/stats.min.js"></script>
+<script src="js/three/Detector.js"></script>
+<script src="js/three/d3-threeD.js"></script>
+<script src="js/three/three-text2d.js"></script>
+<script src="js/three/renderers/Projector.js"></script>
+<script src="js/three/renderers/CanvasRenderer.js"></script>
+
 <script src="js/colorbrewer.js"></script>
 
 
-<script src="js/shaders/CopyShader.js"></script>
-<script src="js/shaders/DotScreenShader.js"></script>
-<script src="js/shaders/VignetteShader.js"></script>
 
-<script src="js/postprocessing/EffectComposer.js"></script>
-<script src="js/postprocessing/RenderPass.js"></script>
-<script src="js/postprocessing/MaskPass.js"></script>
-<script src="js/postprocessing/ShaderPass.js"></script>
-
-
-
-<script type="x-shader/x-vertex" id="vertexShader">
-
-	attribute vec3 center;
-	varying vec3 vCenter;
-
-	void main() {
-
-		vCenter = center;
-		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-
-	}
-
-</script>
-
-<script type="x-shader/x-fragment" id="fragmentShader">
-
-	varying vec3 vCenter;
-	uniform vec3 myColor;
-
-	float edgeFactorTri() {
-
-		vec3 d = fwidth( vCenter.xyz );
-		vec3 a3 = smoothstep( vec3( 0.0 ), d * 1.0, vCenter.xyz );
-		return min( min( a3.x, a3.y ), a3.z );
-
-	}
-
-	void main() {
-
-		gl_FragColor.rgb = mix( myColor, vec3( 0.2 ), edgeFactorTri() );
-		gl_FragColor.a = 0.8;
-	}
-
-</script>
 
 <script>
 
 var width = 1000,
 	height = 700;
 
+
+
+var particleSystem;
+var renderer;
+
+if ( Detector.webgl && false )
+	renderer = new THREE.WebGLRenderer( {antialias:true} );
+else
+	renderer = new THREE.CanvasRenderer( { alpha: true }); 
+
+// var renderer = new THREE.WebGLRenderer( { antialias: true } );
+	//renderer.setClearColor( scene.fog.color, 1 );
+	// renderer.setClearColor( 0xffffff );
+	renderer.setClearColor( 0x1E3791 );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	// renderer.setPixelRatio( window.devicePixelRatio );
+	// renderer.shadowMapCullFace = THREE.CullFaceBack;
+
 var scene = new THREE.Scene();
 	//scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
 
 // scene.add( new THREE.HemisphereLight( 0xffffff, 0xffffff ) );
 scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
+scene.add( new THREE.AmbientLight( 0xffffff ) );
 
 var light = new THREE.DirectionalLight( 0xffffff, 1 );
 light.position.set( 1, 100, 300);
-
 scene.add( light );
-
-
-var particleSystem;
-var renderer = new THREE.WebGLRenderer( { antialias: true } );
-	//renderer.setClearColor( scene.fog.color, 1 );
-	// renderer.setClearColor( 0xffffff );
-	renderer.setClearColor( 0x1E3791 );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-
-	// renderer.shadowMapCullFace = THREE.CullFaceBack;
 
 
 var geometry = new THREE.BufferGeometry();
@@ -258,6 +228,7 @@ var geoGroup = new THREE.Object3D();
 	// geoGroup.position.y = projection(centerCoord)[1];
 	scene.add( geoGroup );
 
+
 // var geometry = new THREE.BoxGeometry( 10, 10, 200 );
 // geometry.computeBoundingSphere()
 // geometry.center();
@@ -305,14 +276,27 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 	    .attr("height", window.innerHeight)
 
 
-	console.log(dataBerlin)
+	console.log(dataBerlin);
 
 	
 
 	// var berlinShape = $d3g.transformSVGPath( geoPath(dataBerlin.features[0]) )
 	// extrudeSvg(geoGroup, berlinShape, 10, new THREE.Color( 0xFFFFFF ))
 
-	console.log(dataBezirke.features)
+	console.log(dataBezirke.features);
+
+	var Text2D = THREE_Text.Text2D;
+  	var textAlign = THREE_Text.textAlign;
+
+	var text = new Text2D("CENTER", {
+		align: textAlign.center,
+		font: '30px Helvetica',
+		fillStyle: "#ffffff" ,
+		antialias: true
+	});
+    text.position.set(0,0,30)
+    text.scale.set(1,1,1)
+    geoGroup.add(text)
 
 	// dataBezirke.features.forEach(function(d){
 	// 	var shape = $d3g.transformSVGPath( geoPath(d) )
@@ -421,32 +405,20 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 		setupAttributes( geometry );
 
-		var uniforms = {  
-		  myColor: { type: "c", value: new THREE.Color().setStyle(color) },
-		};
-
-		var materialShader = new THREE.ShaderMaterial( {
-			uniforms: uniforms,
-			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-			derivatives: true,
-			side: THREE.BackSide,
-			transparent: true
-		} );
-
 		var materialLambert = new THREE.MeshLambertMaterial({
 				// color: new THREE.Color().setStyle(color),
 				// color: new THREE.Color().setRGB(30,55,145),
 				color: new THREE.Color().setStyle("rgb(110,205,245)"),
 				// color: 0xffffff,
 				side: THREE.BackSide,
+				shading: THREE.FlatShading,
 				wireframe:false
 				// transparent: true,
 				// opacity: 0.6
 			});
 
 		
-		var mesh = new THREE.Mesh( geometry, materialLambert );
+		var mesh = new THREE.Mesh( geometryMesh, materialLambert );
 
 		mesh.position.z = i*100; 
 
@@ -456,9 +428,9 @@ function dataLoaded(error, data, dataBerlin, dataBezirke) {
 
 
 
-	// var axes = new THREE.AxisHelper(500);
-	// 	axes.position.set( 0,0,0 );
-	// 	scene.add(axes);
+	var axes = new THREE.AxisHelper(500);
+		axes.position.set( 0,0,0 );
+		scene.add(axes);
 
 	// var grid = new THREE.GridHelper(1000, 10);
 	// 	grid.position.set( 0,0,0 );
