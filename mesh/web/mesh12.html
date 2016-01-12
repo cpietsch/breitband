@@ -200,7 +200,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
 var z = d3.scale.linear();
-var zSocial = d3.scale.linear();
+var zSocial = d3.scale.log();
 var centerCoord = [13.413215, 52.521918];
 var projection = d3.geo.mercator()
 	.scale(200000)
@@ -479,7 +479,7 @@ function makeMeshGitterBig(selection){
 	var triangles = delaunay.triangles(selection);
 	var geometryMesh = new THREE.Geometry();
 
-	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,socialHour(d.social)); });
+	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z+socialHour(d.social)-2); });
 
 	triangles.forEach(function(d){
 		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
@@ -503,7 +503,7 @@ function makeMeshGitterBig(selection){
 
 	var materialLambert = new THREE.MeshLambertMaterial({
 		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
-		color: 0xffffff,
+		color: 0xE60032,
 		side: THREE.BackSide,
 		wireframe:false,
 		// transparent: true,
@@ -512,7 +512,7 @@ function makeMeshGitterBig(selection){
 
 	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
 	// mesh.bezirk = bezirk.key;
-	mesh.position.z = 100;
+	// mesh.position.z = 100;
 
 	scene.add(mesh);
 }
