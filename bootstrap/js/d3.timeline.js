@@ -225,16 +225,19 @@ function Timeline(){
 
     el.append("div")
       // .style("background", function(d){ return color(d.key); })
+		.style('color', function(d){ return color(d.key); })
       .text("✖")
       .classed("close", true)
 
     el.append("div")
       // .style("background", function(d){ return color(d.key); })
+      .style('color', function(d){ return color(d.key); })
       .text(function(d){ return d.mean+"%"; })
       .classed("color", true)
 
     el.append("div")
       .classed("label", true)
+      .style('color', function(d){ return color(d.key); })
       .text(function(d){ return d.key; })
 
     // el.append("span")

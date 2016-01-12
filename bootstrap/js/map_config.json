@@ -37,12 +37,20 @@
     }
   },
   "sources": {
-    "speed": {
+    "speed_low": {
       "type": "vector",
       "tiles": [
-        "http://tiles.sebastianmeier.eu/v2/tiles/{z}/{x}/{y}.pbf"
+        "http://tiles.sebastianmeier.eu/v2/tiles/low/{z}/{x}/{y}.pbf"
       ],
-      "minzoom": 0,
+      "minzoom": 9,
+      "maxzoom": 13
+    },
+    "speed_high": {
+      "type": "vector",
+      "tiles": [
+        "http://tiles.sebastianmeier.eu/v2/tiles/high/{z}/{x}/{y}.pbf"
+      ],
+      "minzoom": 14,
       "maxzoom": 16
     },
     "satellite": {
@@ -75,64 +83,78 @@
       "background-color": "rgba(0,0,0,0.3)"
     }
   },{
-    "id": "speeddichte2013_fill_0",
+    "id": "speed_lowdichte2013_fill_0",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 0],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 0],
     "paint": {
   		"fill-color": "rgba(0,0,0,0.1)"
     }
   },{
-    "id": "speeddichte2013_fill_1",
+    "id": "speed_lowdichte2013_fill_1",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 1],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 1],
     "paint": {
   		"fill-color": "rgba(255,255,178,0.8)"
     }
   },{
-    "id": "speeddichte2013_fill_2",
+    "id": "speed_lowdichte2013_fill_2",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 2],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 2],
     "paint": {
   		"fill-color": "rgba(254,204,92,0.8)"
     }
   },{
-    "id": "speeddichte2013_fill_3",
+    "id": "speed_lowdichte2013_fill_3",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 3],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 3],
     "paint": {
   		"fill-color": "rgba(253,141,60,0.8)"
     }
   },{
-    "id": "speeddichte2013_fill_4",
+    "id": "speed_lowdichte2013_fill_4",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 4],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 4],
     "paint": {
   		"fill-color": "rgba(240,59,32,0.8)"
     }
   },{
-    "id": "speeddichte2013_fill_5",
+    "id": "speed_lowdichte2013_fill_5",
     "type": "fill",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
-    "filter": ["==", "breitband_percentage", 5],
+    "minzoom": 9,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 5],
     "paint": {
   		"fill-color": "rgba(189,0,38,0.8)"
     }
   },{
-    "id": "speeddichte2013_line",
+    "id": "speed_lowdichte2013_line",
     "type": "line",
-    "source": "speed",
+    "source": "speed_low",
     "source-layer": "speed",
+    "minzoom": 9,
+    "maxzoom": 14,
     "layout": {
       "line-join":"round"
     },
@@ -140,8 +162,80 @@
     	"line-width": 0.1,
   		"line-color": "rgba(0,0,0,0)"
     }
-  },
-    {
+  },{
+    "id": "speed_highdichte2013_fill_0",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 0],
+    "paint": {
+  		"fill-color": "rgba(0,0,0,0.1)"
+    }
+  },{
+    "id": "speed_highdichte2013_fill_1",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 1],
+    "paint": {
+  		"fill-color": "rgba(255,255,178,0.8)"
+    }
+  },{
+    "id": "speed_highdichte2013_fill_2",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 2],
+    "paint": {
+  		"fill-color": "rgba(254,204,92,0.8)"
+    }
+  },{
+    "id": "speed_highdichte2013_fill_3",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 3],
+    "paint": {
+  		"fill-color": "rgba(253,141,60,0.8)"
+    }
+  },{
+    "id": "speed_highdichte2013_fill_4",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 4],
+    "paint": {
+  		"fill-color": "rgba(240,59,32,0.8)"
+    }
+  },{
+    "id": "speed_highdichte2013_fill_5",
+    "type": "fill",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "filter": ["==", "percentage", 5],
+    "paint": {
+  		"fill-color": "rgba(189,0,38,0.8)"
+    }
+  },{
+    "id": "speed_highdichte2013_line",
+    "type": "line",
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 14,
+    "layout": {
+      "line-join":"round"
+    },
+    "paint": {
+    	"line-width": 0.1,
+  		"line-color": "rgba(0,0,0,0)"
+    }
+  },{
       "id": "motorway",
       "type": "line",
       "source": "mapbox",
