@@ -187,7 +187,10 @@
 			</div>
 		</div>
 
-		<div id="map"></div>
+		<div id="map_container">
+			<div id="map"></div>
+			<div id="map_cover"></div>
+		</div>
 
 		<div id="technologien" class="grey">
 			<div class="container">
@@ -340,6 +343,8 @@
 
 			$(document).ready(function() {
 				$('#sidr-btn').sidr();
+
+				$('#map_cover').click(function(){$(this).remove();})
 			});
 
 
