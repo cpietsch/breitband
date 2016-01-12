@@ -102,6 +102,20 @@ svg {
 	text-shadows:-3px -3px 1px rgba(255, 255, 255, 0.4), -3px -2px 1px rgba(255, 255, 255, 0.4), -3px -1px 1px rgba(255, 255, 255, 0.4), -3px 0px 1px rgba(255, 255, 255, 0.4), -3px 1px 1px rgba(255, 255, 255, 0.4), -3px 2px 1px rgba(255, 255, 255, 0.4), -3px 3px 1px rgba(255, 255, 255, 0.4), -2px -3px 1px rgba(255, 255, 255, 0.4), -2px -2px 1px rgba(255, 255, 255, 0.4), -2px -1px 1px rgba(255, 255, 255, 0.4), -2px 0px 1px rgba(255, 255, 255, 0.4), -2px 1px 1px rgba(255, 255, 255, 0.4), -2px 2px 1px rgba(255, 255, 255, 0.4), -2px 3px 1px rgba(255, 255, 255, 0.4), -1px -3px 1px rgba(255, 255, 255, 0.4), -1px -2px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.4), -1px 0px 1px rgba(255, 255, 255, 0.4), -1px 1px 1px rgba(255, 255, 255, 0.4), -1px 2px 1px rgba(255, 255, 255, 0.4), -1px 3px 1px rgba(255, 255, 255, 0.4), 0px -3px 1px rgba(255, 255, 255, 0.4), 0px -2px 1px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(255, 255, 255, 0.4), 0px 2px 1px rgba(255, 255, 255, 0.4), 0px 3px 1px rgba(255, 255, 255, 0.4), 1px -3px 1px rgba(255, 255, 255, 0.4), 1px -2px 1px rgba(255, 255, 255, 0.4), 1px -1px 1px rgba(255, 255, 255, 0.4), 1px 0px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(255, 255, 255, 0.4), 1px 2px 1px rgba(255, 255, 255, 0.4), 1px 3px 1px rgba(255, 255, 255, 0.4), 2px -3px 1px rgba(255, 255, 255, 0.4), 2px -2px 1px rgba(255, 255, 255, 0.4), 2px -1px 1px rgba(255, 255, 255, 0.4), 2px 0px 1px rgba(255, 255, 255, 0.4), 2px 1px 1px rgba(255, 255, 255, 0.4), 2px 2px 1px rgba(255, 255, 255, 0.4), 2px 3px 1px rgba(255, 255, 255, 0.4), 3px -3px 1px rgba(255, 255, 255, 0.4), 3px -2px 1px rgba(255, 255, 255, 0.4), 3px -1px 1px rgba(255, 255, 255, 0.4), 3px 0px 1px rgba(255, 255, 255, 0.4), 3px 1px 1px rgba(255, 255, 255, 0.4), 3px 2px 1px rgba(255, 255, 255, 0.4), 3px 3px 1px rgba(255, 255, 255, 0.4);
 
 }
+
+.time {
+	font-family: courier;
+	position: absolute;
+	z-index: 100;
+	right: 30px;
+	top: 30px;
+}
+.time .clock {
+	font-size: 30px;
+}
+.time .date {
+	font-size: 15px;
+}
  
 </style>
 <body>
@@ -109,12 +123,16 @@ svg {
 <div id="container"></div>
 <div id="interface"></div>
 <div id="labels"></div>
-
+<div class="time">
+	<div class="clock"></div>
+	<div class="date">11.01.2016</div>
+</div>
 
 <script src="js/d3.v3.min.js"></script>
 <script src="js/queue.v1.min.js"></script>
 
 <script src="js/three/three.min.js"></script>
+<script src="js/three/tween.min.js"></script>
 <script src="js/three/THREEx.GeometryUtils.js"></script>
 <script src="js/three/TrackballControls.js"></script>
 <script src="js/three/stats.min.js"></script>
@@ -130,6 +148,8 @@ svg {
 
 
 <script>
+
+var clockDiv = d3.select(".time .clock");
 
 var width = window.innerWidth,
 	height = window.innerHeight;
@@ -157,7 +177,7 @@ var scene = new THREE.Scene();
 scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
 // scene.add( new THREE.AmbientLight( 0xffffff ) );
 
-var light = new THREE.DirectionalLight( 0xffffff, 1 );
+var light = new THREE.DirectionalLight( 0xffffff, 0.4 );
 light.position.set( 1, 100, 300);
 scene.add( light );
 
@@ -199,8 +219,10 @@ var stats = new Stats();
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
-var z = d3.scale.linear();
-var zSocial = d3.scale.log();
+var z = d3.scale.linear().range([1,50]).domain([0, 5]);
+var zSocial = d3.scale.log().range([1,200]).domain([1,200]);
+var colorSocial = d3.scale.log().range(["#fff","#ddd"]).domain([1,200]);
+
 var centerCoord = [13.413215, 52.521918];
 var projection = d3.geo.mercator()
 	.scale(200000)
@@ -248,64 +270,8 @@ window.addEventListener( 'mousemove', onMouseMove, false );
 // 	grid.setColors( new THREE.Color(0x7f7f7f), new THREE.Color(0x7f7f7f) );
 // 	scene.add(grid);
 
+var dataAll;
 
-function raycast(){
-	raycaster.setFromCamera( mouse, camera );	
-
-	var intersects = raycaster.intersectObjects( scene.children );
-
-	if ( intersects.length > 0 ) {
-
-		if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
-			// console.log(intersects[ 0 ]);	
-
-			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-
-			INTERSECTED = intersects[ 0 ].object;
-			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
-			INTERSECTED.material.color.setHex( 0xE60032 );
-
-			container.style.cursor = "pointer"
-
-		}
-
-	} else {
-
-		if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-
-		INTERSECTED = null;
-
-		container.style.cursor = "inherit"
-
-	}
-
-}
-
-function animate() {
-
-	requestAnimationFrame( animate );
-	controls.update();
-
-
-	render();
-	stats.update();
-
-}
-
-var rotation = 0;
-
-function render() {
-
-	var time = Date.now() * 0.00001;
-
-	// scene.rotation.z += 0.001;
-
-	update_labels(objects);
-	raycast();
-
-	renderer.render( scene, camera );
-
-}
 
 queue()
 	.defer(d3.csv, 'data/50mbit.csv')
@@ -315,7 +281,7 @@ queue()
 
 function dataLoaded(error, data, bezirke, social) {
 
-	z.range([1,50]).domain([0, 5]);
+	dataAll = data;
 
 	var xymap = [];
 
@@ -327,10 +293,11 @@ function dataLoaded(error, data, bezirke, social) {
 		d.yr = d.y+Math.random();
 		d.percentage = parseInt(d.percentage);
 		d.z = z(d.percentage);
-		d.id = i;
+		d.name = i;
 		d.xx = parseInt(d.xx);
 		d.yy = parseInt(d.yy);
 		d.social = [];
+		d.cube = null;
 
 		if(!xymap[d.xx]) xymap[d.xx]=[];
 		xymap[d.xx][d.yy] = d;
@@ -340,6 +307,7 @@ function dataLoaded(error, data, bezirke, social) {
 		var dd = xymap[d.xx][d.yy];
 		d.x = dd.x;
 		d.y = dd.y;
+		d.z = dd.z;
 		d.xr = dd.xr;
 		d.yr = dd.yr;
 		d.instagram *= 1;
@@ -350,7 +318,7 @@ function dataLoaded(error, data, bezirke, social) {
 	})
 
 	// zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
-	zSocial.range([1,200]).domain([1,20]).clamp(true);
+	
 	// console.log(zSocial.domain());
 
 	console.log(data[0], social[0])
@@ -375,10 +343,18 @@ function dataLoaded(error, data, bezirke, social) {
 	// 	makeMeshGitter(d);
 	// });
 
-	makeMeshGitterBig(data);
+	
+
+	var now = 0;
+	setInterval(function(){
+		// console.time("social")
+		makeSocial(data,now);
+		// console.timeEnd("social")
+		now = now < 23 ? now+1 : 0;
+	}, 100);
 
 	// makeMesh(data);
-	makeCenters(bezirke);
+	//makeCenters(bezirke);
 
 	animate();
 	
@@ -413,8 +389,81 @@ function makeCenters(bezirke){
 
 	})
 
-	update_labels(objects);
 	
+}
+
+
+function raycast(){
+	raycaster.setFromCamera( mouse, camera );	
+
+	var intersects = raycaster.intersectObjects( scene.children );
+
+	if ( intersects.length > 0 ) {
+
+		if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
+			// console.log(intersects[ 0 ]);	
+
+			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+			INTERSECTED = intersects[ 0 ].object;
+			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			INTERSECTED.material.color.setHex( 0xE60032 );
+
+			container.style.cursor = "pointer"
+
+		}
+
+	} else {
+
+		if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+		INTERSECTED = null;
+
+		container.style.cursor = "inherit"
+
+	}
+
+}
+
+function animate( time ) {
+
+	requestAnimationFrame( animate );
+	
+	controls.update();
+	render(time);
+	stats.update();
+
+}
+
+var rotation = 0;
+
+function render(time) {
+
+	// TWEEN.update();
+	// scene.rotation.z += 0.001;
+
+	// update_labels(objects);
+	// raycast();
+	animateSocial();
+
+	renderer.render( scene, camera );
+
+}
+
+function animateSocial(){
+	dataAll.forEach(function(d){
+		if(d.cube){
+			d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
+			d.cube.position.z = socialHoverPos + d.cube.scale.z/2;
+			// d.cube.position.z = d.z + d.cube.scale.z/2;
+
+			if(d.cube.scale.z<0.3){
+				var selectedObject = scene.getObjectByName(d.name);
+           		scene.remove( selectedObject );
+           		d.cube = null;
+			}
+		}
+	})
 }
 
 function update_labels(objects) {
@@ -471,53 +520,141 @@ function toScreenXY(mesh){
     return {x: left, y:top };
 }
 
-function socialHour(d, hour){
+function socialHour(d, type, hour){
 	var s = d.filter(function(d){ return d.hour == hour})[0];
 
-	return s ? s.instagram : 0;
+	return s ? zSocial(s[type]) : 0;
 	// if(d.length == 0) s = 0;
 	// else return zSocial(d[0].instagram);
 }
-function makeMeshGitterBig(selection){
-	var triangles = delaunay.triangles(selection);
-	var geometryMesh = new THREE.Geometry();
 
-	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z+socialHour(d.social, 20)-2); });
+var socialHoverPos = 60;
 
-	triangles.forEach(function(d){
-		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
-		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
-		if(xdist > 20 || ydist > 20) return; // hacky oh boy
+function makeSocial(data, hour){
+	console.log("makeSocial", hour);
 
-		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
-	});
+	clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
 
-	geometryMesh.computeFaceNormals();
-	// geometryMesh.computeVertexNormals();
-	// geometryMesh.computeMorphNormals();		
-	// geometryMesh.computeBoundingSphere();
-	// geometryMesh.computeBoundingBox();
-	//geometryMesh.center();
-	// box = geometryMesh.boundingBox.clone();
+	var geometry = new THREE.BoxGeometry( 10, 10, 1 );
+	// var material = new THREE.MeshBasicMaterial({
+	// 	color: 0xffffff,
+	// 	// color: 0xE60032
+	// 	colorSocial
+	// });
+
+	data.forEach(function(d){
+		var h = socialHour(d.social, "instagram", hour);
+
+		if(!d.cube && h>0){
+			var material = new THREE.MeshBasicMaterial({
+				// color: new THREE.Color(colorSocial(d.social.instagram)),
+				color: 0xffffff
+			});
+			var cube = new THREE.Mesh( geometry, material );
+			var h = socialHour(d.social, "instagram", hour);
+
+			cube.position.x = d.x;
+			cube.position.y = d.y;
+			cube.position.z = socialHoverPos;
+			// cube.position.z = d.z;
+			
+			// cube.scale.z = h;
+			cube.name = d.name;
+			cube.animateZ = h;
+
+			d.cube = cube;
+			scene.add( cube );
+
+			
 
 
-	// var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
-	// setupAttributes( geometry );
+			// new TWEEN.Tween( { z: d.cube.scale.z } )
+			// 	.to({ z: h }, 900 )
+			// 	.easing( TWEEN.Easing.Cubic.In )
+			// 	.start()
+			// 	.onUpdate(function() {
+			// 		d.cube.scale.z = this.z;
+			// 		d.cube.position.z = 60 + this.z/2;
+			// 	})
 
-	var materialLambert = new THREE.MeshLambertMaterial({
-		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
-		color: 0xE60032,
-		side: THREE.BackSide,
-		wireframe:false,
-		// transparent: true,
-		// opacity: 0.6
-	});
+		} else if(d.cube && h==0) {
 
-	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
-	// mesh.bezirk = bezirk.key;
-	// mesh.position.z = 100;
+			d.cube.animateZ = h;
 
-	scene.add(mesh);
+			// new TWEEN.Tween( { z: d.cube.scale.z } )
+			// 	.to({ z: 0 }, 900 )
+			// 	.easing( TWEEN.Easing.Cubic.In )
+			// 	.start()
+			// 	.onUpdate(function() {
+			// 		d.cube.scale.z = this.z;
+			// 		d.cube.position.z = 60 + this.z/2;
+			// 	})
+			// 	.onComplete(function() {
+	  //      			var selectedObject = scene.getObjectByName(d.name);
+	  //          		scene.remove( selectedObject );
+	  //          		d.cube = null;
+			//     })
+			    
+
+		} else if(d.cube && h>0){
+			// new TWEEN.Tween( { z: d.cube.scale.z } )
+			// 	.to({ z: h }, 900 )
+			// 	.easing( TWEEN.Easing.Cubic.In )
+			// 	.start()
+			// 	.onUpdate(function() {
+			// 		d.cube.scale.z = this.z;
+			// 		d.cube.position.z = 60 + this.z/2;
+			// 	})
+
+			// d.cube.scale.z = h;
+			// d.cube.position.z = 60 + h/2;
+
+			d.cube.animateZ = h;
+		}
+		
+	})
+	
+
+
+	// var triangles = delaunay.triangles(selection);
+	// var geometryMesh = new THREE.Geometry();
+
+	// geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z+socialHour(d.social, 20)-2); });
+
+	// triangles.forEach(function(d){
+	// 	var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+	// 	var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+	// 	if(xdist > 20 || ydist > 20) return; // hacky oh boy
+
+	// 	geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
+	// });
+
+	// geometryMesh.computeFaceNormals();
+	// // geometryMesh.computeVertexNormals();
+	// // geometryMesh.computeMorphNormals();		
+	// // geometryMesh.computeBoundingSphere();
+	// // geometryMesh.computeBoundingBox();
+	// //geometryMesh.center();
+	// // box = geometryMesh.boundingBox.clone();
+
+
+	// // var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
+	// // setupAttributes( geometry );
+
+	// var materialLambert = new THREE.MeshLambertMaterial({
+	// 	// color: new THREE.Color().setStyle("rgb(110,205,245)"),
+	// 	color: 0xE60032,
+	// 	side: THREE.BackSide,
+	// 	wireframe:false,
+	// 	// transparent: true,
+	// 	// opacity: 0.6
+	// });
+
+	// var mesh = new THREE.Mesh( geometryMesh, materialLambert );
+	// // mesh.bezirk = bezirk.key;
+	// // mesh.position.z = 100;
+
+	// scene.add(mesh);
 }
 
 function makeMeshGitter(hour){
