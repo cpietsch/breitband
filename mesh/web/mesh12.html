@@ -330,6 +330,7 @@ function dataLoaded(error, data, bezirke, social) {
 		d.id = i;
 		d.xx = parseInt(d.xx);
 		d.yy = parseInt(d.yy);
+		d.social = [];
 
 		if(!xymap[d.xx]) xymap[d.xx]=[];
 		xymap[d.xx][d.yy] = d;
@@ -344,10 +345,13 @@ function dataLoaded(error, data, bezirke, social) {
 		d.instagram *= 1;
 		d.twitter *= 1;
 		d.hour *= 1;
+
+		dd.social.push(d);
 	})
 
-	zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
-	console.log(zSocial.domain());
+	// zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
+	zSocial.range([1,200]).domain([1,20]).clamp(true);
+	// console.log(zSocial.domain());
 
 	console.log(data[0], social[0])
 	console.log(projection([ data[0].longitude, data[0].latitude ]))
@@ -367,11 +371,11 @@ function dataLoaded(error, data, bezirke, social) {
 		.key(function(d){ return d.hour; })
 		.entries(social);
 
-	socialHours.forEach(function(d){
-		makeMeshGitter(d);
-	});
+	// socialHours.forEach(function(d){
+	// 	makeMeshGitter(d);
+	// });
 
-	// makeMeshGitter(socialHours[0]);
+	makeMeshGitterBig(data);
 
 	// makeMesh(data);
 	makeCenters(bezirke);
@@ -467,6 +471,51 @@ function toScreenXY(mesh){
     return {x: left, y:top };
 }
 
+function socialHour(d){
+	if(d.length == 0) return 0;
+	else return zSocial(d[0].instagram);
+}
+function makeMeshGitterBig(selection){
+	var triangles = delaunay.triangles(selection);
+	var geometryMesh = new THREE.Geometry();
+
+	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,socialHour(d.social)); });
+
+	triangles.forEach(function(d){
+		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+		if(xdist > 20 || ydist > 20) return; // hacky oh boy
+
+		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
+	});
+
+	geometryMesh.computeFaceNormals();
+	// geometryMesh.computeVertexNormals();
+	// geometryMesh.computeMorphNormals();		
+	// geometryMesh.computeBoundingSphere();
+	// geometryMesh.computeBoundingBox();
+	//geometryMesh.center();
+	// box = geometryMesh.boundingBox.clone();
+
+
+	// var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
+	// setupAttributes( geometry );
+
+	var materialLambert = new THREE.MeshLambertMaterial({
+		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
+		color: 0xffffff,
+		side: THREE.BackSide,
+		wireframe:false,
+		// transparent: true,
+		// opacity: 0.6
+	});
+
+	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
+	// mesh.bezirk = bezirk.key;
+	mesh.position.z = 100;
+
+	scene.add(mesh);
+}
 
 function makeMeshGitter(hour){
 	var selection = hour.values;
