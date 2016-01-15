@@ -158,7 +158,7 @@ var renderer;
 var container = document.getElementById( 'container' );
 
 
-if ( Detector.webgl )
+if ( Detector.webgl)
 	renderer = new THREE.WebGLRenderer( {antialias:true} );
 else
 	renderer = new THREE.CanvasRenderer( { alpha: true }); 
@@ -344,14 +344,15 @@ function dataLoaded(error, data, bezirke, social) {
 	// });
 
 	
-
 	var now = 0;
 	setInterval(function(){
 		// console.time("social")
 		makeSocial(data,now);
 		// console.timeEnd("social")
 		now = now < 23 ? now+1 : 0;
-	}, 100);
+	}, 1000);
+
+	// makeStaticSocial(data);
 
 	// makeMesh(data);
 	//makeCenters(bezirke);
@@ -454,7 +455,7 @@ function animateSocial(){
 	dataAll.forEach(function(d){
 		if(d.cube){
 			d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
-			d.cube.position.z = socialHoverPos + d.cube.scale.z/2;
+			// d.cube.position.z = socialHoverPos + d.cube.scale.z/2;
 			// d.cube.position.z = d.z + d.cube.scale.z/2;
 
 			if(d.cube.scale.z<0.3){
@@ -530,12 +531,41 @@ function socialHour(d, type, hour){
 
 var socialHoverPos = 60;
 
+function makeStaticSocial(data){
+
+	var cubesGeo = new THREE.Geometry();
+	var geometry = new THREE.BoxGeometry( 10, 10, 1 );
+	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
+
+	var material = new THREE.MeshBasicMaterial({ 
+		color: 0xffffff
+	});
+
+
+	data.forEach(function(d){
+		var h = socialHour(d.social, "instagram", 17);
+		var cube = new THREE.Mesh( geometry, material );
+		
+		cube.position.x = d.x;
+		cube.position.y = d.y;
+		cube.scale.z = 10;
+
+		// cube.matrixAutoUpdate && cube.updateMatrix();
+
+		THREE.GeometryUtils.merge(cubesGeo, cube);
+	});
+
+
+	scene.add(cubesGeo);
+}
+
 function makeSocial(data, hour){
 	console.log("makeSocial", hour);
 
 	clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
 
 	var geometry = new THREE.BoxGeometry( 10, 10, 1 );
+	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
 	// var material = new THREE.MeshBasicMaterial({
 	// 	color: 0xffffff,
 	// 	// color: 0xE60032
@@ -770,5 +800,34 @@ function setupAttributes( geometry ) {
 
 
 
+THREE.GeometryUtils = {
+
+	merge: function ( geometry1, geometry2, materialIndexOffset ) {
+
+		console.warn( 'THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.' );
+
+		var matrix;
+
+		if ( geometry2 instanceof THREE.Mesh ) {
+
+			geometry2.matrixAutoUpdate && geometry2.updateMatrix();
+
+			matrix = geometry2.matrix;
+			geometry2 = geometry2.geometry;
+
+		}
+
+		geometry1.merge( geometry2, matrix, materialIndexOffset );
+
+	},
+
+	center: function ( geometry ) {
+
+		console.warn( 'THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.' );
+		return geometry.center();
+
+	}
+
+};
 
 </script>

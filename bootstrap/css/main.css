@@ -609,6 +609,11 @@ path.trendarea.instagram{
 	margin-top:35px;
 }
 
+#compare-legend {
+    width: 100%;
+    float: left;
+}
+
 #compare text{
 	font-size:10px;
 }
@@ -622,34 +627,44 @@ path.trendarea.instagram{
 }
 
 #compare .menu .entry {
-	cursor: pointer;
-	position: relative;
-	width: 100%;
-	clear: left;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    padding: 3px;
+    float: left;
+}
+#compare .menu .entry * {
+	pointer-events:none;
 }
 
 #compare .menu .color {
 	/*color: #FFF;
 	font-weight: bold;
 	text-shadow: none;*/
-	padding: 3px;
-	margin: 3px;
-	float: left;
+     margin-right: 7px;
+    /* margin: 3px; */
+    float: left;
+    width: 25px;
+    height: 25px;
 }
 
-#compare .menu .label {
-	padding: 6px 3px 0px 3px;
-	margin: 3px;
-	float: left;
-	color:#000;
-	font-size:12px;
+
+#compare .menu .labell {
+	    margin: 4px;
+    float: left;
 }
 
 #compare .menu .close {
-	padding: 3px;
-	margin: 3px;
-	float: left;
+	    margin: 2px;
+	float: right;
 	opacity: 0;
+	color: #000;
+}
+#compare .menu .active .close {
+	opacity: 1;
+}
+#compare .menu .active {
+	background: #eee;
 }
 
 

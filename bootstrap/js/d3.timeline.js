@@ -134,6 +134,7 @@ function Timeline(){
 
 
     menu.on("mouseout", function(d1){
+      console.log("out", d1)
       if(activeMenu) return;
 
         linechartSvg
@@ -146,7 +147,7 @@ function Timeline(){
           .duration(1000)
           .attr("d", function(d){ return line(d.values); })
 
-        return false;
+        // return false;
       })
     
     var activeMenu = false;
@@ -156,9 +157,19 @@ function Timeline(){
       .enter()
       .append("div")
       .classed("entry", true)
+      // .style('color', function(d){ return color(d.key); })
       .on("click", function(d1){
         activeMenu = d1.active = !d1.active;
 
+        menu.selectAll(".entry")
+          .classed("active", function(d2){ return (d1.key == d2.key) & d1.active; });
+
+        // menu.select(".active")
+        //   .style('background', function(d){ return color(d.key); })
+        //   .style('color', "#fff")
+
+
+        
         menu.selectAll(".close")
           .style("opacity", function(d2){
             d2.active = (d1.key == d2.key) & d1.active;
@@ -193,6 +204,8 @@ function Timeline(){
           .attr("d", function(d){ return activeMenu ? lineAll(d.values): line(d.values); })
       })
       .on("mouseenter", function(d1){
+        console.log("enter", d1)
+
         if(activeMenu) return;
 
         linechartSvg
@@ -222,22 +235,22 @@ function Timeline(){
           return false;
       })
       
+    // el.append("div")
+    //   .style("background", function(d){ return color(d.key); })
+    //   .classed("color", true)
 
     el.append("div")
       // .style("background", function(d){ return color(d.key); })
-		.style('color', function(d){ return color(d.key); })
       .text("✖")
       .classed("close", true)
 
     el.append("div")
-      // .style("background", function(d){ return color(d.key); })
-      .style('color', function(d){ return color(d.key); })
-      .text(function(d){ return d.mean+"%"; })
+      .style("background", function(d){ return color(d.key); })
+      // .text(function(d){ return d.mean+"%"; })
       .classed("color", true)
 
     el.append("div")
-      .classed("label", true)
-      .style('color', function(d){ return color(d.key); })
+      .classed("labell", true)
       .text(function(d){ return d.key; })
 
     // el.append("span")
