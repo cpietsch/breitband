@@ -201,22 +201,41 @@ var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHe
 	// camera.aspect = 1.8770614692653673;
 	camera.lookAt(scene.position);	
 
+var drag = d3.behavior.drag()
+	.on("drag",function(d){
+		// console.log(d3.event);
+		scene2.rotation.z += d3.event.dx / 100;
 
-var controls = new THREE.TrackballControls( camera );
-	controls.target.set( 0, 0, 0 );
+		var zoom = d3.event.dy*-10;
+		camera.translateZ(zoom)
+	});
 
-	controls.rotateSpeed = 0.4;
-	controls.zoomSpeed = 0.4;
-	controls.panSpeed = 0.4;
+var fov = camera.fov;
 
-	controls.noZoom = false;
-	controls.noPan = true;
+var zoom = d3.behavior.zoom()
+    .scale(1)
+    .scaleExtent([0.1, 8])
+	.on("zoom", function(d){
+		camera.fov = fov * d3.event.scale;
+     	camera.updateProjectionMatrix();
+	})
 
-	controls.staticMoving = false;
-	controls.dynamicDampingFactor = 0.05;
+d3.select(renderer.domElement).call(drag).call(zoom)
+// var controls = new THREE.TrackballControls( camera );
+// 	controls.target.set( 0, 0, 0 );
 
-	controls.keys = [ 65, 83, 68 ];
-	controls.addEventListener( 'change', render );
+// 	controls.rotateSpeed = 0.4;
+// 	controls.zoomSpeed = 0.4;
+// 	controls.panSpeed = 0.4;
+
+// 	controls.noZoom = false;
+// 	controls.noPan = true;
+
+// 	controls.staticMoving = false;
+// 	controls.dynamicDampingFactor = 0.05;
+
+// 	controls.keys = [ 65, 83, 68 ];
+// 	controls.addEventListener( 'change', render );
 
 
 var stats = new Stats();
@@ -444,7 +463,7 @@ function animate( time ) {
 
 	requestAnimationFrame( animate );
 	
-	controls.update();
+	// controls.update();
 	render(time);
 	stats.update();
 
