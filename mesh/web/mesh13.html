@@ -220,7 +220,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
 var z = d3.scale.linear().range([1,50]).domain([0, 5]);
-var zSocial = d3.scale.log().range([1,200]).domain([1,200]);
+var zSocial = d3.scale.log().range([1,200]).domain([1,50])
 var colorSocial = d3.scale.log().range(["#fff","#ddd"]).domain([1,200]);
 
 var centerCoord = [13.413215, 52.521918];
@@ -296,6 +296,7 @@ function dataLoaded(error, data, bezirke, social) {
 		d.name = i;
 		d.xx = parseInt(d.xx);
 		d.yy = parseInt(d.yy);
+		// d.social = d3.range(24).map(function(d){ return { instagram: 0, twitter: 0}});
 		d.social = [];
 		d.cube = null;
 
@@ -314,7 +315,7 @@ function dataLoaded(error, data, bezirke, social) {
 		d.twitter *= 1;
 		d.hour *= 1;
 
-		dd.social.push(d);
+		dd.social[d.hour] = { twitter: d.twitter, instagram: d.instagram };
 	})
 
 	// zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
@@ -347,12 +348,15 @@ function dataLoaded(error, data, bezirke, social) {
 	var now = 0;
 	setInterval(function(){
 		// console.time("social")
-		makeSocial(data,now);
+		// makeSocial(data,now);
+		updateSocialBars(now)
 		// console.timeEnd("social")
 		now = now < 23 ? now+1 : 0;
-	}, 1000);
+	}, 400);
 
-	// makeStaticSocial(data);
+	// makeSocial(data, now);
+	makeSocialStatic(data, now);
+	updateSocialBars(12);
 
 	// makeMesh(data);
 	//makeCenters(bezirke);
@@ -437,6 +441,7 @@ function animate( time ) {
 }
 
 var rotation = 0;
+var hour = 0;
 
 function render(time) {
 
@@ -445,24 +450,47 @@ function render(time) {
 
 	// update_labels(objects);
 	// raycast();
+	// updateSocial(time);
 	animateSocial();
 
 	renderer.render( scene, camera );
 
 }
 
+function updateSocial(time){
+	var now = parseInt(time/1000) % 24;
+	if(now!=hour){
+		hour = now;
+		updateSocialBars(hour);
+	}
+}
+
+function updateSocialBars(hour){
+	// console.log(hour);
+
+	clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
+
+	dataAll.forEach(function(d){
+		var social = d.social[hour];
+
+		if(d.cube){
+			d.cube.animateZ = social ? zSocial(social.instagram) : 0.2;
+		}
+		if(d.cube2){
+			d.cube2.animateZ = social ? zSocial(social.twitter) : 0.2;
+		}
+	})	
+}
+
 function animateSocial(){
 	dataAll.forEach(function(d){
 		if(d.cube){
 			d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
-			// d.cube.position.z = socialHoverPos + d.cube.scale.z/2;
-			// d.cube.position.z = d.z + d.cube.scale.z/2;
-
-			if(d.cube.scale.z<0.3){
-				var selectedObject = scene.getObjectByName(d.name);
-           		scene.remove( selectedObject );
-           		d.cube = null;
-			}
+			d.cube.visible = (d.cube.scale.z > 1); 
+		}
+		if(d.cube2){
+			d.cube2.scale.z += (d.cube2.animateZ - d.cube2.scale.z)*0.1;
+			d.cube2.visible = (d.cube2.scale.z > 1); 
 		}
 	})
 }
@@ -531,32 +559,53 @@ function socialHour(d, type, hour){
 
 var socialHoverPos = 60;
 
-function makeStaticSocial(data){
+function makeSocialStatic(data,hour){
 
-	var cubesGeo = new THREE.Geometry();
-	var geometry = new THREE.BoxGeometry( 10, 10, 1 );
+	var geometry = new THREE.BoxGeometry( 5, 10, 1 );
 	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
 
 	var material = new THREE.MeshBasicMaterial({ 
-		color: 0xffffff
+		color: 0xffffff,
+		opacity: 0.4
+	});
+	var material2 = new THREE.MeshBasicMaterial({ 
+		color: 0xffff00,
+		opacity: 0.4
 	});
 
 
 	data.forEach(function(d){
-		var h = socialHour(d.social, "instagram", 17);
-		var cube = new THREE.Mesh( geometry, material );
+		//if(d.social.length == 0) return;
+		if(d.social.filter(function(d){ return d.instagram != 0; }).length > 0){
+			var cube = new THREE.Mesh( geometry, material );
+			
+			cube.position.x = d.x;
+			cube.position.y = d.y;
+			cube.position.z = socialHoverPos;
+			cube.scale.z = 0.1;
+			cube.visible = false;
+
+			d.cube = cube;
+			scene.add(cube);
+		}
 		
-		cube.position.x = d.x;
-		cube.position.y = d.y;
-		cube.scale.z = 10;
+		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
+			cube = new THREE.Mesh( geometry, material2 );
+		
+			cube.position.x = d.x+5;
+			cube.position.y = d.y;
+			cube.position.z = socialHoverPos;
+			cube.scale.z = 0.1;
+			cube.visible = false;
 
-		// cube.matrixAutoUpdate && cube.updateMatrix();
-
-		THREE.GeometryUtils.merge(cubesGeo, cube);
+			d.cube2 = cube;
+			scene.add(cube);
+		}
+		
 	});
 
 
-	scene.add(cubesGeo);
+	
 }
 
 function makeSocial(data, hour){
