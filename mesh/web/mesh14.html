@@ -171,15 +171,36 @@ else
 	container.appendChild( renderer.domElement );
 
 var scene = new THREE.Scene();
+var scene2 = new THREE.Scene();
+
+scene.add(scene2);
 	//scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
 
-// scene.add( new THREE.HemisphereLight( 0xffffff, 0xffffff ) );
-scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
-// scene.add( new THREE.AmbientLight( 0xffffff ) );
+hemiLight = new THREE.HemisphereLight( 0xffffff, 0x1E3791, 0.9);
+scene.add( hemiLight );
+scene.add(new THREE.HemisphereLightHelper(hemiLight, 100));
 
-var light = new THREE.DirectionalLight( 0xffffff, 0.4 );
-light.position.set( 1, 100, 300);
-scene.add( light );
+// dirLight = new THREE.DirectionalLight( 0xffffff,  0.4);
+// // dirLight.color.setHSL( 0.1, 1, 0.95 );
+// dirLight.position.set( 3, 2, 4 );
+// dirLight.position.multiplyScalar( 200 );
+// scene.add( dirLight );
+// scene.add(new THREE.DirectionalLightHelper(dirLight, 100));
+
+dirLight2 = new THREE.DirectionalLight( 0xffffff,  1);
+// dirLight.color.setHSL( 0.1, 1, 0.95 );
+dirLight2.position.set( -2, 0, 1 );
+dirLight2.position.multiplyScalar( 300 );
+scene.add( dirLight2 );
+scene.add(new THREE.DirectionalLightHelper(dirLight2, 100));
+
+// scene.add( new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 ) );
+// scene.add( new THREE.HemisphereLight( 0xffffff, 0x3B8FAA ) );
+// scene.add( new THREE.AmbientLight( 0xffffff , 0.1) );
+
+// var light = new THREE.DirectionalLight( 0xffffff, 1);
+// light.position.set( 100, 100, 300);
+// scene.add( light );
 
 
 var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -446,7 +467,7 @@ var hour = 0;
 function render(time) {
 
 	// TWEEN.update();
-	// scene.rotation.z += 0.001;
+	scene2.rotation.z += 0.001;
 
 	// update_labels(objects);
 	// raycast();
@@ -564,11 +585,11 @@ function makeSocialStatic(data,hour){
 	var geometry = new THREE.BoxGeometry( 10, 20, 1 );
 	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
 
-	var material = new THREE.MeshBasicMaterial({ 
+	var material = new THREE.MeshLambertMaterial({ 
 		color: 0xffffff,
 		opacity: 0.4
 	});
-	var material2 = new THREE.MeshBasicMaterial({ 
+	var material2 = new THREE.MeshLambertMaterial({ 
 		color: 0xffff00,
 		opacity: 0.4
 	});
@@ -586,7 +607,7 @@ function makeSocialStatic(data,hour){
 			cube.visible = false;
 
 			d.cube = cube;
-			scene.add(cube);
+			scene2.add(cube);
 		}
 		
 		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
@@ -599,192 +620,19 @@ function makeSocialStatic(data,hour){
 			cube.visible = false;
 
 			d.cube2 = cube;
-			scene.add(cube);
+			scene2.add(cube);
 		}
 		
-	});
-
-
-	
+	});	
 }
 
-function makeSocial(data, hour){
-	console.log("makeSocial", hour);
-
-	clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
-
-	var geometry = new THREE.BoxGeometry( 10, 10, 1 );
-	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
-	// var material = new THREE.MeshBasicMaterial({
-	// 	color: 0xffffff,
-	// 	// color: 0xE60032
-	// 	colorSocial
-	// });
-
-	data.forEach(function(d){
-		var h = socialHour(d.social, "instagram", hour);
-
-		if(!d.cube && h>0){
-			var material = new THREE.MeshBasicMaterial({
-				// color: new THREE.Color(colorSocial(d.social.instagram)),
-				color: 0xffffff
-			});
-			var cube = new THREE.Mesh( geometry, material );
-			var h = socialHour(d.social, "instagram", hour);
-
-			cube.position.x = d.x;
-			cube.position.y = d.y;
-			cube.position.z = socialHoverPos;
-			// cube.position.z = d.z;
-			
-			// cube.scale.z = h;
-			cube.name = d.name;
-			cube.animateZ = h;
-
-			d.cube = cube;
-			scene.add( cube );
-
-			
-
-
-			// new TWEEN.Tween( { z: d.cube.scale.z } )
-			// 	.to({ z: h }, 900 )
-			// 	.easing( TWEEN.Easing.Cubic.In )
-			// 	.start()
-			// 	.onUpdate(function() {
-			// 		d.cube.scale.z = this.z;
-			// 		d.cube.position.z = 60 + this.z/2;
-			// 	})
-
-		} else if(d.cube && h==0) {
-
-			d.cube.animateZ = h;
-
-			// new TWEEN.Tween( { z: d.cube.scale.z } )
-			// 	.to({ z: 0 }, 900 )
-			// 	.easing( TWEEN.Easing.Cubic.In )
-			// 	.start()
-			// 	.onUpdate(function() {
-			// 		d.cube.scale.z = this.z;
-			// 		d.cube.position.z = 60 + this.z/2;
-			// 	})
-			// 	.onComplete(function() {
-	  //      			var selectedObject = scene.getObjectByName(d.name);
-	  //          		scene.remove( selectedObject );
-	  //          		d.cube = null;
-			//     })
-			    
-
-		} else if(d.cube && h>0){
-			// new TWEEN.Tween( { z: d.cube.scale.z } )
-			// 	.to({ z: h }, 900 )
-			// 	.easing( TWEEN.Easing.Cubic.In )
-			// 	.start()
-			// 	.onUpdate(function() {
-			// 		d.cube.scale.z = this.z;
-			// 		d.cube.position.z = 60 + this.z/2;
-			// 	})
-
-			// d.cube.scale.z = h;
-			// d.cube.position.z = 60 + h/2;
-
-			d.cube.animateZ = h;
-		}
-		
-	})
-	
-
-
-	// var triangles = delaunay.triangles(selection);
-	// var geometryMesh = new THREE.Geometry();
-
-	// geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z+socialHour(d.social, 20)-2); });
-
-	// triangles.forEach(function(d){
-	// 	var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
-	// 	var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
-	// 	if(xdist > 20 || ydist > 20) return; // hacky oh boy
-
-	// 	geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
-	// });
-
-	// geometryMesh.computeFaceNormals();
-	// // geometryMesh.computeVertexNormals();
-	// // geometryMesh.computeMorphNormals();		
-	// // geometryMesh.computeBoundingSphere();
-	// // geometryMesh.computeBoundingBox();
-	// //geometryMesh.center();
-	// // box = geometryMesh.boundingBox.clone();
-
-
-	// // var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
-	// // setupAttributes( geometry );
-
-	// var materialLambert = new THREE.MeshLambertMaterial({
-	// 	// color: new THREE.Color().setStyle("rgb(110,205,245)"),
-	// 	color: 0xE60032,
-	// 	side: THREE.BackSide,
-	// 	wireframe:false,
-	// 	// transparent: true,
-	// 	// opacity: 0.6
-	// });
-
-	// var mesh = new THREE.Mesh( geometryMesh, materialLambert );
-	// // mesh.bezirk = bezirk.key;
-	// // mesh.position.z = 100;
-
-	// scene.add(mesh);
-}
-
-function makeMeshGitter(hour){
-	var selection = hour.values;
-	var triangles = delaunay.triangles(selection);
-	var geometryMesh = new THREE.Geometry();
-
-	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,zSocial(d.instagram)); });
-
-	triangles.forEach(function(d){
-		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
-		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
-		if(xdist > 50 || ydist > 50) return; // hacky oh boy
-
-		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
-	});
-
-	geometryMesh.computeFaceNormals();
-	// geometryMesh.computeVertexNormals();
-	// geometryMesh.computeMorphNormals();		
-	// geometryMesh.computeBoundingSphere();
-	// geometryMesh.computeBoundingBox();
-	//geometryMesh.center();
-	// box = geometryMesh.boundingBox.clone();
-
-
-	// var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
-	// setupAttributes( geometry );
-
-	var materialLambert = new THREE.MeshLambertMaterial({
-		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
-		color: 0xffffff,
-		side: THREE.BackSide,
-		wireframe:false,
-		transparent: true,
-		opacity: 0.6
-	});
-
-	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
-	// mesh.bezirk = bezirk.key;
-	mesh.position.z = 100;
-
-	scene.add(mesh);
-}
 
 function makeMesh(bezirk){
 	var selection = bezirk.values;
 	var triangles = delaunay.triangles(selection);
 	var geometryMesh = new THREE.Geometry();
 
-	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z); });
+	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z) });
 
 	triangles.forEach(function(d){
 		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
@@ -795,20 +643,10 @@ function makeMesh(bezirk){
 	});
 
 	geometryMesh.computeFaceNormals();
-	// geometryMesh.computeVertexNormals();
-	// geometryMesh.computeMorphNormals();		
-	// geometryMesh.computeBoundingSphere();
-	// geometryMesh.computeBoundingBox();
-	//geometryMesh.center();
-	// box = geometryMesh.boundingBox.clone();
-
-
-	// var geometry = new THREE.BufferGeometry().fromGeometry( geometryMesh);
-	// setupAttributes( geometry );
 
 	var materialLambert = new THREE.MeshLambertMaterial({
 		color: new THREE.Color().setStyle("rgb(110,205,245)"),
-		// color: 0xffffff,
+		// color: 0x3B8FAA,
 		side: THREE.BackSide,
 		wireframe:false
 		// transparent: true,
@@ -818,65 +656,9 @@ function makeMesh(bezirk){
 	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
 	mesh.bezirk = bezirk.key;
 
-	scene.add(mesh);
+	scene2.add(mesh);
 }
 
 
-
-function setupAttributes( geometry ) {
-
-	// TODO: Bring back quads
-
-	var vectors = [
-		new THREE.Vector3( 1, 0, 0 ),
-		new THREE.Vector3( 0, 1, 0 ),
-		new THREE.Vector3( 0, 0, 1 )
-	];
-
-	var position = geometry.attributes.position;
-	var centers = new Float32Array( position.count * 3 );
-
-	for ( var i = 0, l = position.count; i < l; i ++ ) {
-
-		vectors[ i % 3 ].toArray( centers, i * 3 );
-
-	}
-
-	geometry.addAttribute( 'center', new THREE.BufferAttribute( centers, 3 ) );
-
-}
-
-
-
-
-THREE.GeometryUtils = {
-
-	merge: function ( geometry1, geometry2, materialIndexOffset ) {
-
-		console.warn( 'THREE.GeometryUtils: .merge() has been moved to Geometry. Use geometry.merge( geometry2, matrix, materialIndexOffset ) instead.' );
-
-		var matrix;
-
-		if ( geometry2 instanceof THREE.Mesh ) {
-
-			geometry2.matrixAutoUpdate && geometry2.updateMatrix();
-
-			matrix = geometry2.matrix;
-			geometry2 = geometry2.geometry;
-
-		}
-
-		geometry1.merge( geometry2, matrix, materialIndexOffset );
-
-	},
-
-	center: function ( geometry ) {
-
-		console.warn( 'THREE.GeometryUtils: .center() has been moved to Geometry. Use geometry.center() instead.' );
-		return geometry.center();
-
-	}
-
-};
 
 </script>
