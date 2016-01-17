@@ -641,50 +641,58 @@ path.trendarea.instagram{
 	/*color: #FFF;
 	font-weight: bold;
 	text-shadow: none;*/
-     margin-right: 7px;
-    /* margin: 3px; */
+    margin-right: 7px;
+    margin: 2px; 
     float: left;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;
+
 }
 
 
 #compare .menu .labell {
-	    margin: 4px;
+    margin: 4px;
     float: left;
 }
 
 #compare .menu .close {
-	    margin: 2px;
+    margin: 2px;
 	float: right;
 	opacity: 0;
-	color: #000;
+	color: #fff;
 }
 #compare .menu .active .close {
 	opacity: 1;
 }
 #compare .menu .active {
-	background: #eee;
+	background: #E60032;
+    color: #FFF;
+    font-weight: bold;
 }
 
-
-.line {
+#compare-container .ortsteil {
 	fill:none;
+	cursor: pointer;
 }
 
-.axis path {
+#compare-container .axis path {
   display: none;
 }
 
-.axis line {
+#compare-container .axis line {
   shape-rendering: crispEdges;
   stroke: #A0A0A0;
 
 }
 
-.axis .minor line {
+#compare-container .axis .minor line {
   stroke: #BFBFBF;
   stroke-dasharray: 2,2;
+}
+
+#compare-container .x.axis .tick line {
+    display: none;
 }
 
 /*-------- Map headline --------*/

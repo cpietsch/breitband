@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width">
+		<meta charset='UTF-8'/>
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!-- D3 -->
+		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<!-- // <script src="js/d3.v4.0.0-alpha.4.min.js" charset="utf-8"></script> -->
+		<script src="//d3js.org/topojson.v1.min.js"></script>
+		<!-- SIDR -->
+		<script src="js/jquery.sidr.min.js"></script>
+		<link rel="stylesheet" href="css/jquery.sidr.dark.css">
+		<!-- Mapbox -->
+		
+		<!-- Breitband CSS -->
+		<link rel='stylesheet' href='css/fonts.css' type='text/css' />
+		<link rel='stylesheet' href='css/main.css' type='text/css' />
+	</head>
+	<body>
+
+
+
+		<div id="compare">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div class="red company-help pulse-help">
+							<strong>Stadtteile im Detail</strong>
+							<p><img src="images/noun_145047_cc_white.svg" alt="" />Klicken Sie auf einen der Stadtteile in der Legende um mehr über diesen Stadtteil zu erfahren.</p>
+							<div class="triangle bottom red"></div>
+						</div>
+						<div id="compare-legend"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div id="compare-container"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	
+
+		<!-- Breitband Scripts -->
+	
+		<script src='js/d3.tooltip.js'></script>
+
+		<script src='js/d3.timeline.js'></script>
+		<script src='js/d3.compare.js'></script>
+		<script type="text/javascript">
+			//Initiate scripts
+			
+			var tooltip = d3_tooltip();
+				d3.select('body').call(tooltip);
+
+		
+			var compare = d3_compare();
+				d3.selectAll('#compare-container').call(compare);
+
+
+
+
+		</script>
+	</body>
+</html>
