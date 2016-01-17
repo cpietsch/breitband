@@ -187,9 +187,9 @@ scene.add(new THREE.HemisphereLightHelper(hemiLight, 100));
 // scene.add( dirLight );
 // scene.add(new THREE.DirectionalLightHelper(dirLight, 100));
 
-dirLight2 = new THREE.DirectionalLight( 0xffffff,  1);
+dirLight2 = new THREE.DirectionalLight( 0xffffff,  0.8);
 // dirLight.color.setHSL( 0.1, 1, 0.95 );
-dirLight2.position.set( -2, 0, 1 );
+dirLight2.position.set( -2, 0, 2 );
 dirLight2.position.multiplyScalar( 300 );
 scene.add( dirLight2 );
 scene.add(new THREE.DirectionalLightHelper(dirLight2, 100));
@@ -380,7 +380,7 @@ function dataLoaded(error, data, bezirke, social) {
 	updateSocialBars(12);
 
 	// makeMesh(data);
-	//makeCenters(bezirke);
+	makeCenters(bezirke);
 
 	animate();
 	
@@ -393,7 +393,7 @@ function makeCenters(bezirke){
 	bezirke.features.forEach(function(bezirk,i){
 		var centroid = geoPath.centroid(bezirk.geometry);
 
-		var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		var geometry = new THREE.SphereGeometry( 10, 10, 10 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
 		var mesh = new THREE.Mesh( geometry, material );
 
@@ -410,7 +410,7 @@ function makeCenters(bezirke){
 		mesh.domlabel.style.position = 'absolute';
 		document.getElementById( 'labels' ).appendChild( mesh.domlabel );
 
-		scene.add(mesh);
+		scene2.add(mesh);
 		objects.push(mesh);
 
 	})
@@ -469,8 +469,8 @@ function render(time) {
 	// TWEEN.update();
 	scene2.rotation.z += 0.001;
 
-	// update_labels(objects);
-	// raycast();
+	update_labels(objects);
+	raycast();
 	// updateSocial(time);
 	animateSocial();
 
