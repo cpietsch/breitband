@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+	color: #cccccc;
+	font-family:Helvetica Neue, Helvetica;
+	font-size: 11px;
+	background-color: #050505;
+	margin: 0px;
+	overflow: hidden;
+}
+
+#info {
+	position: absolute;
+	top: 0px; width: 100%;
+	padding: 5px;
+}
+
+a {
+
+	color: #0080ff;
+}
+
+svg {
+	font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	fill:none;
+	stroke:#000;
+	shape-rendering: crispEdges;
+}
+
+.line {
+	fill: none;
+	stroke-width: 1px;
+	opacity: 0.6;
+}
+.bars {
+	opacity: 0.8;
+}
+
+#interface {
+	background: rgba(0, 0, 0, 0.6);
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 100;
+	font-size: 10px;
+	overflow-y:scrolls;
+	height:100%;
+
+}
+
+#interface>div {
+	padding: 3px;
+	margin: 3px;
+	clear: both;
+	cursor: pointer;
+}
+
+#interface .color {
+	float: left;
+	width: 10px;
+	height: 10px;
+	margin-top: 2px;
+	margin-right: 6px;
+}
+#interface .name {
+	float: left;
+	padding-right: 30px;
+}
+#interface .num {
+	float: right;
+}
+
+
+svg {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 100;
+	top:0;
+}
+#labels {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+#labels span {
+    position: relative;
+    left: -50%;
+}
+#labels div {
+	pointer-events:none;
+	white-space: nowrap;
+	color: #FFF;
+	text-shadow: 0 0 1px #000, 0 0 2px #000, 0 0 5px #000, 0 0 10px #000;
+	font-weight: bold;
+	text-shadows:-3px -3px 1px rgba(255, 255, 255, 0.4), -3px -2px 1px rgba(255, 255, 255, 0.4), -3px -1px 1px rgba(255, 255, 255, 0.4), -3px 0px 1px rgba(255, 255, 255, 0.4), -3px 1px 1px rgba(255, 255, 255, 0.4), -3px 2px 1px rgba(255, 255, 255, 0.4), -3px 3px 1px rgba(255, 255, 255, 0.4), -2px -3px 1px rgba(255, 255, 255, 0.4), -2px -2px 1px rgba(255, 255, 255, 0.4), -2px -1px 1px rgba(255, 255, 255, 0.4), -2px 0px 1px rgba(255, 255, 255, 0.4), -2px 1px 1px rgba(255, 255, 255, 0.4), -2px 2px 1px rgba(255, 255, 255, 0.4), -2px 3px 1px rgba(255, 255, 255, 0.4), -1px -3px 1px rgba(255, 255, 255, 0.4), -1px -2px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.4), -1px 0px 1px rgba(255, 255, 255, 0.4), -1px 1px 1px rgba(255, 255, 255, 0.4), -1px 2px 1px rgba(255, 255, 255, 0.4), -1px 3px 1px rgba(255, 255, 255, 0.4), 0px -3px 1px rgba(255, 255, 255, 0.4), 0px -2px 1px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(255, 255, 255, 0.4), 0px 2px 1px rgba(255, 255, 255, 0.4), 0px 3px 1px rgba(255, 255, 255, 0.4), 1px -3px 1px rgba(255, 255, 255, 0.4), 1px -2px 1px rgba(255, 255, 255, 0.4), 1px -1px 1px rgba(255, 255, 255, 0.4), 1px 0px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(255, 255, 255, 0.4), 1px 2px 1px rgba(255, 255, 255, 0.4), 1px 3px 1px rgba(255, 255, 255, 0.4), 2px -3px 1px rgba(255, 255, 255, 0.4), 2px -2px 1px rgba(255, 255, 255, 0.4), 2px -1px 1px rgba(255, 255, 255, 0.4), 2px 0px 1px rgba(255, 255, 255, 0.4), 2px 1px 1px rgba(255, 255, 255, 0.4), 2px 2px 1px rgba(255, 255, 255, 0.4), 2px 3px 1px rgba(255, 255, 255, 0.4), 3px -3px 1px rgba(255, 255, 255, 0.4), 3px -2px 1px rgba(255, 255, 255, 0.4), 3px -1px 1px rgba(255, 255, 255, 0.4), 3px 0px 1px rgba(255, 255, 255, 0.4), 3px 1px 1px rgba(255, 255, 255, 0.4), 3px 2px 1px rgba(255, 255, 255, 0.4), 3px 3px 1px rgba(255, 255, 255, 0.4);
+
+}
+
+.time {
+	font-family: courier;
+	position: absolute;
+	z-index: 100;
+	right: 30px;
+	top: 30px;
+}
+.time .clock {
+	font-size: 30px;
+}
+.time .date {
+	font-size: 15px;
+}
+ 
+</style>
+<body>
+
+<div id="container"></div>
+<div id="interface"></div>
+<div id="labels"></div>
+<div class="time">
+	<div class="clock"></div>
+	<div class="date">11.01.2016</div>
+</div>
+
+<script src="js/d3.v3.min.js"></script>
+<script src="js/queue.v1.min.js"></script>
+
+<script src="js/three/three.min.js"></script>
+<script src="js/three/tween.min.js"></script>
+<script src="js/three/THREEx.GeometryUtils.js"></script>
+<script src="js/three/TrackballControls.js"></script>
+<script src="js/three/stats.min.js"></script>
+<script src="js/three/Detector.js"></script>
+<script src="js/three/d3-threeD.js"></script>
+<script src="js/three/three-text2d.js"></script>
+<script src="js/three/renderers/Projector.js"></script>
+<script src="js/three/renderers/CanvasRenderer.js"></script>
+
+<script src="js/colorbrewer.js"></script>
+
+
+
+
+<script>
+
+var clockDiv = d3.select(".time .clock");
+
+var width = window.innerWidth,
+	height = window.innerHeight;
+
+var renderer;
+var container = document.getElementById( 'container' );
+
+
+if ( Detector.webgl)
+	renderer = new THREE.WebGLRenderer( {antialias:true} );
+else
+	renderer = new THREE.CanvasRenderer( { alpha: true }); 
+
+	//renderer.setClearColor( scene.fog.color, 1 );
+	renderer.setClearColor( 0x1E3791 );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	// renderer.setPixelRatio( window.devicePixelRatio );
+	// renderer.shadowMapCullFace = THREE.CullFaceBack;
+	container.appendChild( renderer.domElement );
+
+var scene = new THREE.Scene();
+var scene2 = new THREE.Scene();
+
+
+scene.add(scene2);
+
+
+scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
+// scene.add( new THREE.AmbientLight( 0xffffff ) );
+
+var light = new THREE.DirectionalLight( 0xffffff, 1 );
+light.position.set( 1, 100, 300);
+scene.add( light );
+
+
+var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
+	// camera.position.z = 300;
+
+	camera.position.x = 0;
+	camera.position.y = -1848;
+	camera.position.z = 818;
+
+
+	// camera.aspect = 1.8770614692653673;
+	camera.lookAt(scene.position);	
+
+
+var controls = new THREE.TrackballControls( camera );
+	controls.target.set( 0, 0, 0 );
+
+	controls.rotateSpeed = 0.4;
+	controls.zoomSpeed = 0.4;
+	controls.panSpeed = 0.4;
+
+	controls.noZoom = false;
+	controls.noPan = true;
+
+	controls.staticMoving = false;
+	controls.dynamicDampingFactor = 0.05;
+
+	controls.keys = [ 65, 83, 68 ];
+	controls.addEventListener( 'change', render );
+
+
+var stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	container.appendChild( stats.domElement );
+
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+var fill = d3.scale.ordinal().range(colorbrewer.Accent[5]);
+var z = d3.scale.linear().range([1,50]).domain([0, 5]);
+var zSocial = d3.scale.log().range([1,200]).domain([1,50])
+var colorSocial = d3.scale.log().range(["#fff","#ddd"]).domain([1,200]);
+
+var centerCoord = [13.413215, 52.521918];
+var projection = d3.geo.mercator()
+	.scale(200000)
+	.center(centerCoord)
+	.translate([0,0]);
+
+var geoPath = d3.geo.path()
+	.projection(projection);
+
+var delaunay = d3.geom.voronoi().x(function(d) { return d.xr; }).y(function(d) { return d.yr; })
+
+
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2();
+var INTERSECTED;
+
+function onMouseMove( event ) {
+
+	// calculate mouse position in normalized device coordinates
+	// (-1 to +1) for both components
+
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
+
+	raycast();
+}
+
+window.addEventListener( 'mousemove', onMouseMove, false );
+
+// var scene = new THREE.Object3D();
+// 	// scene.position.x = -projection(centerCoord)[0];
+// 	// scene.position.y = projection(centerCoord)[1];
+// 	// scene.position.z = 0.0;
+// 	// scene.position.x = -projection(centerCoord)[0];
+// 	// scene.position.y = projection(centerCoord)[1];
+// 	scene.add( scene );
+
+// var axes = new THREE.AxisHelper(500);
+// 	axes.position.set( 0,0,0 );
+// 	scene.add(axes);
+
+// var grid = new THREE.GridHelper(1000, 10);
+// 	grid.position.set( 0,0,0 );
+// 	grid.rotation.x = Math.PI/2;
+// 	grid.setColors( new THREE.Color(0x7f7f7f), new THREE.Color(0x7f7f7f) );
+// 	scene.add(grid);
+
+var dataAll;
+
+
+queue()
+	.defer(d3.csv, 'data/50mbit.csv')
+	.defer(d3.json, 'data/berliner-bezirke.geojson')
+	.defer(d3.csv, 'data/data.csv')
+	.await(dataLoaded);
+
+function dataLoaded(error, data, bezirke, social) {
+
+	dataAll = data;
+
+	var xymap = [];
+
+	data.forEach(function(d,i){
+		p = projection([d.longitude, d.latitude])
+		d.x = parseInt(p[0]);
+		d.y = -parseInt(p[1]);
+		d.xr = d.x+Math.random();
+		d.yr = d.y+Math.random();
+		d.percentage = parseInt(d.percentage);
+		d.z = z(d.percentage);
+		d.name = i;
+		d.xx = parseInt(d.xx);
+		d.yy = parseInt(d.yy);
+		// d.social = d3.range(24).map(function(d){ return { instagram: 0, twitter: 0}});
+		d.social = [];
+		d.cube = null;
+
+		if(!xymap[d.xx]) xymap[d.xx]=[];
+		xymap[d.xx][d.yy] = d;
+	})
+
+	social.forEach(function(d){
+		var dd = xymap[d.xx][d.yy];
+		d.x = dd.x;
+		d.y = dd.y;
+		d.z = dd.z;
+		d.xr = dd.xr;
+		d.yr = dd.yr;
+		d.instagram *= 1;
+		d.twitter *= 1;
+		d.hour *= 1;
+
+		dd.social[d.hour] = { twitter: d.twitter, instagram: d.instagram };
+	})
+
+	// zSocial.range([1,200]).domain(d3.extent(social, function(d){ return d.instagram; }));
+	
+	// console.log(zSocial.domain());
+
+	console.log(data[0], social[0])
+	console.log(projection([ data[0].longitude, data[0].latitude ]))
+
+	console.log("bezirke", bezirke)
+	console.log(geoPath.centroid(bezirke.features[0].geometry))
+
+	var dataBezirke = d3.nest()
+		.key(function(d){ return d.bezirk; })
+		.entries(data);
+
+	dataBezirke.forEach(function(d){
+		makeMesh(d);
+	});
+
+	var socialHours = d3.nest()
+		.key(function(d){ return d.hour; })
+		.entries(social);
+
+	// socialHours.forEach(function(d){
+	// 	makeMeshGitter(d);
+	// });
+
+	
+	var now = 0;
+	setInterval(function(){
+		// console.time("social")
+		// makeSocial(data,now);
+		updateSocialBars(now)
+		// console.timeEnd("social")
+		now = now < 23 ? now+1 : 0;
+	}, 400);
+
+	// makeSocial(data, now);
+	makeSocialStatic(data, now);
+	updateSocialBars(12);
+
+	// makeMesh(data);
+	makeCenters(bezirke);
+
+	animate();
+	
+};
+
+var objects = [];
+
+function makeCenters(bezirke){
+
+	bezirke.features.forEach(function(bezirk,i){
+		var centroid = geoPath.centroid(bezirk.geometry);
+
+		var geometry = new THREE.SphereGeometry( 10, 10, 10 );
+		var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+		var mesh = new THREE.Mesh( geometry, material );
+
+		mesh.position.x = centroid[0];
+		mesh.position.y = -centroid[1];
+		mesh.position.z = 100;
+		mesh.visible = false;
+
+		var inner = document.createElement( 'span' );
+		inner.innerHTML = bezirk.properties.Name;
+		mesh.domlabel = document.createElement( 'div' );
+		mesh.domlabel.appendChild(inner);
+
+		mesh.domlabel.style.display = 'none';
+		mesh.domlabel.style.position = 'absolute';
+		document.getElementById( 'labels' ).appendChild( mesh.domlabel );
+
+		scene2.add(mesh);
+		objects.push(mesh);
+
+	})
+
+	
+}
+
+
+function raycast(){
+	raycaster.setFromCamera( mouse, camera );	
+
+	var intersects = raycaster.intersectObjects( scene2.children );
+	// console.log(intersects)
+
+	if ( intersects.length > 0 ) {
+
+		if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
+			//console.log(intersects[ 0 ]);	
+
+			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+			INTERSECTED = intersects[ 0 ].object;
+			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			INTERSECTED.material.color.setHex( 0xE60032 );
+
+			container.style.cursor = "pointer"
+
+		}
+
+	} else {
+
+		if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+		INTERSECTED = null;
+
+		container.style.cursor = "inherit"
+
+	}
+
+}
+
+function animate( time ) {
+
+	requestAnimationFrame( animate );
+	
+	controls.update();
+	render(time);
+	stats.update();
+
+}
+
+var rotation = 0;
+var hour = 0;
+
+function render(time) {
+
+	// TWEEN.update();
+	scene2.rotation.z += 0.001;
+
+	update_labels(objects);
+	//raycast();
+	// updateSocial(time);
+	animateSocial();
+
+	renderer.render( scene, camera );
+
+}
+
+function updateSocial(time){
+	var now = parseInt(time/1000) % 24;
+	if(now!=hour){
+		hour = now;
+		updateSocialBars(hour);
+	}
+}
+
+function updateSocialBars(hour){
+	// console.log(hour);
+
+	clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
+
+	dataAll.forEach(function(d){
+		var social = d.social[hour];
+
+		if(d.cube){
+			d.cube.animateZ = social ? zSocial(social.instagram) : 0.2;
+		}
+		if(d.cube2){
+			d.cube2.animateZ = social ? zSocial(social.twitter) : 0.2;
+		}
+	})	
+}
+
+function animateSocial(){
+	dataAll.forEach(function(d){
+		if(d.cube){
+			d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
+			d.cube.visible = (d.cube.scale.z > 1); 
+		}
+		if(d.cube2){
+			d.cube2.scale.z += (d.cube2.animateZ - d.cube2.scale.z)*0.1;
+			d.cube2.visible = (d.cube2.scale.z > 1); 
+		}
+	})
+}
+
+function update_labels(objects) {
+	var x_min = 0;
+	var y_min = 0;
+	var x_max = window.innerWidth;
+	var y_max = window.innerHeight;
+	var x_mid = window.innerWidth / 2;
+	var y_mid = window.innerHeight / 2;
+
+	for ( var i = 0; i < objects.length; i ++ ) {
+		var pos = toScreenXY( objects[i] );
+		// console.log(pos2)
+		// keep label within screen bounds
+		// if ( pos.x < x_min ) pos.x = x_min;
+		// if ( pos.y < y_min ) pos.y = y_min;
+		// if ( pos.x > x_max ) pos.x = x_max;
+		// if ( pos.y > y_max ) pos.y = y_max;
+
+		// objects[i].domlabel.style.top = pos.y + "px";
+		// objects[i].domlabel.style.left = pos.x + "px";
+		// console.log(pos)
+		// TODO: Labels of objects behind the camera view should always be
+		// on the outside border. Need to figure this out.
+		// Determine if object is outside of view
+		// var frustum = new THREE.Frustum;
+		// frustum.setFromMatrix( new THREE.Matrix4().multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse ) );
+		// if( frustum.containsPoint( objects[i].position ) )
+		objects[i].domlabel.style.display = 'block';
+		objects[i].domlabel.style.transform = "translate("+pos.x+"px,"+pos.y+"px)"
+		// if ( pos.x >= x_max ) {
+		// 	objects[i].domlabel.style.left = '';
+		// 	objects[i].domlabel.style.right = x_max - pos.x+ "px";
+		// } else {
+		// 	objects[i].domlabel.style.right = '';
+		// 	objects[i].domlabel.style.left = pos.x+ "px";
+		// }
+		// if ( pos.y == y_max ) {
+		// 	objects[i].domlabel.style.top = '';
+		// 	objects[i].domlabel.style.bottom = y_max - pos.y+ "px";
+		// } else {
+		// 	objects[i].domlabel.style.bottom = '';
+		// 	objects[i].domlabel.style.top = pos.y+ "px";
+		// }
+	}
+}
+
+function toScreenXY(mesh){
+
+    var v = new THREE.Vector3().setFromMatrixPosition( mesh.matrixWorld ).project(camera)
+
+    var left = (v.x + 1) / 2 * width;
+    var top = (-v.y + 1) / 2 * height;
+
+    return {x: left, y:top };
+}
+
+function socialHour(d, type, hour){
+	var s = d.filter(function(d){ return d.hour == hour})[0];
+
+	return s ? zSocial(s[type]) : 0;
+	// if(d.length == 0) s = 0;
+	// else return zSocial(d[0].instagram);
+}
+
+var socialHoverPos = 60;
+
+function makeSocialStatic(data,hour){
+
+	var geometry = new THREE.BoxGeometry( 10, 20, 1 );
+	geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
+
+	var material = new THREE.MeshLambertMaterial({ 
+		color: 0xE60032,
+		opacity: 0.4
+	});
+	var material2 = new THREE.MeshLambertMaterial({ 
+		color: 0xffff00,
+		opacity: 0.4
+	});
+
+
+	data.forEach(function(d){
+		//if(d.social.length == 0) return;
+		if(d.social.filter(function(d){ return d.instagram != 0; }).length > 0){
+			var cube = new THREE.Mesh( geometry, material );
+			
+			cube.position.x = d.x;
+			cube.position.y = d.y;
+			cube.position.z = socialHoverPos;
+			cube.scale.z = 0.1;
+			cube.visible = false;
+
+			d.cube = cube;
+			scene2.add(cube);
+		}
+		
+		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
+			cube = new THREE.Mesh( geometry, material2 );
+		
+			cube.position.x = d.x+10;
+			cube.position.y = d.y;
+			cube.position.z = socialHoverPos;
+			cube.scale.z = 0.1;
+			cube.visible = false;
+
+			d.cube2 = cube;
+			scene2.add(cube);
+		}
+		
+	});	
+}
+
+
+function makeMesh(bezirk){
+	var selection = bezirk.values;
+	var triangles = delaunay.triangles(selection);
+	var geometryMesh = new THREE.Geometry();
+
+	geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z) });
+
+	triangles.forEach(function(d){
+		var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
+		var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
+		if(xdist > 20 || ydist > 20) return; // hacky oh boy
+
+		geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
+	});
+
+	geometryMesh.computeFaceNormals();
+
+	var materialLambert = new THREE.MeshLambertMaterial({
+		color: new THREE.Color().setStyle("rgb(110,205,245)"),
+		// color: 0x3B8FAA,
+		side: THREE.BackSide,
+		wireframe:false
+		// transparent: true,
+		// opacity: 0.6
+	});
+
+	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
+	mesh.bezirk = bezirk.key;
+
+	scene2.add(mesh);
+}
+
+
+
+</script>
