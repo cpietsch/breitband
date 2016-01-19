@@ -204,45 +204,43 @@ scene.add( light );
 
 
 var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
-	// camera.position.z = 300;
-
 	camera.position.x = 0;
 	camera.position.y = -1848;
 	camera.position.z = 818;
-
 
 	// camera.aspect = 1.8770614692653673;
 	camera.lookAt(scene.position);	
 
 var drag = d3.behavior.drag()
 	.on("drag",function(d){
-		// console.log(d3.event);
 		scene2.rotation.z += d3.event.dx / 100;
-
-		var zoom = d3.event.dy*-10;
-		camera.translateZ(zoom)
 	});
 
 var fov = camera.fov;
+var cameraStart = new THREE.Vector3().copy(camera.position);
 
 var zoom = d3.behavior.zoom()
     .scale(1)
-    .scaleExtent([0.1, 8])
+    .scaleExtent([1, 5])
 	.on("zoom", function(d){
-		camera.fov = fov * d3.event.scale;
-     	camera.updateProjectionMatrix();
+  		camera.position.x = cameraStart.x / d3.event.scale;
+  		camera.position.y = cameraStart.y / d3.event.scale;
+  		camera.position.z = cameraStart.z / d3.event.scale;
 	})
+var oldScale = zoom.scale();
 
-var renderCanvas = d3.select(renderer.domElement).call(drag).call(zoom)
+var renderCanvas = d3.select(renderer.domElement).call(drag)
+	.call(zoom)
 // var controls = new THREE.TrackballControls( camera );
 // 	controls.target.set( 0, 0, 0 );
 
-// 	controls.rotateSpeed = 0.4;
-// 	controls.zoomSpeed = 0.4;
-// 	controls.panSpeed = 0.4;
+// 	// controls.rotateSpeed = 0.4;
+// // 	controls.zoomSpeed = 0.4;
+// // 	controls.panSpeed = 0.4;
 
 // 	controls.noZoom = false;
 // 	controls.noPan = true;
+// 	controls.noRotate = true;
 
 // 	controls.staticMoving = false;
 // 	controls.dynamicDampingFactor = 0.05;
@@ -302,7 +300,7 @@ function onMouseClick( event ) {
 		    .start();
 
 		var tween = new TWEEN.Tween({ scale: zoom.scale() })
-		    .to({ scale: 0.3 }, 1000)
+		    .to({ scale: 3 }, 1000)
 		    .onUpdate(function(d){
 		    	zoom.scale(this.scale).event(renderCanvas);
 		    })
