@@ -1,0 +1,188 @@
+<html>
+	<head>
+		<script type="text/javascript" src="../timeline/d3/lib/d3.v3.min.js"></script>
+		<meta charset='UTF-8'/>
+		<style type="text/css">
+
+			svg{
+				font-family: Arial;
+				font-size:10px;
+			}
+
+			.axis path,
+			.axis line{
+				stroke-width:1;
+				fill:transparent;
+				stroke:#000;
+			}
+
+			circle{
+				fill:rgba(0,0,0,0.1);
+				stroke:rgba(0,0,0,0.1);
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script type="text/javascript">
+
+			var speeds = [1,2,6,16,30,50];
+
+			var data = [{
+				short:"DSL",
+				long:"Digital Subscriber Line",
+				description:"",
+				type:"cabel",
+				speeds:[99.7, 99.86, 99.37, 95.66, 81.43, 37.54]
+			},
+			{
+				short:"CATV",
+				long:"Kabelnetz",
+				description:"",
+				type:"cabel",
+				fullspeed:120,
+				speeds:[0, 0, 0, 0, 0, 88.92]
+			},
+			{
+				short:"FTTX",
+				long:"Faseroptische Technologie",
+				description:"",
+				type:"cabel",
+				fullspeed:200,
+				speeds:[0, 0, 0, 0, 0, 0.35]
+			},
+			{
+				short:"LTE",
+				long:"Long Term Evolution",
+				description:"",
+				type:"mobile",
+				speeds:[100.0, 100.0, 95.07]
+			},
+			{
+				short:"HSDPA",
+				long:"Breitband-UMTS",
+				description:"",
+				type:"mobile",
+				speeds:[99.94, 43.47, 0]
+			}];
+
+			var color_scale = d3.scale.linear()
+	    		.domain([100, 95, 75, 50, 10, 0])
+    			.range([{r:189,g:0,b:38,a:0.8},{r:240,g:59,b:32,a:0.8},{r:253,g:141,b:60,a:0.8},{r:254,g:204,b:92,a:0.8},{r:255,g:255,b:178,a:0.8},{r:0,g:0,b:0,a:0.8}]);
+
+			var datas = [];
+			for(var d = 0; d<data.length; d++){
+				for(var dd = 0; dd<data[d].speeds.length; dd++){
+					if(data[d].speeds[dd]>0 && data[d].type == 'cabel'){
+						datas.push({
+							type:data[d].type,
+							short:data[d].short,
+							percentage:data[d].speeds[dd],
+							speed:speeds[dd]
+						});
+					}
+				}
+			}
+
+			var padding = 75,
+				width = 500,
+				height = 500;
+
+			var svg = d3.select('#container').append('svg')
+				.attr('width', width)
+				.attr('height', height)
+				.append('g')
+					.attr('transform', 'translate('+padding+' '+padding+')');
+
+
+			var radius = d3.scale.linear()
+						.domain([0, 100])
+						.range([2, 20]);
+
+			var radius1 = d3.scale.sqrt()
+						.domain([0, 100])
+						.range([2, 20]);
+
+			var scaleDomain = [0,25,50,70,85,95,100];
+			var scaleStep = (width-2*padding)/scaleDomain.length;
+			var scaleRange = [];
+			for(var r=(scaleDomain.length-1); r>=0; r--){
+				scaleRange.push(scaleStep*r);
+			}
+
+			var y = d3.scale.linear()
+					.domain(scaleDomain)
+					.range(scaleRange);
+
+			var speed_range = [];
+			var scaleStep = (height-2*padding)/speeds.length;
+			for(var s = 0; s<speeds.length; s++){
+				speed_range.push(scaleStep*s);
+			}
+
+			var x = d3.scale.linear()
+					.domain(speeds)
+					.range(speed_range);
+
+			var y_axis = d3.svg.axis()
+					.scale(y)
+					.orient("left")
+					.tickFormat(function(d, i){ var r = d; if(d==100){ r+="%"; } return r; })
+					.tickValues([0,25,50,70,85,95,100]);
+
+			var x_axis = d3.svg.axis()
+					.orient("bottom")
+					.scale(x)
+					.tickFormat(function(d, i){ var r = "≥"+parseInt(d); if(d==1){ r += " Mbit/s";} return r;})
+					.tickValues([1,2,6,16,30,50]);
+
+			svg.selectAll('circle.sqrt').data(datas).enter().append('circle')
+				.attr('class', 'sqrt')
+				.style('fill', function(d){
+					var c = color_scale(d.percentage);
+					return 'rgba('+Math.round(c.r)+','+Math.round(c.g)+','+Math.round(c.b)+',1)';
+				})
+				.attr('cx', function(d){ return x(d.speed); })
+				.attr('cy', function(d){ return y(d.percentage); })
+				.attr('r', function(d){ return radius1(d.percentage); });
+
+			svg.selectAll('text.label').data(datas).enter().append('text')
+				.attr('class', 'label')
+				.attr('text-anchor', function(d){
+					if(d.percentage < 200){
+						return 'start';
+					}else{
+						return 'middle';
+					}
+				})
+				.attr('x', function(d){ 
+					var r = x(d.speed); 
+					//if(d.percentage < 40){
+						//r += radius1(d.percentage)+3;
+					//}
+					return r;
+				})
+				.attr('y', function(d){ return y(d.percentage)+4+radius1(d.percentage)+10; })
+				.text(function(d){ 
+					var r = d.short; 
+					if(d.short == "DSL"){
+						r = d.speed+" Mbit/s "+r;
+					}
+					return r;
+				});
+
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + (height-2*padding) + ")")
+				.call(x_axis);
+
+			svg.append("g")
+				.attr("transform", "translate(-30, 0)")
+				.attr("class", "y axis")
+				.call(y_axis);
+
+
+		</script>
+	</body>
+</html>

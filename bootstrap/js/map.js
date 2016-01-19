@@ -3,13 +3,13 @@ var map = new mapboxgl.Map({
 	container: 'map',
 	center: [13.4244, 52.5047],
 	zoom: 10,
-	maxZoom:17,
+	maxZoom:16,
 	minZoom:10,
 	style: 'js/map_config_mapbox_only_full.json'
 }).on('click', 
 	function(e){
 		mapEnable();
-	} 
+	}
 );
 
 function mapDisable(){

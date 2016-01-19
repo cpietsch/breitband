@@ -160,6 +160,114 @@
   		"line-color": "rgba(0,0,0,0)"
     }
   },{
+    "id": "speed_highdichte2013_line_0",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 0],
+    "paint": {
+  		"line-color": "rgba(0,0,0,0.1)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
+    "id": "speed_highdichte2013_line_1",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 1],
+    "paint": {
+  		"line-color": "rgba(255,255,178,0.8)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
+    "id": "speed_highdichte2013_line_2",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 2],
+    "paint": {
+  		"line-color": "rgba(254,204,92,0.8)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
+    "id": "speed_highdichte2013_line_3",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 3],
+    "paint": {
+  		"line-color": "rgba(253,141,60,0.8)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
+    "id": "speed_highdichte2013_line_4",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 4],
+    "paint": {
+  		"line-color": "rgba(240,59,32,0.8)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
+    "id": "speed_highdichte2013_line_5",
+    "type": "line",
+    "layout": {
+      "line-join":"round"
+    },
+    "source": "speed_high",
+    "source-layer": "speed",
+    "minzoom": 11,
+    "maxzoom": 14,
+    "filter": ["==", "percentage", 5],
+    "paint": {
+  		"line-color": "rgba(189,0,38,0.8)",
+  		"line-width": {
+        	"base": 1,
+        	"stops": [[10, 4], [13, 0]]
+    	}
+    }
+  },{
       "id": "motorway",
       "type": "line",
       "source": "mapbox",

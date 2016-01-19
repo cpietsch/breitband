@@ -609,11 +609,6 @@ path.trendarea.instagram{
 	margin-top:35px;
 }
 
-#compare-legend {
-    width: 100%;
-    float: left;
-}
-
 #compare text{
 	font-size:10px;
 }
@@ -627,72 +622,54 @@ path.trendarea.instagram{
 }
 
 #compare .menu .entry {
-    cursor: pointer;
-    position: relative;
-    width: 100%;
-    padding: 3px;
-    float: left;
-}
-#compare .menu .entry * {
-	pointer-events:none;
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+	clear: left;
 }
 
 #compare .menu .color {
 	/*color: #FFF;
 	font-weight: bold;
 	text-shadow: none;*/
-    margin-right: 7px;
-    margin: 2px; 
-    float: left;
-    width: 20px;
-    height: 20px;
-    border-radius: 40px;
-
+	padding: 3px;
+	margin: 3px;
+	float: left;
 }
 
-
-#compare .menu .labell {
-    margin: 4px;
-    float: left;
+#compare .menu .label {
+	padding: 6px 3px 0px 3px;
+	margin: 3px;
+	float: left;
+	color:#000;
+	font-size:12px;
 }
 
 #compare .menu .close {
-    margin: 2px;
-	float: right;
+	padding: 3px;
+	margin: 3px;
+	float: left;
 	opacity: 0;
-	color: #fff;
-}
-#compare .menu .active .close {
-	opacity: 1;
-}
-#compare .menu .active {
-	background: #E60032;
-    color: #FFF;
-    font-weight: bold;
 }
 
-#compare-container .ortsteil {
+
+.line {
 	fill:none;
-	cursor: pointer;
 }
 
-#compare-container .axis path {
+.axis path {
   display: none;
 }
 
-#compare-container .axis line {
+.axis line {
   shape-rendering: crispEdges;
   stroke: #A0A0A0;
 
 }
 
-#compare-container .axis .minor line {
+.axis .minor line {
   stroke: #BFBFBF;
   stroke-dasharray: 2,2;
-}
-
-#compare-container .x.axis .tick line {
-    display: none;
 }
 
 /*-------- Map headline --------*/
@@ -847,6 +824,38 @@ ul.legend span span{
 
 #footer .scnd-col{
 	padding-top:80px;
+}
+
+/*---------- Bootstrap modifications ----------*/
+
+#breitband-icon{
+	background-image:url('../images/icon.png');
+	background-size: 88px 75px;
+	width:88px;
+	height:75px;
+	display: block;
+	background-position: center;
+	float:left;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) { 
+	#breitband-icon{
+		background-image:url('../images/icon@2x.png');
+	}
+}
+
+.navbar-default .navbar-brand{
+	float:left;
+	font-family: "ClanOT-Medium";
+	font-size:2em;
+	color:rgb(30,55,145);
+	line-height:1.8em;
+	margin-right:0.1em;
+}
+
+.navbar-default{
+	background-color:#fff;
+	min-height: 75px;
 }
 
 /******************** Runde Buttons *******************/

@@ -64,7 +64,7 @@ function d3_company(){
 					path:[[0,12],[n+3,12],[n+3,27+o],[2*n+m,27+o]]
 				},
 				{
-					type:'fftx',
+					type:'fttx',
 					path:[[0,13],[n+1,13],[n+1,o+36],[2*n+m,o+36]]
 				}
 			]
@@ -147,7 +147,7 @@ function d3_company(){
 			img:'ewe.svg',
 			con:[
 				{
-					type:'fftx',
+					type:'fttx',
 					path:[[0,35+o],[n+8,35+o],[n+8,37+o],[2*n+m,37+o]]
 				}
 			]
@@ -158,7 +158,7 @@ function d3_company(){
 			img:'swap.jpg',
 			con:[
 				{
-					type:'fftx',
+					type:'fttx',
 					path:[[0,38+o],[2*n+m,38+o]]
 				}
 			]
@@ -173,7 +173,7 @@ function d3_company(){
 			},
 			con:[
 				{
-					type:'fftx',
+					type:'fttx',
 					path:[[0,41+o],[n,41+o],[n,39+o],[2*n+m,39+o]]
 				},
 				{

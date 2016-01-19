@@ -93,7 +93,7 @@ function d3_technologie(){
 				speeds:[88.92, 88.92, 88.92, 88.92, 88.92, 88.92]
 			},
 			{
-				short:"FFTX",
+				short:"FTTX",
 				long:"Faseroptische Technologie",
 				description:"",
 				type:"cabel",
