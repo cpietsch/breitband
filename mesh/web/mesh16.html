@@ -131,6 +131,7 @@ svg {
 <div class="time">
 	<div class="clock"></div>
 	<div class="date">11.01.2016</div>
+	<div class="screenshot">make screenshot</div>
 </div>
 
 <script src="js/d3.v3.min.js"></script>
@@ -148,13 +149,23 @@ svg {
 <script src="js/three/renderers/CanvasRenderer.js"></script>
 
 <script src="js/colorbrewer.js"></script>
+<script src="js/FileSaver.js"></script>
+<script src="js/canvas-toBlob.js"></script>
 
 
 
 
 <script>
 
+
+
+var makeScreenshot = false;
 var clockDiv = d3.select(".time .clock");
+
+d3.select(".time .screenshot")
+	.on("click", function(d){
+		makeScreenshot = true;
+	})
 
 var width = window.innerWidth,
 	height = window.innerHeight;
@@ -177,9 +188,11 @@ else
 
 var scene = new THREE.Scene();
 var scene2 = new THREE.Scene();
+var scene3 = new THREE.Scene();
 
 
 scene.add(scene2);
+scene2.add(scene3);
 
 
 scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
@@ -220,7 +233,7 @@ var zoom = d3.behavior.zoom()
      	camera.updateProjectionMatrix();
 	})
 
-d3.select(renderer.domElement).call(drag).call(zoom)
+var renderCanvas = d3.select(renderer.domElement).call(drag).call(zoom)
 // var controls = new THREE.TrackballControls( camera );
 // 	controls.target.set( 0, 0, 0 );
 
@@ -277,7 +290,31 @@ function onMouseMove( event ) {
 	raycast();
 }
 
+function onMouseClick( event ) {
+
+	if(INTERSECTED){
+		INTERSECTED.geometry.computeBoundingBox();
+		var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
+
+		var tween = new TWEEN.Tween(scene3.position)
+		    .to({ x: geocenter.x, y: geocenter.y }, 1000)
+		    .easing(TWEEN.Easing.Quadratic.InOut)
+		    .start();
+
+		var tween = new TWEEN.Tween({ scale: zoom.scale() })
+		    .to({ scale: 0.3 }, 1000)
+		    .onUpdate(function(d){
+		    	zoom.scale(this.scale).event(renderCanvas);
+		    })
+		    .easing(TWEEN.Easing.Quadratic.InOut)
+		    .start();
+
+	}
+
+}
+
 window.addEventListener( 'mousemove', onMouseMove, false );
+window.addEventListener( 'click', onMouseClick, false );
 
 // var scene = new THREE.Object3D();
 // 	// scene.position.x = -projection(centerCoord)[0];
@@ -417,7 +454,7 @@ function makeCenters(bezirke){
 		mesh.domlabel.style.position = 'absolute';
 		document.getElementById( 'labels' ).appendChild( mesh.domlabel );
 
-		scene2.add(mesh);
+		scene3.add(mesh);
 		objects.push(mesh);
 
 	})
@@ -429,7 +466,7 @@ function makeCenters(bezirke){
 function raycast(){
 	raycaster.setFromCamera( mouse, camera );	
 
-	var intersects = raycaster.intersectObjects( scene2.children );
+	var intersects = raycaster.intersectObjects( scene3.children );
 	// console.log(intersects)
 
 	if ( intersects.length > 0 ) {
@@ -462,7 +499,7 @@ function raycast(){
 function animate( time ) {
 
 	requestAnimationFrame( animate );
-	
+	TWEEN.update();
 	// controls.update();
 	render(time);
 	stats.update();
@@ -483,6 +520,17 @@ function render(time) {
 	animateSocial();
 
 	renderer.render( scene, camera );
+
+	if(makeScreenshot){
+		renderer.domElement.toBlob(function(blob) {
+		    saveAs(blob, "breitband.png");
+		});
+		
+		// var screenshot = renderer.domElement.toDataURL();
+		// saveAs(dataURItoBlob(screenshot), "breitband.png");
+
+		makeScreenshot = false;
+	}
 
 }
 
@@ -616,7 +664,7 @@ function makeSocialStatic(data,hour){
 			cube.visible = false;
 
 			d.cube = cube;
-			scene2.add(cube);
+			scene3.add(cube);
 		}
 		
 		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
@@ -629,7 +677,7 @@ function makeSocialStatic(data,hour){
 			cube.visible = false;
 
 			d.cube2 = cube;
-			scene2.add(cube);
+			scene3.add(cube);
 		}
 		
 	});	
@@ -665,7 +713,26 @@ function makeMesh(bezirk){
 	var mesh = new THREE.Mesh( geometryMesh, materialLambert );
 	mesh.bezirk = bezirk.key;
 
-	scene2.add(mesh);
+	scene3.add(mesh);
+}
+
+function dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    var byteString = atob(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var arrayBuffer = new ArrayBuffer(byteString.length);
+    var _ia = new Uint8Array(arrayBuffer);
+    for (var i = 0; i < byteString.length; i++) {
+        _ia[i] = byteString.charCodeAt(i);
+    }
+
+    var dataView = new DataView(arrayBuffer);
+    var blob = new Blob([dataView], { type: mimeString });
+    return blob;
 }
 
 
