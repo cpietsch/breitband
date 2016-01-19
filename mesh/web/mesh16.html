@@ -212,11 +212,13 @@ var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHe
 	camera.lookAt(scene.position);	
 
 var drag = d3.behavior.drag()
+	.on("dragstart", function() {
+	  d3.event.sourceEvent.stopPropagation(); // silence other listeners
+	})
 	.on("drag",function(d){
 		scene2.rotation.z += d3.event.dx / 100;
 	});
 
-var fov = camera.fov;
 var cameraStart = new THREE.Vector3().copy(camera.position);
 
 var zoom = d3.behavior.zoom()
@@ -227,10 +229,41 @@ var zoom = d3.behavior.zoom()
   		camera.position.y = cameraStart.y / d3.event.scale;
   		camera.position.z = cameraStart.z / d3.event.scale;
 	})
+
 var oldScale = zoom.scale();
 
-var renderCanvas = d3.select(renderer.domElement).call(drag)
+var renderCanvas = d3.select(renderer.domElement)
+	.datum({ drag: false })
+	.call(drag)
 	.call(zoom)
+	.on("click", function(){
+		if (d3.event.defaultPrevented) return;
+
+		if(INTERSECTED){
+			INTERSECTED.geometry.computeBoundingBox();
+			var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
+
+			var tween = new TWEEN.Tween(scene3.position)
+			    .to({ x: geocenter.x, y: geocenter.y }, 1000)
+			    .easing(TWEEN.Easing.Quadratic.InOut)
+			    .start();
+
+			var tween = new TWEEN.Tween({ scale: zoom.scale() })
+			    .to({ scale: 3 }, 1000)
+			    .onUpdate(function(d){
+			    	zoom.scale(this.scale).event(renderCanvas);
+			    })
+			    .easing(TWEEN.Easing.Quadratic.InOut)
+			    .start();
+
+		}
+	})
+	.on("mousemove", function(){
+		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
+
+		raycast();
+	})
 // var controls = new THREE.TrackballControls( camera );
 // 	controls.target.set( 0, 0, 0 );
 
@@ -277,42 +310,6 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var INTERSECTED;
 
-function onMouseMove( event ) {
-
-	// calculate mouse position in normalized device coordinates
-	// (-1 to +1) for both components
-
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
-
-	raycast();
-}
-
-function onMouseClick( event ) {
-
-	if(INTERSECTED){
-		INTERSECTED.geometry.computeBoundingBox();
-		var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
-
-		var tween = new TWEEN.Tween(scene3.position)
-		    .to({ x: geocenter.x, y: geocenter.y }, 1000)
-		    .easing(TWEEN.Easing.Quadratic.InOut)
-		    .start();
-
-		var tween = new TWEEN.Tween({ scale: zoom.scale() })
-		    .to({ scale: 3 }, 1000)
-		    .onUpdate(function(d){
-		    	zoom.scale(this.scale).event(renderCanvas);
-		    })
-		    .easing(TWEEN.Easing.Quadratic.InOut)
-		    .start();
-
-	}
-
-}
-
-window.addEventListener( 'mousemove', onMouseMove, false );
-window.addEventListener( 'click', onMouseClick, false );
 
 // var scene = new THREE.Object3D();
 // 	// scene.position.x = -projection(centerCoord)[0];
