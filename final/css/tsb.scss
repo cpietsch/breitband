@@ -388,13 +388,13 @@ path.trendline{
 }
 
 path.trendline.cix{
-	stroke:rgba(230,0,50,1);
+	stroke:rgba(152,78,163,1);
 }
 path.trendline.instagram{
-	stroke:rgba(30,55,145,1);
+	stroke:rgba(55,126,184,1);
 }
 path.trendline.twitter{
-	stroke:rgba(0,115,125,1);
+	stroke:rgba(77,175,74,1);
 }
 
 path.trendarea{
@@ -402,13 +402,13 @@ path.trendarea{
 }
 
 path.trendarea.cix{
-	fill:rgba(230,0,50,0.2);
+	fill:rgba(152,78,163,0.2);
 }
 path.trendarea.twitter{
-	fill:rgba(0,115,125,0.2);
+	fill:rgba(55,126,184,0.2);
 }
 path.trendarea.instagram{
-	fill:rgba(30,55,145,0.2);
+	fill:rgba(77,175,74,0.2);
 }
 
 #d3_circular path.bg-pattern{
@@ -758,10 +758,10 @@ path.trendarea.instagram{
 	font-weight:bold;
 }
 
-#map-legend ul li#legend_instagram{ color:rgba(30,55,145,1);}
-#map-legend ul li#legend_twitter{ color:rgba(0,115,125,1);}
+#map-legend ul li#legend_instagram{ color:rgba(77,175,74,1);}
+#map-legend ul li#legend_twitter{ color:rgba(55,126,184,1);}
 #map-legend ul li#legend_cix{
-	color:rgba(230,0,50,1);
+	color:rgba(152,78,163,1);
 	width:100%;
 }
 

@@ -166,15 +166,15 @@ function d3_pulse(){
 			};
 
 			var line_colors = {
-				cix:'rgba(230,0,50,1)',
-				instagram:'rgba(30,55,145,1)',
-				twitter:'rgba(0,115,125,1)'
+				cix:'rgba(152,78,163,1)',
+				instagram:'rgba(77,175,74,1)',
+				twitter:'rgba(55,126,184,1)'
 			};
 
 			var line_fill_colors = {
-				cix:'rgba(230,0,50,0.2)',
-				instagram:'rgba(30,55,145,0.2)',
-				twitter:'rgba(0,115,125,0.2)'
+				cix:'rgba(152,78,163,0.2)',
+				instagram:'rgba(77,175,74,0.2)',
+				twitter:'rgba(55,126,184,0.2)'
 			};
 
 			//fill species with empty data
@@ -300,15 +300,6 @@ function d3_pulse(){
 					instagram : null
 				};
 
-			var colors = [
-				'rgba(0,0,0,0.1)',
-				'rgba(255,255,178,0.3)',
-				'rgba(254,204,92,0.3)',
-				'rgba(253,141,60,0.3)',
-				'rgba(240,59,32,0.3)',
-				'rgba(189,0,38,0.3)'
-			];
-
 			svg.append('image')
 				.attr('xlink:href', 'images/pulse_background_lg.png')
 				.attr('x', 0)
@@ -365,7 +356,7 @@ function d3_pulse(){
 						dx:d.x,
 						dy:d.y,
 						o:0,
-						c:'rgba(30,55,145,',
+						c:'rgba(77,175,74,',
 						type:'twitter'
 					});
 					cells.push({
@@ -374,7 +365,7 @@ function d3_pulse(){
 						dx:d.x,
 						dy:d.y,
 						o:0,
-						c:'rgba(0,115,125,',
+						c:'rgba(55,126,184,',
 						type:'instagram'
 					});
 				});
@@ -414,7 +405,7 @@ function d3_pulse(){
 						context.clearRect(0, 0, canvas.width, canvas.height);
 						cells.forEach(function(d,i,a){
 							context.beginPath();
-							context.arc(d.cx*scale, d.cy*scale, oversize*scale, 0, 2 * Math.PI, false);
+							context.arc(d.cx*scale, d.cy*scale, (oversize/1.5)*scale, 0, 2 * Math.PI, false);
 							context.fillStyle = d.c+d.o+')';
 							context.fill();
 							context.lineWidth = 0;
@@ -469,7 +460,7 @@ function d3_pulse(){
 
 		d3.select('.timetext').text(hour);
 		
-		requestAnimationFrame(pulse.iterate);
+		requestAnimationFrame(debouncer(pulse.iterate, 100));
 	};
 
 	pulse.reorder = function(key, array){
