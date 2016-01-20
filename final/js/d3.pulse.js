@@ -39,76 +39,7 @@ function d3_pulse(){
 				.attr('preserveAspectRatio', 'xMidYMid meet')
 				.append('g');
 
-			/*var line_x = d3.scale.linear()
-				.domain([0,24])
-				.range([0, line_width-2*line_pad]);
-
-			var cix = [66,48,40,32,29,27,23,19,17,16,14,14,14,15,18,20,23,28,32,37,40,45,46,49,53,54,57,60,65,69,67,71,76,74,71,77,75,78,88,74,78,84,83,87,81,74,74,72,66];
-			var cix_max = d3.max(cix);
-			var line_y_cix = d3.scale.linear()
-				.domain([0, cix_max])
-				.range([line_height-2*line_pad, 0]);
-
-			//Draw Background Time Pattern 
-			for(var i = 0; i<24; i++){
-				line_svg.append('rect')
-					.attr('class', function(d){ var r = 'bg-'+i+' bg-pattern'; if(i % 2 == true){ r += ' odd'; }else{ r += ' even'; } return r; })
-					.attr('x', line_x(i))
-					.attr('y', 0)
-					.attr('width', line_x(1))
-					.attr('height', line_y_cix(0));
-			}
-
-			line_svg.append('line')
-				.attr('class', 'bottomline')
-				.attr('x1', line_x(0))
-				.attr('x2', line_x(24))
-				.attr('y1', line_y_cix(0))
-				.attr('y2', line_y_cix(0));
-
-			var area_cix = d3.svg.area().x(function(d,i){return line_x(i/2.0);}).y0(function(d){return line_y_cix(d);}).y1(function(d){return line_y_cix(0);}).interpolate('basis');
-			var line_cix = d3.svg.line().x(function(d,i){return line_x(i/2.0);}).y(function(d){return line_y_cix(d);}).interpolate('basis');
-			line_svg.append('path').datum(cix).attr('class', 'trendline cix').attr('d', line_cix);
-			line_svg.append('path').datum(cix).attr('class', 'trendarea cix').attr('d', area_cix);
-
-			d3.json('http://tsb.sebastianmeier.eu/static/info.json', function(err, info_data){
-				var twitter_max = 0,
-					instagram_max = 0,
-					twitter = [],
-					instagram = [];
-
-				var first = false;
-
-				for(var i in info_data.histogram.twitter){
-					if(!first){first = info_data.histogram.twitter[i];}
-					if(info_data.histogram.twitter[i]>twitter_max){twitter_max = info_data.histogram.twitter[i];}
-					twitter.push(info_data.histogram.twitter[i]);
-				}
-				twitter.push(first);
-
-				first = false;
-
-				for(var i in info_data.histogram.instagram){
-					if(!first){first = info_data.histogram.instagram[i];}
-					if(info_data.histogram.instagram[i]>instagram_max){instagram_max = info_data.histogram.instagram[i];}
-					instagram.push(info_data.histogram.instagram[i]);
-				}
-				instagram.push(first);
-
-				var line_y_twitter = d3.scale.linear().range([line_height-2*line_pad, 0]).domain([0, twitter_max]);
-				var line_y_instagram = d3.scale.linear().range([line_height-2*line_pad, 0]).domain([0, instagram_max]);
-
-				var area_twitter = d3.svg.area().x(function(d,i){return line_x(i);}).y0(function(d){return line_y_twitter(d);}).y1(function(d){return line_y_twitter(0);}).interpolate('basis');
-				var line_twitter = d3.svg.line().x(function(d,i){return line_x(i);}).y(function(d){return line_y_twitter(d);}).interpolate('basis');
-				line_svg.append('path').datum(twitter).attr('class', 'trendline twitter').attr('d', line_twitter);
-				//line_svg.append('path').datum(twitter).attr('class', 'trendarea twitter').attr('d', area_twitter);
-
-				var area_instagram = d3.svg.area().x(function(d,i){return line_x(i);}).y0(function(d){return line_y_instagram(d);}).y1(function(d){return line_y_instagram(0);}).interpolate('basis');
-				var line_instagram = d3.svg.line().x(function(d,i){return line_x(i);}).y(function(d){return line_y_instagram(d);}).interpolate('basis');
-				line_svg.append('path').datum(instagram).attr('class', 'trendline instagram').attr('d', line_instagram);
-				//line_svg.append('path').datum(instagram).attr('class', 'trendarea instagram').attr('d', area_instagram);
-
-			});*/
+			/* CIRCULAR TIMELINE */
 
 			var start = 0;
 			var end = 24;
@@ -351,6 +282,8 @@ function d3_pulse(){
 
 			});
 
+			/*--- END DRAW CIRCLE TIMELINE ---*/
+
 
 			/*------ DRAW THE MAP -------*/
 
@@ -478,7 +411,7 @@ function d3_pulse(){
 	};
 
 	pulse.colorHour = function(h, type){
-		d3.selectAll('circle.cell').style('opacity', function(d){ 
+		/*d3.selectAll('circle.cell').style('opacity', function(d){ 
 			var item = d3.select(this);
 			var t = parseFloat(item.attr('o'));
 			var dx = parseInt(item.attr('dx'));
@@ -495,7 +428,7 @@ function d3_pulse(){
 			item.attr('o', t);
 
 			return t;
-		});
+		});*/
 
 		requestAnimationFrame(pulse.iterate);
 	};
