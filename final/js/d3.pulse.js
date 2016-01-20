@@ -414,7 +414,7 @@ function d3_pulse(){
 						context.clearRect(0, 0, canvas.width, canvas.height);
 						cells.forEach(function(d,i,a){
 							context.beginPath();
-							context.arc(d.cx*scale, d.cy*scale, oversize, 0, 2 * Math.PI, false);
+							context.arc(d.cx*scale, d.cy*scale, oversize*scale, 0, 2 * Math.PI, false);
 							context.fillStyle = d.c+d.o+')';
 							context.fill();
 							context.lineWidth = 0;
