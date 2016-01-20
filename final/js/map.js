@@ -4,6 +4,7 @@
 var map = new L.Map('map', {
 	center: new L.LatLng(52.5047, 13.4244), 
 	zoom: 11,
+	attributionControl:false,
 	maxZoom:18,
 	minZoom:11,
 	maxBounds:L.latLngBounds(
@@ -156,11 +157,11 @@ d3.csv('data/brain.csv', function(err, data){
 				new L.LatLng(d.latitude, d.longitude),
 				{
 					radius:d.type*3,
-					color:'#ffffff',
+					color:'#000000',
     				fillColor:'#ffffff',
     				weight:1,
     				fillOpacity:1,
-    				opacity:0,
+    				opacity:1,
     				title:d.name
 				}
 			).on('mouseover', function (e) {
@@ -177,3 +178,11 @@ d3.csv('data/brain.csv', function(err, data){
 
 $('.leaflet-google-layer').css('z-index', '2 !important');
 $('.leaflet-google-layer').first().css('z-index', '0 !important');
+
+function resizeMap(){
+	if(window.innerHeight<600){
+		$('#map_container').css('height', (window.innerHeight-100)+'px');
+	}else{
+		$('#map_container').css('height', '600px');	
+	}
+}

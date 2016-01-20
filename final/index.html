@@ -12,7 +12,6 @@
 		<script src="//d3js.org/topojson.v1.min.js"></script>
 		<!-- SIDR -->
 		<script src="js/jquery.sidr.min.js"></script>
-		<link rel="stylesheet" href="css/sidr.css">
 		<!-- Mapbox -->
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -20,8 +19,6 @@
 		<script src="js/min/Google-min.js"></script>
 		<script src="js/min/Leaflet.Sleep-min.js"></script>
 		<!-- Breitband CSS -->
-		<link rel='stylesheet' href='css/fonts.css' type='text/css' />
-		<link rel='stylesheet' href='css/tsbicons.css' type='text/css' />
 		<link rel='stylesheet' href='css/main.css' type='text/css' />
 	</head>
 	<body>
@@ -110,11 +107,10 @@
 					</div>
 					<div class="col col-xs-12 col-sm-3 col-lg-4 middle-col">
 						<p><strong>10 Gbit/s Highspeed<br />Wissenschaftsnetzwerk</strong></p>
-						<span class="image image-network"></span>
 						<ul class="legend">
 							<li>BRAIN-Kernnetz</li>
 							<li>Behördenstandort</li>
-							<li>Wissenschaftsstandort</li>
+							<li>Wissenschafts-<br />standort</li>
 						</ul>
 						<span class="image image-brain"></span>
 					</div>
@@ -141,12 +137,24 @@
 			<div class="container">
 				<div class="row">
 					<div class="col col-xs-12 col-sm-4">
+
 					</div>
 					<div class="col col-xs-12 col-sm-4 scnd-col">
 						Kontakt TSB
 					</div>
 					<div class="col col-xs-12 col-sm-4 scnd-col">
 						Partner Vislab &amp; Co.
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xs-12">
+						<ul class="logolist">
+							<li><a href="#" title="be Berlin"><span class="image image-beberlin"></span></a></li>
+							<li><a href="#" title="Europäische Union"><span class="image image-eu"></span></a></li>
+							<li><a href="#" title="EFRE"><span class="image image-efre"></span></a></li>
+							<li><a href="#" title="Investitionsbank Berlin"><span class="image image-invest"></span></a></li>
+						</ul>
+						<span class="small">Gefördert aus Mitteln des Landes Berlin und der Investitionsbank Berlin, kofinanziert von der Europäischen Union - Europäischer Fonds für Regionale Entwicklung. Investition in Ihre Zukunft.</span>
 					</div>
 				</div>
 			</div>
@@ -202,6 +210,7 @@
 				d3.selectAll('.minimap').call(minimap);
 
 				$(window).resize(debouncer(function(e){
+					resizeMap();
 					minimap.resize();
 				}));
 			});
