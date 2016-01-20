@@ -135,6 +135,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/chrispie.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2273,
+		"inputAbbreviatedPath": "\/images\/chrispie.jpg",
+		"outputAbbreviatedPath": "\/images\/chrispie.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/chrispie@2x.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3791,
+		"inputAbbreviatedPath": "\/images\/chrispie@2x.jpg",
+		"outputAbbreviatedPath": "\/images\/chrispie@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/efre.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -252,6 +274,50 @@
 		"initialSize": 11849,
 		"inputAbbreviatedPath": "\/images\/investitionsbank@2x.jpg",
 		"outputAbbreviatedPath": "\/images\/investitionsbank@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/tsb.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 9968,
+		"inputAbbreviatedPath": "\/images\/tsb.jpg",
+		"outputAbbreviatedPath": "\/images\/tsb.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/tsb@2x.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 19673,
+		"inputAbbreviatedPath": "\/images\/tsb@2x.jpg",
+		"outputAbbreviatedPath": "\/images\/tsb@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/vislab.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3251,
+		"inputAbbreviatedPath": "\/images\/vislab.jpg",
+		"outputAbbreviatedPath": "\/images\/vislab.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/vislab@2x.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6606,
+		"inputAbbreviatedPath": "\/images\/vislab@2x.jpg",
+		"outputAbbreviatedPath": "\/images\/vislab@2x.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
