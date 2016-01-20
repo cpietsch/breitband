@@ -133,6 +133,54 @@
 			<div id="map"></div>
 		</div>
 
+		<div id="pulse" class="white">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<h3><span class="image image-pulse"></span>Puls der Stadt</h3>
+						<p>
+							Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.
+						</p>
+						<div class="blue company-help pulse-help">
+							<strong>24h Berlin</strong>
+							<p>In der Karte und der kreisförmigen Zeitleiste sehen Sie Twitter und Instagram-Aktivität der letzten 24h.</p>
+							<div class="hidden-xs triangle right blue"></div>
+							<div class="triangle bottom blue"></div>
+						</div>
+						<div id="d3_circular"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-7 col-lg-8 scnd-col">
+						<div id="d3_pulse"></div>
+						<div id="map-legend">
+							<ul>
+								<li id="legend_twitter">
+									<div></div> Twitter Aktivität
+								</li>
+								<li id="legend_instagram">
+									<div></div> Instagram Aktivität
+								</li>
+								<li id="legend_cix">
+									<div></div> Aktivität am Internetknoten CIX-Berlin
+								</li>
+							</ul>
+							<div class="data"><span class="small">Quelle: CIX, Twitter, Instagram, TÜV, BMVI<br /><a href="#">Erfahren Sie mehr über die Daten hinter der Visualisierung &raquo;</a></span></div>
+						</div>
+						<div id="small-legend">
+							<p><strong>Anteil der Haushalte<br />mit 50Mbit/s Breitband</strong></p>
+							<ul class="legend">
+								<li><span><span style="background-color:rgba(189,0,38,0.3);"></span></span> >95% </li>
+								<li><span><span style="background-color:rgba(240,59,32,0.3);"></span></span> >75 - 95%</li>
+								<li><span><span style="background-color:rgba(253,141,60,0.3);"></span></span> >50 - 75%</li>
+								<li><span><span style="background-color:rgba(254,204,92,0.3);"></span></span> >10 - 50%</li>
+								<li><span><span style="background-color:rgba(255,255,178,0.3);"></span></span> 0 - 10%</li>
+								<li><span><span style="background-color:rgba(0,0,0,0.1);"></span></span> Keine Daten</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="footer">
 			<div class="container">
 				<div class="row">
@@ -189,12 +237,13 @@
 		<!-- Breitband Scripts -->
 		<script src='js/min/main-min.js'></script>
 		<script src='js/min/d3.tooltip-min.js'></script>
+		<script src='js/min/d3.minimap-min.js'></script>
 		<script src='js/min/map-min.js'></script>
+		<script src='js/min/d3.pulse-min.js'></script>
 		
 		<!--<script src='js/d3.company.js'></script>
-		<script src='js/d3.technologie.js'></script>
-		<script src='js/d3.pulse.js'></script>-->
-		<script src='js/min/d3.minimap-min.js'></script>
+		<script src='js/d3.technologie.js'></script>-->
+		
 		<!--<script src='js/d3.timeline.js'></script>
 		<script src='js/d3.compare.js'></script>-->
 		<script type="text/javascript">
@@ -216,6 +265,9 @@
 
 				minimap = d3_minimap();
 				d3.selectAll('.minimap').call(minimap);
+
+				pulse = d3_pulse();
+				d3.selectAll('#d3_pulse').call(pulse);
 
 				$(window).resize(debouncer(function(e){
 					resizeMap();

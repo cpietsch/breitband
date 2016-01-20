@@ -311,9 +311,11 @@ h3{
 	padding-bottom:100px;
 }
 
-#pulse h3 img{
+#pulse h3 span.image{
 	width:30px;
-	height:auto;
+	height:22px;
+	background-image:url('../images/pulse.png');
+	background-size:30px 22px;
 	margin:5px 10px 0 0;
 	float:left;
 }
@@ -1108,6 +1110,10 @@ ul.legend span span{
 
 	.image-chrispie{
 		background-image:url('../images/chrispie@2x.jpg');
+	}
+
+	#pulse h3 span.image{
+		background-image:url('../images/pulse@2x.png');
 	}
 }
 
