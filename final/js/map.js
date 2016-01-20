@@ -174,3 +174,6 @@ d3.csv('data/brain.csv', function(err, data){
 		);
 	});
 });
+
+$('.leaflet-google-layer').css('z-index', '2 !important');
+$('.leaflet-google-layer').first().css('z-index', '0 !important');

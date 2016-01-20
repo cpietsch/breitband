@@ -995,14 +995,6 @@ ul.legend span span{
 	background-color:transparent !important;
 }
 
-#_GMapContainer_25{
-	z-index: 0 !important;
-}
-
-#_GMapContainer_24{
-	z-index: 2 !important;
-}
-
 .leaflet-map-pane{
 	z-index:1 !important;
 }
