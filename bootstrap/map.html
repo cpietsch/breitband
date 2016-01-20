@@ -1,0 +1,100 @@
+<html>
+<head>
+	<title>Google Custom Styles // Leaflet</title>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<script src="js/leaflet.js"></script>
+	<script src="http://maps.google.com/maps/api/js?v=3"></script>
+	<script src="js/Google.js"></script>
+	<style>
+		body,html{
+			padding:0;
+			margin:0;
+			width:100%;
+			height:100%;
+		}
+
+		.leaflet-google-layer{
+			background-color:transparent !important;
+		}
+
+		#_GMapContainer_25{
+			z-index: 0 !important;
+		}
+
+		#_GMapContainer_24{
+			z-index: 2 !important;
+		}
+
+		.leaflet-map-pane{
+			z-index:1 !important;
+			background-color:rgba(0,0,0,0.5);
+		}
+
+		.leaflet-tile{
+			background-color: rgba(0,0,0,0.3) !important;
+		}
+	</style>
+</head>
+<body>
+	<!-- define a DIV into which the map will appear. Make it take up the whole window -->
+	<div style="width:100%; height:100%" id="map"></div>
+<script type='text/javascript'>
+var map = new L.Map('map', {center: new L.LatLng(52.5047, 13.4244), zoom: 13});
+
+var speedmap = new L.TileLayer('http://tiles.sebastianmeier.eu/v2/tiles/fullimage/{z}/{x}/{y}.png').addTo(map);
+
+var styles = [
+  {
+  	"featureType":"all",
+    "elementType": "geometry",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "transit.line",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "transit.station",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "poi",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+  	"featureType":"all",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      { "color": "#ffffff" }
+    ]
+  },{
+  	"featureType":"all",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      { "color": "#111111" }
+    ]
+  }
+];
+
+var streets = new L.Google('ROADMAP', {
+	mapOptions: {
+		styles: styles
+	}
+});
+
+map.addLayer(streets);
+
+var satellite = new L.Google('SATELLITE', {});
+map.addLayer(satellite);
+
+</script>
+ 
+</body>
+</html>

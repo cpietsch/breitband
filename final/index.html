@@ -14,10 +14,11 @@
 		<script src="js/jquery.sidr.min.js"></script>
 		<link rel="stylesheet" href="css/sidr.css">
 		<!-- Mapbox -->
-		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.js'></script>
-		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.10.0/mapbox-gl.css' rel='stylesheet' />
-		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.js'></script>
-		<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v0.0.0/mapbox-gl-geocoder.css' type='text/css' />
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<script src="http://maps.google.com/maps/api/js?v=3"></script>
+		<script src="js/min/Google-min.js"></script>
+		<script src="js/min/Leaflet.Sleep-min.js"></script>
 		<!-- Breitband CSS -->
 		<link rel='stylesheet' href='css/fonts.css' type='text/css' />
 		<link rel='stylesheet' href='css/tsbicons.css' type='text/css' />
@@ -36,18 +37,110 @@
 			</div>
 		</nav>
 
-		<div class="container" id="start">
-			<div class="blue storer-box">
-				<h2>Breitbandausbau</h2>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+		<div id="start">
+			<div class="container">
+				<div class="blue storer-box">
+					<h2>Breitbandausbau</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+				</div>
 			</div>
+		</div>
+
+		<div id="minimap" class="white">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<div class="mapswitch-head">
+							<h3>Entwicklung des Breitbandausbaus</h3>
+							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+						</div>
+					</div>
+					<div class="col col-xs-12 col-sm-1 col-lg-3"></div>
+					<div class="col col-xs-12 col-sm-6 col-lg-5">
+						<div class="row switchrow">
+							<div class="col col-xs-12 red company-help">
+								<span class="image image-interactive"></span><strong>2011 - 2015</strong>
+								<p>Während der Ausbau im unteren Breitbandbereich schon weit fortgeschritten ist, gibt es im >50Mbit/s Bereich noch unterversorgte Bereiche.</p>
+							</div>
+						</div>
+						<div class="row switchrow">
+							<div class="col col-xs-12 col-sm-6" data-speed="16">
+								<div class="mapswitch light_red">16Mbit/s</div>
+								<div class="hidden-xs triangle bottom red" style="display:none;"></div>
+							</div>
+							<div class="col col-xs-12 col-sm-6" data-speed="50">
+								<div class="mapswitch red">50Mbit/s</div>
+								<div class="hidden-xs triangle bottom red"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2011" data-year="2011"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2012" data-year="2012"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2013" data-year="2013"></div>
+					</div>
+					<div class="col col-xs-12 col-sm-3">
+						<div class="minimap mm-2015" data-year="2015"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="datacol col col-xs-12">
+						<svg id="minimap-legend" height="50" width="240"></svg><br />
+						<span class="small">Prozentuale Verfügbarkeit</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="map-intro" class="grey">
+			<div class="container">
+				<div class="row">
+					<div class="col col-xs-12 col-sm-5 col-lg-4">
+						<h3>Stand des Ausbaus</h3>
+						<p>
+							Die Stadt Berlin und die Breitband-Anbieter haben in den letzten Jahren den Großteil Berlins mit schnellem Internet erschlossen. Verschaffen Sie sich einen Überblick über den aktuellen Stand.
+						</p>
+						<span class="small">Stand: Mitte 2015</span>
+					</div>
+					<div class="col col-xs-12 col-sm-3 col-lg-4 middle-col">
+						<p><strong>10 Gbit/s Highspeed<br />Wissenschaftsnetzwerk</strong></p>
+						<span class="image image-network"></span>
+						<ul class="legend">
+							<li>BRAIN-Kernnetz</li>
+							<li>Behördenstandort</li>
+							<li>Wissenschaftsstandort</li>
+						</ul>
+						<span class="image image-brain"></span>
+					</div>
+					<div class="col col-xs-12 col-sm-4 col-lg-4 scnd-col">
+						<p><strong>Anteil der Haushalte mit<br />50Mbit/s Breitband</strong></p>
+						<ul class="legend">
+							<li>≥95%<span><span style="background-color:rgba(189,0,38,0.8);"></span></span> ></li>
+							<li>75 - 95%<span><span style="background-color:rgba(240,59,32,0.8);"></span></span> ></li>
+							<li>50 - 75%<span><span style="background-color:rgba(253,141,60,0.8);"></span></span> ></li>
+							<li>10 - 50%<span><span style="background-color:rgba(254,204,92,0.8);"></span></span> ></li>
+							<li>0 - 10%<span><span style="background-color:rgba(255,255,178,0.8);"></span></span></li>
+							<li>Keine Daten<span><span style="background-color:rgba(0,0,0,0.1);"></span></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="map_container">
+			<div id="map"></div>
 		</div>
 
 		<div id="footer">
 			<div class="container">
 				<div class="row">
 					<div class="col col-xs-12 col-sm-4">
-						<img src="images/tsbx2.png" width="160" height="160" alt="Technologie Stiftung Berlin" />
 					</div>
 					<div class="col col-xs-12 col-sm-4 scnd-col">
 						Kontakt TSB
@@ -78,16 +171,39 @@
 		</div>
 
 		<!-- Breitband Scripts -->
+		<script src='js/min/main-min.js'></script>
+		<script src='js/min/d3.tooltip-min.js'></script>
+		<script src='js/min/map-min.js'></script>
+		
+		<!--<script src='js/d3.company.js'></script>
+		<script src='js/d3.technologie.js'></script>
+		<script src='js/d3.pulse.js'></script>-->
+		<script src='js/min/d3.minimap-min.js'></script>
+		<!--<script src='js/d3.timeline.js'></script>
+		<script src='js/d3.compare.js'></script>-->
 		<script type="text/javascript">
+			var minimap, tooltip;
+
 			$(document).ready(function() {
 				$('#sidr-btn').sidr({
 					name:'sidr',
 					renaming: 'true',
 					side: 'right'
 				});
+
 				$('.tsbicon.i-close').click(function(){
 					$.sidr('close','sidr');
 				});
+
+				tooltip = d3_tooltip();
+				d3.select('body').call(tooltip);
+
+				minimap = d3_minimap();
+				d3.selectAll('.minimap').call(minimap);
+
+				$(window).resize(debouncer(function(e){
+					minimap.resize();
+				}));
 			});
 		</script>
 	</body>
