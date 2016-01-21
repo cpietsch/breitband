@@ -147,7 +147,7 @@ function d3_pulse(){
 
 			//Background Grid
 			var grid = line_svg.append('g').attr('class', 'grid').attr('transform', 'translate('+(line_width/2)+','+(line_height/2)+')');
-			var hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+			var hours = d3.range(23).map(function(d,i){ return i; });
 			grid.selectAll('line').data(hours).enter().append('line')
 				.attr('x1', function(d){ var l_xy = xy(d, 1, function(d){return d;}); return l_xy[0]; })
 				.attr('x2', function(d){ var l_xy = xy(d, 0, function(d){return d;}); return l_xy[0]; })
