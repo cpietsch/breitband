@@ -2,10 +2,9 @@
 function Timeline(){
   var chart = {};
 
-  var margin = {top: 30, right:30, bottom: 30, left: 30},
-      width = 400 - (margin.left*2) - margin.right,
-      height = 550 - margin.top - margin.bottom;
-
+  var margin = {top: 50, right:15, bottom: 50, left: 30},
+      width = 390 - margin.left - margin.right,
+      height = 650 - margin.top - margin.bottom;
 
   var x = d3.scale.linear()
       .range([0, width])
@@ -35,9 +34,6 @@ function Timeline(){
   var line = d3.svg.line()
       .interpolate("basis")
       .x(function(d) { return x(d.jahr); })
-      // .x(function(d) { console.log(d); return x(d.key); })
-      // .y(function(d) { return y(d3.mean(d.values, function(d){ return d.value; })); });
-      // .y(function(d) { return y(d.value); })
       .y(function(d) { return y(d.mean); })
 
   var lineAll = d3.svg.line()
@@ -48,46 +44,21 @@ function Timeline(){
 
   var menu = d3.select("#compare-legend").append("div").classed("menu", true);
   
-  var svg = d3.select("#compare-container").append("svg")
-      .attr("shape-rendering", "optimizeSpeed")
-      .attr("width", (width + margin.left + margin.right)*2)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  // var svg = d3.select("#compare").append("svg")
+  //     .attr("width", (width + margin.left + margin.right)*2)
+  //     .attr("height", height + margin.top + margin.bottom)
+  //   .append("g")
+  //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   
-  var axisSvg = svg.append("g")
-  var linechartSvg = svg.append("g")
+  // var axisSvg = svg.append("g")
+  var linechartSvg = d3.select("#compare .chart");
 
-  // var timeLine = svg.append("line")
-  //    .classed("timeline", true)
-  //    .attr("y2", height)
-  //    .attr("x1", 0)
+  var state = { activeMenu: false, item: null };
+  var title = { leitung16: "> 16Mbit", leitung50: "> 50Mbit"}
 
-
-  var hover = svg.append("g")
- 
-
-  chart.load = function(data){
-
-    var columns = ["leitung16", "leitung50"];
-    var title = { leitung16: "> 16Mbit", leitung50: "> 50Mbit"}
-
-    var data2 = columns.map(function(type){
-      return data.map(function(d){
-        return {
-          type: type,
-          value: d[type],
-          ortsteil: d.ortsteil,
-          bezirk: d.bezirk,
-          jahr: d.jahr,
-          data: d
-        }
-      })
-    }).reduce(function(d1,d2){ return d1.concat(d2) },[]);;
+  chart.load = function(data2){
     
-    console.log(data2);
-
     var yearMean = d3.nest()
       .key(function(d) { return d.type; })
       .key(function(d) { return d.bezirk; })
@@ -113,9 +84,6 @@ function Timeline(){
       .key(function(d) { return d.bezirk; })
       .entries(data2);
 
-    
-    console.log("yearMean", yearMean);
-
     var bezirke = d3.nest()
       .key(function(d) { return d.bezirk; })
       .entries(data2)
@@ -128,126 +96,89 @@ function Timeline(){
     bezirke
       .sort(function(a,b){ return b.mean - a.mean; })
 
-
-    var activeMenu = false;
-
     menu.on("mouseout", function(d1){
-      // console.log("out", d1)
-      if(activeMenu) return;
-
+        if(state.activeMenu) return;
         linechartSvg
+          .classed("active", false)
           .selectAll(".bezirke")
-          .selectAll(".ortsteil")
-          .style("stroke-width", 1.5)
-          .style("opacity", 1)
-          // .attr("stroke", function(d){ return color(d.key); })
-          .attr("stroke", "#E60032")
-          .selectAll(".ortsteil")
-          .transition()
-          .duration(1000)
-          .attr("d", function(d){ return line(d.values); })
-
-        // return false;
+          .classed("active", false)
       })
-    
-    var entry = menu.selectAll("div")
+
+    var entry = menu
+      .selectAll("div")
       .data(bezirke)
       .enter()
       .append("div")
       .classed("entry", true)
-      // .style('color', function(d){ return color(d.key); })
       .on("click", function(d1){
-        activeMenu = d1.highlight = !d1.highlight;
 
-        menu.selectAll(".entry")
-          .classed("active", function(d2){ return (d1.key == d2.key) & d1.highlight; });
+        menu
+          .selectAll(".entry")
+          .classed("hover", false)
 
-        
-        linechartSvg
-          .selectAll(".bezirke")
-          .filter(function(d2){
-            return d1.key != d2.key;
-          })
-          // .style("opacity", 0.2)
-          .selectAll(".ortsteil")
-          .style("stroke-width", 1.5)
-          .attr("stroke", "#eee")
-          .transition()
-          .duration(1000)
-          .attr("d", function(d){ return line(d.values); })
-          .each(function(d){ d.highlight = false; })
+        if(state.item == d1.key && state.activeMenu){
 
+          state.activeMenu = false;
+          linechartSvg
+            
+            .selectAll(".bezirke")
+            .selectAll(".ortsteil")
+            .transition()
+            .attr("d", function(d){ return line(d.values); })
+            .each("end", function(d,i){
+              if(i==0) linechartSvg.classed("expand", false).classed("active", false)
+            })
+        } else {
+          state.activeMenu = true;
+          linechartSvg.classed("expand", true).classed("active", true)
 
-        linechartSvg
-          .selectAll(".bezirke")
-          .filter(function(d2){
-            return d1.key == d2.key;
-          })
-          .moveToFront()
-          // .attr("stroke", function(d){ return color(d.key); })
-          .selectAll(".ortsteil")
-          .attr("stroke", function(d){ return "#E60032" })
-          .style("stroke-width", 2.5)
-          .style("opacity", 1)
-          .style("display", "block")
-          .transition()
-          .duration(1000)
-          .attr("d", function(d){ return activeMenu ? lineAll(d.values): line(d.values); })
-          .each("end", function(d,i){
-            // console.log(i)
-            if(i != 0 && !activeMenu) d3.select(this).style("display", "none");
-          })
-          .each(function(d){ d.highlight = true; })
-      })
-      .on("mouseenter", function(d1){
-        // console.log("enter", d1)
+          linechartSvg 
+            .selectAll(".bezirke")
+            .selectAll(".ortsteil")
+            .transition()
+            .attr("d", function(d){ return line(d.values); })
 
-        if(activeMenu) return;
-
-        linechartSvg
-          .selectAll(".bezirke")
-          .filter(function(d2){
-            return d1.key != d2.key;
-          })
-          .selectAll(".ortsteil")
-          // .style("opacity", 0.2)
-          .style("stroke-width", 1.5)
-          .attr("stroke", "#eee")
-          .each(function(d){ d.highlight = false; })
 
           linechartSvg
             .selectAll(".bezirke")
-            .filter(function(d2){
-              // console.log(d2)
-              return d1.key == d2.key;
-            })
+            .classed("active", function(d2){ return d1.key == d2.key; })
+            .filter(".active")
             .moveToFront()
-            // .attr("stroke", function(d){ return color(d.key); })
             .selectAll(".ortsteil")
-            .attr("stroke", "#E60032")
-            .style("stroke-width", 2.5)
-            .style("opacity", 1)
-            .each(function(d){ d.highlight = true; })
-            // .selectAll(".line")
-            // .transition()
-            // .duration(1000)
-            // .attr("d", function(d){ return lineAll(d.values); })
-          return false;
+            .transition()
+            .attr("d", function(d){ return lineAll(d.values); })
+            
+        }
+
+        state.item = d1.key;
+
+        menu.selectAll(".entry")
+          .classed("active", function(d2){ return (d1.key == d2.key) & state.activeMenu; });
+
+        tooltip.hide()
+      
+      })
+      .on("mouseenter", function(d1){
+        if(state.activeMenu) return;
+
+        menu
+          .selectAll(".entry")
+          .classed("hover", function(d2){ return d2.key == d1.key; })
+
+        linechartSvg
+          .classed("active", true)
+          .selectAll(".bezirke")
+          .classed("active", function(d2){ return d1.key == d2.key; })
+          .filter(".active")
+            .moveToFront();
+
       })
 
-      
-    // entry.append("div")
-    //   .style("background", function(d){ return color(d.key); })
-    //   .classed("color", true)
-
     entry.append("div")
-      // .style("background", function(d){ return color(d.key); })
       .text("×")
       .classed("close", true)
 
     entry.append("div")
-      // .style("background", function(d){ return color(d.key); })
-      // .text(function(d){ return d.mean+"%"; })
       .text(function(d){ return d.mean+"%"; })
       .classed("labell", true)
 
@@ -255,126 +186,101 @@ function Timeline(){
       .classed("labell", true)
       .text(function(d,i){ return d.key; })
 
-    // el.append("span")
-    //   .text(function(d){ return parseInt(d3.mean(d.values.filter(function(d) { return d.jahr == "2015"}), function(d){ return d.value; }))+"%"; })
-    
 
     var linechart = linechartSvg
-      .selectAll("g")
+      .selectAll("div")
       .data(nest)
       .enter()
+      .append("div")
+      .each(function(d){
+        return d;
+      })
+      .attr("class", "col col-xs-12 col-sm-4 col-lg-4")
+     // .call(makeAxis)
+      .append("svg")
+      .attr('viewBox', '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom))
+      // .attr('preserveAspectRatio', 'xMidYMid meet')
+      // .attr("width", (width + margin.left + margin.right))
+      // .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      .attr("transform", function(d,i){  return "translate(" + (i*width + i*(margin.left*2)) + ",0)"})
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(makeAxis)
       .append("g")
-      //.classed("viz", true)
 
     linechart.append("text")
       .text(function(d){ return title[d.key]; })
       .attr("y", -10)
 
     
-    var activeLine = false;
-
     var bezirkeG = linechart
       .selectAll(".bezirke")
       .data(function(d){ return d.values; })
       .enter()
       .append("g")
       .classed("bezirke", true)
-      // .attr("stroke", function(d){ return color(d.key); })
-      .attr("stroke", function(d){ return "#E60032" })
-      .on("click", function(d){
 
-      })
-      .style("stroke-width", 1.5)
-
-    
-    function mouseenter(d, el){
-      // console.log("enter", linechart.selectAll(".ortsteil"))
-      linechart.selectAll(".ortsteil")
-        // .classed("active", function(d2){ return d2.active; })
-        .style("stroke-width", function(d2){
-          return d2.active ? 2.5 : 1.5;
-        })
-        .attr("stroke", function(d2){ 
-          // console.log(d2)
-          // return d2.active ? color(d2.key) : "#EEE";
-          return d2.active ? "#E60032" : "#EEE";
-        })
-        // .style("opacity", function(d2){
-        //   return d2.active ? 1 : 0.5;
-        // })
-
-      d3.select(el).moveToFront();
-      
-      var r = d3.select(el).node().getBoundingClientRect();
-      // console.log(d)
-      var text = !activeMenu ? d.values[0].bezirk : d.key;
-
-      // tooltip.content("<strong>"+text+"</strong>");
-      // // tooltip.position([r.right + window.scrollX, r.top + window.scrollY]);
-      // tooltip.position([d3.event.pageX, d3.event.pageY]);
-      // tooltip.show();
-    }
-
-    function mouseleave(d, el){
-      linechart.selectAll(".ortsteil")
-       // .classed("active", function(d2){ return d2.active; })
-       .style("stroke-width", function(d2){
-         return d2.active ? 2.5 : 1.5;
-       })
-       // .attr("stroke", function(d2){ return color(d2.key);  })
-       .attr("stroke", "#E60032")
-        .style("opacity", 1)
-
-       tooltip.hide(); 
-    }
-
-    // bezirkeG
-    //   .append("path")
-    //   .classed("ortsteil", true)
-    //   .datum(function(d){
-    //     // d.vals = 
-    //     console.log(d); return d;
-    //   })
-    //   .attr("d", function(d){ return line(d.values); })
-    //   .attr("class", "line")
 
     bezirkeG.selectAll(".ortsteil")
       .data(function(d){ return d.values; })
       .enter()
       .append("path")
       .classed("ortsteil", true)
-      // .datum(function(d){console.log(d); return d.values; })
-      .attr("d", function(d){ return line(d.values); })
-      // .attr("class", "line")
-      .style("display", function(d,i){
-        return i==0 ? "inherit" : "none";
-      })  
-      .on("mouseenter", function(d){
-        if(!activeLine && activeMenu && !d.highlight) return;
-        // if(activeLine) return;
-        activeLine = d.active = true;
-        console.log(d);
+      .attr("d", function(d){ return line(d.values); }) 
+      .on("mouseenter", function(d1){
+        var parent = d3.select(this.parentNode).datum();
 
-        mouseenter(d, this);
+        menu
+          .selectAll(".entry")
+          .classed("hover", function(d2){ return d2.key == parent.key && !state.activeMenu; })
+
+        linechartSvg
+          .classed("hover", true)
+          .selectAll(".bezirke")
+          .classed("active", function(d2){ return parent.key == d2.key; })
+          .filter(".active")
+          .moveToFront()
+          
+          linechartSvg
+            .selectAll(".bezirke")
+            .selectAll(".ortsteil")
+            .classed("hover", function(d2){ return d1.key == d2.key; })
+            .filter(".hover")
+            .moveToFront()
+
+        var text = state.activeMenu ? d1.key : parent.key;
+        tooltip.content("<strong>"+text+"</strong>");
+        tooltip.position([d3.event.pageX, d3.event.pageY]);
+        tooltip.show(); 
+
       })
-      .on("mouseleave", function(d){
-        if(!d.highlight) return;
+      .on("mouseleave", function(d1){
 
-        console.log(d);
-        activeLine = d.active = false;
+        menu
+          .selectAll(".entry")
+          .classed("hover", false)
 
-        mouseleave(d);
+        linechartSvg
+          .classed("hover", false)
+          .selectAll(".bezirke")
+          .classed("hover", false)
+          .selectAll(".ortsteil")
+          .classed("hover", false)
+
+        tooltip.hide(); 
       })
- 
-
+      .on("click", function(d1){
+        var parent = d3.select(this.parentNode).datum();
+        var m = menu
+          .selectAll(".entry")
+          .filter(function(d2){
+            return parent.key == d2.key;
+          })
+          .node()
+          .click();
+      })
     };
 
     
-
-
     function makeAxis(selection){
       var svgAxis = selection.append("g");
 

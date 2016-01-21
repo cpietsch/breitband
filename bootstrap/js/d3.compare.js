@@ -10,7 +10,18 @@ function d3_compare(){
 				d.leitung16 *= 1;
 			});
 
-			data = csv;
+			data = ["leitung16", "leitung50"].map(function(type){
+			  return csv.map(function(d){
+			    return {
+			      type: type,
+			      value: d[type],
+			      ortsteil: d.ortsteil,
+			      bezirk: d.bezirk,
+			      jahr: d.jahr,
+			      data: d
+			    }
+			  })
+			}).reduce(function(d1,d2){ return d1.concat(d2) },[]);
 			
 			compare.init();
 		});
