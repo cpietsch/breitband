@@ -335,7 +335,7 @@ var dataAll;
 queue()
 	.defer(d3.csv, 'data/50mbit.csv')
 	.defer(d3.json, 'data/berliner-bezirke.geojson')
-	.defer(d3.csv, 'data/dataNEW2.csv')
+	.defer(d3.csv, 'data/dataNEW.csv')
 	.await(dataLoaded);
 
 function dataLoaded(error, data, bezirke, social) {
@@ -645,12 +645,15 @@ function makeSocialStatic(data,hour){
 		color: 0xffff00,
 		opacity: 0.4
 	});
+	var material3 = new THREE.MeshBasicMaterial({ 
+		color: 0xffffff
+	});
 
 
 	data.forEach(function(d){
 		//if(d.social.length == 0) return;
 		if(d.social.filter(function(d){ return d.instagram != 0; }).length > 0){
-			var cube = new THREE.Mesh( geometry, material );
+			var cube = new THREE.Mesh( geometry, material3 );
 			
 			cube.position.x = d.x;
 			cube.position.y = d.y;
@@ -663,7 +666,7 @@ function makeSocialStatic(data,hour){
 		}
 		
 		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
-			cube = new THREE.Mesh( geometry, material2 );
+			cube = new THREE.Mesh( geometry, material3 );
 		
 			cube.position.x = d.x+10;
 			cube.position.y = d.y;
