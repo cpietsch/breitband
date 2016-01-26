@@ -25,6 +25,11 @@ div.red{
 	color:#fff;
 }
 
+div.darkgrey{
+	background-color:rgb(100,100,100);
+	color:#fff;
+}
+
 div.light_red{
 	background-color:rgba(230,0,50,0.3);
 	color:rgb(230,0,50);
@@ -116,6 +121,12 @@ h3{
 
 .datacol svg{
 	margin-bottom:5px;
+}
+
+.datacol svg path{
+	stroke-width:1px;
+	fill:none;
+	stroke:#000;
 }
 
 .minimap svg path{
@@ -427,10 +438,6 @@ path.trendarea.instagram{
 	stroke-width:2px;
 }
 
-.company-help.pulse-help{
-	height:135px;
-}
-
 .company-help.pulse-help strong{
 	font-size:18px;
 	padding:15px 20px 5px 20px;
@@ -452,11 +459,6 @@ path.trendarea.instagram{
 	background-position: center;
 	background-size: 100% 100%;*/
 	margin-top:50px;
-}
-
-#companies .container{
-	width:100%;
-	margin:0;
 }
 
 #companies-vis{
@@ -508,11 +510,15 @@ path.trendarea.instagram{
 	margin:0 auto;
 }
 
+#companies .frst h3{
+	margin-bottom:15px;
+}
+
 .company-help{
 	width:100%;
 	max-width:400px;
 	margin:30px auto 0 auto;
-	height:175px;
+	padding-bottom:10px;
 }
 
 .switchrow .company-help{
@@ -535,7 +541,8 @@ path.trendarea.instagram{
 }
 
 .company-help .triangle.bottom{
-	margin:20px auto 0 auto;
+	margin:0 auto 0 50%;
+	float:left;
 }
 
 .switchrow .triangle.bottom{
@@ -551,7 +558,7 @@ path.trendarea.instagram{
 	display:block;
 	margin-top:5px;
 	margin-right:15px;
-	margin-bottom:15px;
+	margin-bottom:25px;
 }
 
 .company-help strong{
@@ -580,8 +587,14 @@ path.trendarea.instagram{
 .satellite-icn{
 	float:left;
 	width:20%;
-	height:auto;
+	height:80px;
 	margin-right:5%;
+}
+
+.image-satellite{
+	background-image:url("../images/satellite.png");
+	background-size:100% auto;
+	background-position:top center;
 }
 
 .satellite-text{
@@ -655,67 +668,143 @@ path.trendarea.instagram{
 	margin-top:35px;
 }
 
+#compare-legend {
+    width: 100%;
+    float: left;
+}
+
 #compare text{
 	font-size:10px;
 }
 
+#compare .company-help {
+	margin: 30px auto 20 auto;
+}
+
 #compare .menu {
-	padding: 20px;
+	/*padding: 20px;*/
 	float: left;
 	width: 100%;
 	font-size:12px;
 	color:#000;
 }
 
+#compare .menu .entry.hover {
+    background: #eee;
+}
+
 #compare .menu .entry {
-	cursor: pointer;
-	position: relative;
-	width: 100%;
-	clear: left;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    padding: 3px;
+    float: left;
+}
+
+
+#compare .menu .entry * {
+	pointer-events:none;
 }
 
 #compare .menu .color {
 	/*color: #FFF;
 	font-weight: bold;
 	text-shadow: none;*/
-	padding: 3px;
-	margin: 3px;
-	float: left;
+    margin-right: 7px;
+    margin: 2px; 
+    float: left;
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;
+
 }
 
-#compare .menu .label {
-	padding: 6px 3px 0px 3px;
-	margin: 3px;
-	float: left;
-	color:#000;
-	font-size:12px;
+
+#compare .menu .labell {
+    margin: 4px;
+    float: left;
 }
 
 #compare .menu .close {
-	padding: 3px;
-	margin: 3px;
-	float: left;
+    margin: 2px;
+	float: right;
 	opacity: 0;
+	color: #fff;
+}
+#compare .menu .active .close {
+	opacity: 1;
+}
+#compare .menu .active {
+	background: #E60032;
+    color: #FFF;
+    font-weight: bold;
+}
+
+#compare .chart .bezirke .ortsteil {
+    stroke: #E60032;
+    stroke-width: 2;
+}
+
+#compare .chart .ortsteil:not(:last-child){
+	display: none;
+	pointer-events:none;
+}
+
+#compare .chart.hover .ortsteil {
+	stroke:#eee;
+}
+
+#compare .chart.hover .hover {
+	stroke:#E60032;
+	stroke-width: 3.5px;
 }
 
 
-.line {
+#compare .chart.active .bezirke .ortsteil {
+	stroke:#eee;
+	pointer-events:none;
+}
+
+#compare .chart.active .bezirke.active .ortsteil {
+	stroke:#E60032;
+}
+
+#compare .chart.expand .bezirke.active .ortsteil{
+	display: inherit;
+	pointer-events:stroke;
+}
+
+#compare .chart.expand.hover .bezirke.active .ortsteil{
+	stroke:#B1B1B1;
+}
+#compare .chart.expand.hover .bezirke.active .hover{
+	/*stroke:#1E3791;*/
+	stroke:#E60032;
+}
+
+
+#compare .ortsteil {
 	fill:none;
+	cursor: pointer;
 }
 
-.axis path {
+#compare .chart .axis path {
   display: none;
 }
 
-.axis line {
+#compare .chart .axis line {
   shape-rendering: crispEdges;
   stroke: #A0A0A0;
 
 }
 
-.axis .minor line {
+#compare .chart .axis .minor line {
   stroke: #BFBFBF;
   stroke-dasharray: 2,2;
+}
+
+#compare .chart .x.axis .tick line {
+    display: none;
 }
 
 /*-------- Map headline --------*/
@@ -900,10 +989,12 @@ ul.legend span span{
 /*-------- Footer --------*/
 
 #footer{
+	clear:both;
 	background-color:rgba(255,255,255,1);
 	color:#555;
 	padding:50px 0 80px 0;
-	border-top:2px solid rgba(0,0,0,0.8);
+	border-top:2px solid rgba(0,0,0,0.5);
+	margin-top:100px;
 }
 
 #footer .middle-col{
@@ -1121,6 +1212,10 @@ ul.legend span span{
 	#pulse h3 span.image{
 		background-image:url('../images/pulse@2x.png');
 	}
+
+	.image-satellite{
+		background-image:url("../images/satellite@2x.png");
+	}
 }
 
 /******************** Responsive *******************/
@@ -1157,4 +1252,54 @@ ul.legend span span{
 	background-image:url('../images/btn_network.gif');
 	background-size:30px 30px;
 	cursor: pointer;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+#techCarousel{
+	display:none;
+}
+
+/* Carousel base class */
+.carousel {
+  height: 500px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 500px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+}
+
+/******************** DEV *******************/
+
+#background{
+	padding:70px 0;
 }
