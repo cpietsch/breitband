@@ -90,7 +90,12 @@ L.Google = L.Class.extend({
 		if (!this._container) {
 			this._container = L.DomUtil.create('div', 'leaflet-google-layer leaflet-top leaflet-left');
 			this._container.id = '_GMapContainer_' + L.Util.stamp(this);
-			this._container.style.zIndex = 'auto';
+			if($('.leaflet-google-layer').length>=1){
+				this._container.style.zIndex = '0';	
+			}else{
+				this._container.style.zIndex = '2';	
+			}
+			
 		}
 
 		tilePane.insertBefore(this._container, first);
