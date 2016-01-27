@@ -38,7 +38,7 @@ function d3_minimap(){
 
 		legend.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(20,29)")
+			.attr("transform", "translate(20,33)")
 			.call(x_axis);
 
 		var defs = legend.append("defs")
