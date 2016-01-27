@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image map types</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+var styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 52.5047, lng: 13.4244},
+    zoom: 13,
+    streetViewControl: false,
+    mapTypeControl:false
+  });
+
+  var moonMapType = new google.maps.ImageMapType({
+    getTileUrl: function(coord, zoom) {
+        return 'http://tiles.sebastianmeier.eu/v2/tiles/fullimage' +
+            '/' + zoom + '/' + coord.x + '/' +
+            (coord.y) + '.png';
+    },
+    tileSize: new google.maps.Size(256, 256),
+    maxZoom: 18,
+    minZoom: 11
+  });
+
+  map.mapTypes.set('moon', moonMapType);
+  map.setMapTypeId('moon');
+
+  var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+
+  map.mapTypes.set('map_style', styledMap);
+  map.setMapTypeId('map_style');
+}
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE3M0MTjGfJkW6LQHEESD33rmzSrylvXA&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

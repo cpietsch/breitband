@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WMTS</title>
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.13.0/css/ol.css" type="text/css">
+	<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+    <script src="http://openlayers.org/en/v3.13.0/build/ol.js"></script>
+    <style type="text/css">
+    	html, body{
+    		margin:0;
+    		padding:0;
+    		width:100%;
+    		height:100%;
+    	}
+
+    	#map{
+    		width:100%;
+    		height:100%;
+    	}
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+    	var gmap = new google.maps.Map(document.getElementById('gmap'), {
+		  disableDefaultUI: true,
+		  keyboardShortcuts: false,
+		  draggable: false,
+		  disableDoubleClickZoom: true,
+		  scrollwheel: false,
+		  streetViewControl: false
+		});
+		
+		var map = new ol.Map({
+			target: 'map',
+			layers: [
+				new ol.layer.Tile({
+					source: new ol.source.XYZ({
+						url: 'http://tiles.sebastianmeier.eu/v2/tiles/fullimage/{z}/{x}/{y}.png'
+					})
+				})
+			],
+			view: new ol.View({
+				center: [13.4244, 52.5047],
+				projection: 'EPSG:4326',
+				zoom: 12
+			})
+		});
+
+
+		
+
+var view = new ol.View({
+  // make sure the view doesn't go beyond the 22 zoom levels of Google Maps
+  maxZoom: 21
+});
+view.on('change:center', function() {
+  var center = ol.proj.transform(view.getCenter(), 'EPSG:3857', 'EPSG:4326');
+  gmap.setCenter(new google.maps.LatLng(center[1], center[0]));
+});
+view.on('change:resolution', function() {
+  gmap.setZoom(view.getZoom());
+});
+
+var vector = new ol.layer.Vector({
+  source: new ol.source.GeoJSON({
+    url: 'data/geojson/countries.geojson',
+    projection: 'EPSG:3857'
+  }),
+  style: new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.6)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#319FD3',
+      width: 1
+    })
+  })
+});
+
+var olMapDiv = document.getElementById('olmap');
+var map = new ol.Map({
+  layers: [vector],
+  interactions: ol.interaction.defaults({
+    altShiftDragRotate: false,
+    dragPan: false,
+    rotate: false
+  }).extend([new ol.interaction.DragPan({kinetic: null})]),
+  target: olMapDiv,
+  view: view
+});
+view.setCenter([0, 0]);
+view.setZoom(1);
+
+olMapDiv.parentNode.removeChild(olMapDiv);
+gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(olMapDiv);
+    </script>
+  </body>
+</html>
