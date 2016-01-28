@@ -379,12 +379,12 @@ function mesh(){
 	// 	controls.keys = [ 65, 83, 68 ];
 	// 	controls.addEventListener( 'change', render );
 
-	var state = { active: null, twitter: true, instagram: true };
+	var state = { active: null, twitter: false, instagram: false };
 
-	var stats = new Stats();
+	/*var stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
-		container.appendChild( stats.domElement );
+		container.appendChild( stats.domElement );*/
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -649,7 +649,7 @@ function mesh(){
 		TWEEN.update();
 		// controls.update();
 		render(time);
-		stats.update();
+		//stats.update();
 
 	}
 

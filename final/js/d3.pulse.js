@@ -150,6 +150,15 @@ function d3_pulse(){
 				.attr('text-anchor', 'end')
 				.text('18:00');
 
+			grid.append('circle')
+				.attr('id', 'timebutton')
+				.attr('cx', 0)
+				.attr('cy', 0)
+				.attr('r', line_width/2)
+				.on('click', function(){
+					console.log(d3.mouse(this));
+				});
+
 			//svg groups for circles
 			var species_g = {};
 			//svg groups for paths
@@ -346,7 +355,7 @@ function d3_pulse(){
 
 		d3.select('.timetext').text(hour);
 		
-		requestAnimationFrame(debouncer(pulse.iterate, 100));
+		requestAnimationFrame(debouncer(pulse.iterate, 200));
 	};
 
 	pulse.reorder = function(key, array){
