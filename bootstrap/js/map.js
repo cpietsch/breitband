@@ -5,7 +5,7 @@ var map = new mapboxgl.Map({
 	zoom: 10,
 	maxZoom:16,
 	minZoom:10,
-	style: 'js/map_config_mapbox_only_full.json'
+	style: 'js/map_config.json'
 }).on('click', 
 	function(e){
 		mapEnable();

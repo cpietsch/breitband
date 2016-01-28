@@ -12,7 +12,21 @@ function d3_compare(){
 		labelPos = {
 			leitung16:{},
 			leitung50:{}
+		},labelAlt={
+			"Wilmersdorf":"Charlottenburg-Wilmersdorf",
+			"Kreuzberg":"Friedrichshain-Kreuzberg",
+			"Wartenberg":"Lichtenberg",
+			"Hellersdorf":"Marzahn-Hellersdorf",
+			"Rudow":"Neukölln",
+			"Wilhelmsruh":"Pankow",
+			"Hansaviertel":"Mitte",
+			"Wittenau":"Reinickendorf",
+			"Wilhelmsstadt":"Spandau",
+			"Tempelhof":"Tempelhof-Schöneberg",
+			"Zehlendorf":"Steglitz-Zehlendorf",
+			"Schmöckwitz":"Treptow-Köpenick"
 		};
+
 
 	function compare(sel){
 		selection = sel;
@@ -115,6 +129,8 @@ function d3_compare(){
 			.x(function(d) { return x(d.jahr); })
 			.y(function(d) { return y(d.value); });	
 
+		linechart.call(compare.makeAxis);
+
 		var bezirkeG = linechart
 			.selectAll(".bezirke")
 			.data(function(d){ return d.values; })
@@ -133,28 +149,27 @@ function d3_compare(){
 			.attr('data-key', function(d){ return d3.select(this.parentNode).data()[0].key; })
 			.classed("bezirke", true);
 
-		linechart.call(compare.makeAxis);
+		console.log("Charlottenburg-Wilmersdorf" in labelPos);
 
 		[bezirkeG,bezirkeA].forEach(function(b,index,array){
 			b.selectAll(".ortsteil")
 				.data(function(d){ return d.values; })
 				.enter()
 				.append("path")
-				.attr('class', function(d){ if(d.key in labelPos.leitung50){ return 'overbezirk'; }else{ return 'normalbezirk'; } })
+				.attr('id', function(d){ return 'ortsteil_'+d.key; })
+				.attr('class', function(d){ if(labelAlt[d.key] in labelPos.leitung50){ return 'overbezirk'; }else{ return 'normalbezirk'; } })
 				.classed("ortsteil", true)
 				.attr("d", function(d){ return line(d.values); }) 
 				.on("mouseenter", function(d1){
 					var parent = d3.select(this.parentNode).datum();
 					var key = d3.select(this.parentNode).attr('data-key');
 
-					var r = 1; //($('#leitung50').width() / 390);
-
 					var o = $('#'+key).offset();
-					var tx = o.left + (x(d1.values[2].jahr) + margin.left)*r, ty;
-					if((d3.select(this).attr('class')).indexOf('overbezirk') === 0){
-						ty = o.top + (y(d1.values[2].mean) + margin.top)*r + 3;
+					var tx = o.left + x(d1.values[2].jahr) + margin.left, ty;
+					if(!state.activeMenu){
+						ty = o.top + y(d1.values[2].mean) + margin.top + 3;
 					}else{
-						ty = o.top + (y(d1.values[2].value) + margin.top)*r + 3;
+						ty = o.top + y(d1.values[2].value) + margin.top + 3;
 					}
 
 					menu

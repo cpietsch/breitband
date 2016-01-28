@@ -43,6 +43,12 @@ var styles = [
       { visibility: "off" }
     ]
   },{
+    "featureType": "road.highway",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
   	featureType:"all",
     elementType: "labels.text.fill",
     stylers: [
@@ -65,11 +71,19 @@ var streets = new L.Google('ROADMAP', {
 
 map.addLayer(streets);
 
+/*map.on('zoomstart', function(){
+	$('.leaflet-google-layer').last().hide();
+});
+
+map.on('zoomend', function(){
+	$('.leaflet-google-layer').last().show();
+});*/
+
 var satellite = new L.Google('SATELLITE', {});
 map.addLayer(satellite);
 
-var brainLayer = L.layerGroup().addTo(map);
-var brainToggle = false;
+var brainLayer = L.layerGroup();
+var brainToggle = true;
 
 var brainControl = L.Control.extend({
 	options: {
