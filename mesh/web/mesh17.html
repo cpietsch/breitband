@@ -175,12 +175,13 @@ var container = document.getElementById( 'container' );
 
 
 if ( Detector.webgl)
-	renderer = new THREE.WebGLRenderer( {antialias:true} );
+	renderer = new THREE.WebGLRenderer( {antialias:true, preserveDrawingBuffer: true } );
 else
 	renderer = new THREE.CanvasRenderer( { alpha: true }); 
 
-	//renderer.setClearColor( scene.fog.color, 1 );
+	// renderer.setClearColor( scene.fog.color, 1 );
 	renderer.setClearColor( 0x1E3791 );
+	// renderer.autoClearColor = false;
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	// renderer.setPixelRatio( window.devicePixelRatio );
 	// renderer.shadowMapCullFace = THREE.CullFaceBack;
@@ -190,6 +191,8 @@ var scene = new THREE.Scene();
 var scene2 = new THREE.Scene();
 var scene3 = new THREE.Scene();
 
+// scene.fog = new THREE.FogExp2( 0x1E3791, 0.0005 );
+// scene.fog = new THREE.Fog( 0x1E3791, 1000,4000 );
 
 scene.add(scene2);
 scene2.add(scene3);
@@ -205,8 +208,8 @@ scene.add( light );
 
 var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.x = 0;
-	camera.position.y = -1848;
-	camera.position.z = 818;
+	camera.position.y = -2000;
+	camera.position.z = 1200;
 
 	// camera.aspect = 1.8770614692653673;
 	camera.lookAt(scene.position);	
@@ -240,6 +243,7 @@ var renderCanvas = d3.select(renderer.domElement)
 		if (d3.event.defaultPrevented) return;
 
 		if(INTERSECTED){
+			// INTERSECTED.position.z = 50;
 			INTERSECTED.geometry.computeBoundingBox();
 			var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
 
@@ -310,24 +314,11 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var INTERSECTED;
 
-
-// var scene = new THREE.Object3D();
-// 	// scene.position.x = -projection(centerCoord)[0];
-// 	// scene.position.y = projection(centerCoord)[1];
-// 	// scene.position.z = 0.0;
-// 	// scene.position.x = -projection(centerCoord)[0];
-// 	// scene.position.y = projection(centerCoord)[1];
-// 	scene.add( scene );
-
-// var axes = new THREE.AxisHelper(500);
-// 	axes.position.set( 0,0,0 );
-// 	scene.add(axes);
-
-// var grid = new THREE.GridHelper(1000, 10);
-// 	grid.position.set( 0,0,0 );
-// 	grid.rotation.x = Math.PI/2;
-// 	grid.setColors( new THREE.Color(0x7f7f7f), new THREE.Color(0x7f7f7f) );
-// 	scene.add(grid);
+var grid = new THREE.GridHelper(10000, 50);
+	grid.position.set( 0,0,0 );
+	grid.rotation.x = Math.PI/2;
+	grid.setColors( new THREE.Color(0x4988EE), new THREE.Color(0x4988EE) );
+	scene3.add(grid);
 
 var dataAll;
 
@@ -365,6 +356,7 @@ function dataLoaded(error, data, bezirke, social) {
 
 	social.forEach(function(d){
 		var dd = xymap[d.x][d.y];
+		// d.data = dd;
 		d.x = dd.x;
 		d.y = dd.y;
 		d.z = dd.z;
@@ -469,11 +461,19 @@ function raycast(){
 		if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
 			//console.log(intersects[ 0 ]);	
 
-			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+			if ( INTERSECTED ){
+				INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+				INTERSECTED.position.z = 0;
+				INTERSECTED.material.wireframe = false;
+
+			}
 
 			INTERSECTED = intersects[ 0 ].object;
 			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 			INTERSECTED.material.color.setHex( 0xE60032 );
+			// INTERSECTED.material.emissive.setHex( 0x1d2052 );
+			// INTERSECTED.position.z = 10;
+			INTERSECTED.material.wireframe = true;
 
 			container.style.cursor = "pointer"
 
@@ -481,7 +481,11 @@ function raycast(){
 
 	} else {
 
-		if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+		if ( INTERSECTED ) {
+			INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+			INTERSECTED.position.z = 0;
+			INTERSECTED.material.wireframe = false;
+		}
 
 		INTERSECTED = null;
 
@@ -544,13 +548,17 @@ function updateSocialBars(hour){
 
 	dataAll.forEach(function(d){
 		var social = d.social[hour];
+		var zInstagram = 0.2;
+		var zTwitter = 0.2;
+		
+		if(social){
+			var diff = (socialHoverPos-d.z);
+			zInstagram = diff + zSocial(social.instagram);
+			zTwitter = diff + zSocial(social.twitter);
+		}
 
-		if(d.cube){
-			d.cube.animateZ = social ? zSocial(social.instagram) : 0.2;
-		}
-		if(d.cube2){
-			d.cube2.animateZ = social ? zSocial(social.twitter) : 0.2;
-		}
+		if(d.cube) d.cube.animateZ = zInstagram;
+		if(d.cube2) d.cube2.animateZ = zTwitter;	
 	})	
 }
 
@@ -639,14 +647,19 @@ function makeSocialStatic(data,hour){
 
 	var material = new THREE.MeshLambertMaterial({ 
 		color: 0xE60032,
-		opacity: 0.4
+		color: 0xffffff,
+		opacity: 0.4,
+		wireframe: false
 	});
-	var material2 = new THREE.MeshLambertMaterial({ 
+	var material2 = new THREE.MeshNormalMaterial({ 
 		color: 0xffff00,
 		opacity: 0.4
 	});
 	var material3 = new THREE.MeshBasicMaterial({ 
-		color: 0xffffff
+		color: 0xffffff,
+		transparent: true,
+		opacity: 0.9,
+		fog: false
 	});
 
 
@@ -657,7 +670,8 @@ function makeSocialStatic(data,hour){
 			
 			cube.position.x = d.x;
 			cube.position.y = d.y;
-			cube.position.z = socialHoverPos;
+			// cube.position.z = socialHoverPos;
+			cube.position.z = d.z;
 			cube.scale.z = 0.1;
 			cube.visible = false;
 
@@ -670,7 +684,8 @@ function makeSocialStatic(data,hour){
 		
 			cube.position.x = d.x+10;
 			cube.position.y = d.y;
-			cube.position.z = socialHoverPos;
+			// cube.position.z = socialHoverPos;
+			cube.position.z = d.z;
 			cube.scale.z = 0.1;
 			cube.visible = false;
 
