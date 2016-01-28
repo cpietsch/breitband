@@ -3,7 +3,7 @@
 <style>
 
 body {
-	color: #cccccc;
+	color: #fff;
 	font-family:Helvetica Neue, Helvetica;
 	font-size: 11px;
 	background-color: #050505;
@@ -139,6 +139,34 @@ svg {
 .fullscreen.active {
 	background-image: url("img/fullscreen2.svg");
 }
+
+.menu {
+    position: absolute;
+    left: 41%;
+    top: 10px;
+}
+
+.menu * {
+    cursor: pointer;
+    /* background: rgba(30, 55, 145, 0.43); */
+    float: left;
+    position: relative;
+    padding: 12px;
+    margin: 20px;
+    border: 1px solid rgb(255, 255, 255);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/*.menu *:hover {
+    background: #FFF;
+    color: #051344;
+}*/
+
+.menu .active {
+    background: #FFF;
+    color: #051344;
+}
  
 </style>
 <body>
@@ -150,7 +178,12 @@ svg {
 <div class="time">
 	<div class="clock"></div>
 	<div class="date">11.01.2016</div>
+</div>
+
+<div class="menu">
 	<div class="screenshot">make screenshot</div>
+	<div class="twitter active">twitter</div>
+	<div class="instagram active">instagram</div>
 </div>
 
 <script src="js/d3.v3.min.js"></script>
@@ -177,14 +210,7 @@ svg {
 
 <script>
 
-function resize(){
-	width = window.innerWidth;
-	height = window.innerHeight;
-	
-	camera.aspect =  width / height;
-	camera.updateProjectionMatrix();
-	renderer.setSize( width, height );
-}
+
 
 d3.select(window)
 	.on("resize", function(){
@@ -200,13 +226,34 @@ d3.select(".fullscreen")
 	})
 	.style("display", function(){ return screenfull.enabled; })
 
-var makeScreenshot = false;
-var clockDiv = d3.select(".time .clock");
+d3.select(".instagram")
+	.on("click", function(d){
+		state.instagram = !state.instagram;
+		d3.select(this).classed("active", state.instagram);
+	})
+d3.select(".twitter")
+	.on("click", function(d){
+		state.twitter = !state.twitter;
+		d3.select(this).classed("active", state.twitter);
+	})
 
-d3.select(".time .screenshot")
+d3.select(".menu .screenshot")
 	.on("click", function(d){
 		makeScreenshot = true;
 	})
+
+
+var makeScreenshot = false;
+var clockDiv = d3.select(".time .clock");
+
+var resize = function(){
+	width = window.innerWidth;
+	height = window.innerHeight;
+	
+	camera.aspect =  width / height;
+	camera.updateProjectionMatrix();
+	renderer.setSize( width, height );
+}
 
 var width = window.innerWidth,
 	height = window.innerHeight;
@@ -311,7 +358,7 @@ var renderCanvas = d3.select(renderer.domElement)
 // 	controls.keys = [ 65, 83, 68 ];
 // 	controls.addEventListener( 'change', render );
 
-var state = { active: null };
+var state = { active: null, twitter: true, instagram: true };
 
 var stats = new Stats();
 	stats.domElement.style.position = 'absolute';
@@ -630,11 +677,11 @@ function updateSocialBars(hour){
 		var social = d.social[hour];
 		var zInstagram = 0.2;
 		var zTwitter = 0.2;
-		
+		var diff = (socialHoverPos-d.z);
+
 		if(social){
-			var diff = (socialHoverPos-d.z);
-			zInstagram = diff + zSocial(social.instagram);
-			zTwitter = diff + zSocial(social.twitter);
+			if(state.instagram) zInstagram = diff + zSocial(social.instagram);
+			if(state.twitter) zTwitter = diff + zSocial(social.twitter);
 		}
 
 		if(d.cube) d.cube.animateZ = zInstagram;
