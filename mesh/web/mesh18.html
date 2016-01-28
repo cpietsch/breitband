@@ -292,7 +292,7 @@ var renderCanvas = d3.select(renderer.domElement)
 		mouse.x = ( event.clientX / width ) * 2 - 1;
 		mouse.y = - ( event.clientY / height ) * 2 + 1;		
 
-		raycast();
+		if(!state.active) raycast();
 	})
 // var controls = new THREE.TrackballControls( camera );
 // 	controls.target.set( 0, 0, 0 );
@@ -311,6 +311,7 @@ var renderCanvas = d3.select(renderer.domElement)
 // 	controls.keys = [ 65, 83, 68 ];
 // 	controls.addEventListener( 'change', render );
 
+var state = { active: null };
 
 var stats = new Stats();
 	stats.domElement.style.position = 'absolute';
@@ -417,8 +418,35 @@ function dataLoaded(error, data, bezirke, social) {
 		.key(function(d){ return d.hour; })
 		.entries(social);
 
+	
+
 	renderCanvas.on("click", function(){
 		if (d3.event.defaultPrevented) return;
+
+		if(state.active == INTERSECTED){
+			state.active = INTERSECTED = null;
+
+			meshBezirke.forEach(function(d){
+				d.material.wireframe = false;
+				d.material.opacity = 1;
+				d.material.color.setHex( 0x6ECDF5 );
+				d.intersected = false;
+			})
+
+			var tween = new TWEEN.Tween(scene3.position)
+			    .to({ x: 0, y: 0 }, 1000)
+			    .easing(TWEEN.Easing.Quadratic.InOut)
+			    .start();
+
+			var tween = new TWEEN.Tween({ scale: zoom.scale() })
+			    .to({ scale: 1 }, 1000)
+			    .onUpdate(function(d){
+			    	zoom.scale(this.scale).event(renderCanvas);
+			    })
+			    .easing(TWEEN.Easing.Quadratic.InOut)
+			    .start();
+
+		}
 
 		if(INTERSECTED){
 			var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
@@ -440,6 +468,8 @@ function dataLoaded(error, data, bezirke, social) {
 				d.material.wireframe = !d.intersected;
 				d.material.opacity = d.intersected ? 1 : 0.6;
 			})
+
+			state.active = INTERSECTED;
 		}
 	})
 
@@ -740,8 +770,8 @@ function makeMesh(bezirk){
 	geometryMesh.computeBoundingBox();
 
 	var materialLambert = new THREE.MeshLambertMaterial({
-		color: new THREE.Color().setStyle("rgb(110,205,245)"),
-		// color: 0x3B8FAA,
+		// color: new THREE.Color().setStyle("rgb(110,205,245)"),
+		color: 0x6ECDF5,
 		side: THREE.BackSide,
 		wireframe:false,
 		transparent: true
