@@ -90,8 +90,8 @@ function threeD(){
 	var cameraStart = new THREE.Vector3().copy(camera.position);
 
 	var zoom = d3.behavior.zoom()
-	    .scale(1)
-	    .scaleExtent([1, 5])
+	    .scale(1.5)
+	    .scaleExtent([1.5, 5])
 		.on("zoom", function(d){
 	  		camera.position.y = cameraStart.y / (d3.event.scale);
 	  		camera.position.z = cameraStart.z / d3.event.scale;
@@ -111,7 +111,7 @@ function threeD(){
 			if(!state.active) raycast();
 		});
 
-	var state = { active: null, twitter: true, instagram: true };
+	var state = { active: null, twitter: false, instagram: false };
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -222,10 +222,13 @@ function threeD(){
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
 
+				console.log(zoom.scale());
+
 				var tween = new TWEEN.Tween({ scale: zoom.scale() })
 				    .to({ scale: 1 }, 1000)
 				    .onUpdate(function(d){
 				    	zoom.scale(this.scale).event(renderCanvas);
+				    	console.log(zoom.scale());
 				    })
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
@@ -240,10 +243,12 @@ function threeD(){
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
 
+				 console.log(zoom.scale());
 				var tween = new TWEEN.Tween({ scale: zoom.scale() })
 				    .to({ scale: 3 }, 1000)
 				    .onUpdate(function(d){
 				    	zoom.scale(this.scale).event(renderCanvas);
+				    	console.log(zoom.scale());
 				    })
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
@@ -351,6 +356,25 @@ function threeD(){
 	var rotation = 0;
 	var hour = 0;
 
+	function toggleSocial(){
+		dataAll.forEach(function(d){
+			if(d.cube){
+				if(state.instagram){
+					d.cube.visible = true;
+				}else{
+					d.cube.visible = false;
+				}
+			}
+			if(d.cube2){
+				if(state.twitter){
+					d.cube2.visible = true;
+				}else{
+					d.cube2.visible = false;
+				}
+			}
+		})
+	}
+
 	function render(time) {
 
 		// TWEEN.update();
@@ -358,8 +382,10 @@ function threeD(){
 
 		update_labels(objects);
 		//raycast();
-		updateSocial(time);
-		animateSocial();
+		if(state.twitter || state.instagram){
+			updateSocial(time);
+			animateSocial();
+		}
 
 		renderer.render( scene, camera );
 
@@ -419,7 +445,7 @@ function threeD(){
 				d.cube2.scale.z = d.cube2.scale.x = d.cube2.scale.y += (d.cube2.animateZ/10 - d.cube2.scale.z) * animationSpeed;
 				// d.cube2.visible = (d.cube2.scale.z > 1); 
 			}
-		})
+		});
 	}
 
 	function update_labels(objects) {
@@ -497,6 +523,8 @@ function threeD(){
 			}
 			
 		});	
+
+		toggleSocial();
 	}
 
 
