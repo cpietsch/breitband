@@ -1430,6 +1430,7 @@ ul.legend span span{
 #threeD #hasGL #container{
 	width:100%;
 	height:100%;
+	float:left;
 }
 
 #noGL{
@@ -1531,9 +1532,10 @@ ul.legend span span{
 }
 
 #threeD #labels {
-    top: 0;
-    left: 0;
-    position: absolute;
+	width:100%;
+	height:500px;
+	float:left;
+	margin-top:-500px;
 }
 
 #threeD #labels span {

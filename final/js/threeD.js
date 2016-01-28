@@ -291,7 +291,6 @@ function threeD(){
 			mesh.domlabel.appendChild(inner);
 
 			mesh.domlabel.style.display = 'none';
-			mesh.domlabel.style.position = 'absolute';
 			document.getElementById( 'labels' ).appendChild( mesh.domlabel );
 
 			scene3.add(mesh);
@@ -451,8 +450,9 @@ function threeD(){
 	function update_labels(objects) {
 		for ( var i = 0; i < objects.length; i ++ ) {
 			var v = new THREE.Vector3().setFromMatrixPosition( objects[i].matrixWorld ).project(camera);
+			console.log(v);
 			objects[i].domlabel.style.display = 'block';
-			objects[i].domlabel.style.transform = "translate("+((v.x + 1) / 2 * width)+"px,"+((-v.y + 1) / 2 * height)+"px)"
+			objects[i].domlabel.style.transform = "translate("+(((v.x + 1) / 2 * width))+"px,"+((-v.y + 1) / 2 * height)+"px)"
 		}
 	}
 
