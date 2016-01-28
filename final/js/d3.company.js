@@ -372,7 +372,7 @@ function d3_company(){
 			//Mobile
 			svg.append('image')
 				.attr('class', 'technology')
-				.attr('xlink:href', 'images/satellite@2x.png')
+				.attr('xlink:href', 'images/wireless@2x.png')
 				.attr('width', 100)
 				.attr('height', 60)
 				.attr('x', width-20)

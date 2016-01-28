@@ -182,7 +182,6 @@ h3{
 /*-------- Technologien --------*/
 
 #tech-legend{
-	padding-top:30px;
 	font-style:italic;
 }
 
@@ -196,9 +195,15 @@ h3{
 	border:2px solid rgba(255,0,0,0.5);
 }
 
+#tech-legend>p{
+	display:block;
+	clear:both;
+	margin:0 50px;
+	font-size:12px;
+}
+
 #technologien{
 	padding-top:50px;
-	padding-bottom:50px;
 }
 
 #technologien path.missing{
@@ -209,7 +214,7 @@ h3{
 #technologien path{
 	stroke:#000;
 	fill:none;
-	stroke-width:3;
+	stroke-width:2;
 	stroke-linejoin:round;
 	stroke-linecap:round;
 }
@@ -219,7 +224,7 @@ h3{
 }
 
 #technologien text{
-	font-size: 12px;
+	font-size: 11px;
 }
 
 #technologien text.headline{
@@ -230,6 +235,15 @@ h3{
 #technologien text.speed-label{
 	font-family: "ClanOT-Medium";
 	font-size:12px;
+}
+
+#technologien circle{
+	cursor:pointer;
+}
+
+#technologien .outline-circle{
+	stroke:none;
+	display:none;
 }
 
 #technologien .axis path{
@@ -249,6 +263,7 @@ h3{
 }
 
 #technologien .data p{
+	font-size:11px;
 	padding-right:50px;
 }
 
@@ -1191,6 +1206,15 @@ ul.legend span span{
 /******************** Highres Retina Images *******************/
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) { 
+
+	.carousel .image-wireless{
+		background-image:url('../images/wireless@2x.png');
+	}
+
+	.carousel .image-cable{
+		background-image:url('../images/cable@2x.png');
+	}
+
 	#breitband-icon{
 		background-image:url('../images/icon@2x.png');
 	}
@@ -1287,31 +1311,81 @@ ul.legend span span{
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
-#techCarousel{
-	display:none;
-}
-
 /* Carousel base class */
 .carousel {
-	height: 500px;
+	margin-top:20px;
+	height: 350px;
 	margin-bottom: 60px;
 }
+
+.carousel-indicators .active{
+	background-color:rgba(0,0,0,1);
+}
+
+.carousel-indicators li:hover{
+	background-color:rgba(0,0,0,0.5);
+}
+
+.carousel-indicators li{
+	border-color:#000;
+}
+
+.carousel .image-wireless{
+	float:left;
+	width:60px;
+	height:84px;
+	display: block;
+	background-size:60px 84px;
+	background-image:url('../images/wireless.png');
+	margin: 0 10px 10px 0;
+}
+
+.carousel .image-cable{
+	float:left;
+	width:60px;
+	height:84px;
+	display: block;
+	background-size:55px 72px;
+	background-image:url('../images/cable.png');
+	margin: 0 10px 10px 0;
+}
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
 	z-index: 10;
+	text-shadow:none;
+	color:#000;
+	margin:0 auto;
+	text-align:left;
+	padding-bottom:60px;
+}
+
+.carousel-caption p{
+	font-size:14px;
+}
+
+.carousel-caption h4{
+	font-family: "ClanOT-Medium";
+	font-size:18px;
 }
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-	height: 500px;
-	background-color: #777;
+	height: 350px;
+	background-color:#f5f5f5;
 }
-.carousel-inner > .item > img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-width: 100%;
-	height: 500px;
+
+.carousel-control.right,
+.carousel-control.left{
+	background-image:none;
+}
+
+.carousel-control{
+	color:rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control:hover{
+	color:rgba(0, 0, 0, 1);
 }
 
 
@@ -1319,13 +1393,6 @@ ul.legend span span{
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
-	/* Bump up size of carousel content */
-	.carousel-caption p {
-		margin-bottom: 20px;
-		font-size: 21px;
-		line-height: 1.4;
-	}
-
 	#compare .chart .col{
 		height:600px;
 	}
@@ -1347,4 +1414,171 @@ ul.legend span span{
 
 #background{
 	padding:70px 0;
+}
+
+/******************** THREEJS *******************/
+
+#threeD{
+	width:100%;
+	height:500px;
+}
+
+#threeD #hasGL,
+#threeD #hasGL #container{
+	width:100%;
+	height:100%;
+}
+
+#noGL{
+	display:none;
+}
+
+#threeD .menu {
+    position: absolute;
+    left: 41%;
+    top: 10px;
+}
+
+#threeD .menu * {
+    cursor: pointer;
+    /* background: rgba(30, 55, 145, 0.43); */
+    float: left;
+    position: relative;
+    padding: 12px;
+    margin: 20px;
+    border: 1px solid rgb(255, 255, 255);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#threeD .menu .active {
+    background: #FFF;
+    color: #051344;
+}
+
+#threeD #info {
+	position: absolute;
+	top: 0px; width: 100%;
+	padding: 5px;
+}
+
+#threeD .axis path,
+#threeD .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+#threeD .x.axis path {
+	fill:none;
+	stroke:#000;
+	shape-rendering: crispEdges;
+}
+
+#threeD .line {
+	fill: none;
+	stroke-width: 1px;
+	opacity: 0.6;
+}
+
+#threeD .bars {
+	opacity: 0.8;
+}
+
+#threeD #interface {
+	background: rgba(0, 0, 0, 0.6);
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 100;
+	font-size: 10px;
+	overflow-y:scrolls;
+	height:100%;
+}
+
+#threeD #interface>div {
+	padding: 3px;
+	margin: 3px;
+	clear: both;
+	cursor: pointer;
+}
+
+#threeD #interface .color {
+	float: left;
+	width: 10px;
+	height: 10px;
+	margin-top: 2px;
+	margin-right: 6px;
+}
+
+#threeD #interface .name {
+	float: left;
+	padding-right: 30px;
+}
+
+#threeD #interface .num {
+	float: right;
+}
+
+#threeD svg {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 100;
+	top:0;
+}
+
+#threeD #labels {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+#threeD #labels span {
+    position: relative;
+    left: -50%;
+}
+
+#threeD #labels div {
+	pointer-events:none;
+	white-space: nowrap;
+	color: #FFF;
+	text-shadow: 0 0 1px #000, 0 0 2px #000, 0 0 5px #000, 0 0 10px #000;
+	font-weight: bold;
+	text-shadows:-3px -3px 1px rgba(255, 255, 255, 0.4), -3px -2px 1px rgba(255, 255, 255, 0.4), -3px -1px 1px rgba(255, 255, 255, 0.4), -3px 0px 1px rgba(255, 255, 255, 0.4), -3px 1px 1px rgba(255, 255, 255, 0.4), -3px 2px 1px rgba(255, 255, 255, 0.4), -3px 3px 1px rgba(255, 255, 255, 0.4), -2px -3px 1px rgba(255, 255, 255, 0.4), -2px -2px 1px rgba(255, 255, 255, 0.4), -2px -1px 1px rgba(255, 255, 255, 0.4), -2px 0px 1px rgba(255, 255, 255, 0.4), -2px 1px 1px rgba(255, 255, 255, 0.4), -2px 2px 1px rgba(255, 255, 255, 0.4), -2px 3px 1px rgba(255, 255, 255, 0.4), -1px -3px 1px rgba(255, 255, 255, 0.4), -1px -2px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.4), -1px 0px 1px rgba(255, 255, 255, 0.4), -1px 1px 1px rgba(255, 255, 255, 0.4), -1px 2px 1px rgba(255, 255, 255, 0.4), -1px 3px 1px rgba(255, 255, 255, 0.4), 0px -3px 1px rgba(255, 255, 255, 0.4), 0px -2px 1px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(255, 255, 255, 0.4), 0px 2px 1px rgba(255, 255, 255, 0.4), 0px 3px 1px rgba(255, 255, 255, 0.4), 1px -3px 1px rgba(255, 255, 255, 0.4), 1px -2px 1px rgba(255, 255, 255, 0.4), 1px -1px 1px rgba(255, 255, 255, 0.4), 1px 0px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(255, 255, 255, 0.4), 1px 2px 1px rgba(255, 255, 255, 0.4), 1px 3px 1px rgba(255, 255, 255, 0.4), 2px -3px 1px rgba(255, 255, 255, 0.4), 2px -2px 1px rgba(255, 255, 255, 0.4), 2px -1px 1px rgba(255, 255, 255, 0.4), 2px 0px 1px rgba(255, 255, 255, 0.4), 2px 1px 1px rgba(255, 255, 255, 0.4), 2px 2px 1px rgba(255, 255, 255, 0.4), 2px 3px 1px rgba(255, 255, 255, 0.4), 3px -3px 1px rgba(255, 255, 255, 0.4), 3px -2px 1px rgba(255, 255, 255, 0.4), 3px -1px 1px rgba(255, 255, 255, 0.4), 3px 0px 1px rgba(255, 255, 255, 0.4), 3px 1px 1px rgba(255, 255, 255, 0.4), 3px 2px 1px rgba(255, 255, 255, 0.4), 3px 3px 1px rgba(255, 255, 255, 0.4);
+}
+
+#threeD .time {
+	font-family: courier;
+	position: absolute;
+	z-index: 100;
+	left: 30px;
+	top: 30px;
+}
+
+#threeD .time .clock {
+	font-size: 30px;
+}
+
+#threeD .time .date {
+	font-size: 15px;
+}
+
+#threeD .fullscreen {
+	cursor: pointer;
+	background-image: url("img/fullscreen.svg");
+	width: 10px;
+	height: 10px;
+	padding: 5px;
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	background-size: contain;
+}
+
+#threeD .fullscreen:hover {
+	opacity: 0.8;
+}
+
+#threeD .fullscreen.active {
+	background-image: url("img/fullscreen2.svg");
 }

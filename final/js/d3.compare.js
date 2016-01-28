@@ -149,8 +149,6 @@ function d3_compare(){
 			.attr('data-key', function(d){ return d3.select(this.parentNode).data()[0].key; })
 			.classed("bezirke", true);
 
-		console.log("Charlottenburg-Wilmersdorf" in labelPos);
-
 		[bezirkeG,bezirkeA].forEach(function(b,index,array){
 			b.selectAll(".ortsteil")
 				.data(function(d){ return d.values; })
