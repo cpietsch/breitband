@@ -663,39 +663,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/images\/threeD-bg-1.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 1518,
-		"inputAbbreviatedPath": "\/images\/threeD-bg-1.png",
-		"outputAbbreviatedPath": "\/images\/threeD-bg-1.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/images\/threeD-bg-2.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 1354,
-		"inputAbbreviatedPath": "\/images\/threeD-bg-2.png",
-		"outputAbbreviatedPath": "\/images\/threeD-bg-2.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/images\/threeD-bg.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 1172,
-		"inputAbbreviatedPath": "\/images\/threeD-bg.png",
-		"outputAbbreviatedPath": "\/images\/threeD-bg.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
 	"\/images\/tsb.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
