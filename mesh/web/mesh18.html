@@ -112,7 +112,7 @@ svg {
 	font-family: courier;
 	position: absolute;
 	z-index: 100;
-	right: 30px;
+	left: 30px;
 	top: 30px;
 }
 .time .clock {
@@ -121,6 +121,24 @@ svg {
 .time .date {
 	font-size: 15px;
 }
+
+.fullscreen {
+	cursor: pointer;
+	background-image: url("img/fullscreen.svg");
+	width: 10px;
+	height: 10px;
+	padding: 5px;
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	background-size: contain;
+}
+.fullscreen:hover {
+	opacity: 0.8;
+}
+.fullscreen.active {
+	background-image: url("img/fullscreen2.svg");
+}
  
 </style>
 <body>
@@ -128,6 +146,7 @@ svg {
 <div id="container"></div>
 <div id="interface"></div>
 <div id="labels"></div>
+<div class="fullscreen"></div>
 <div class="time">
 	<div class="clock"></div>
 	<div class="date">11.01.2016</div>
@@ -151,13 +170,35 @@ svg {
 <script src="js/colorbrewer.js"></script>
 <script src="js/FileSaver.js"></script>
 <script src="js/canvas-toBlob.js"></script>
+<script src="js/screenfull.min.js"></script>
 
 
 
 
 <script>
 
+function resize(){
+	width = window.innerWidth;
+	height = window.innerHeight;
+	
+	camera.aspect =  width / height;
+	camera.updateProjectionMatrix();
+	renderer.setSize( width, height );
+}
 
+d3.select(window)
+	.on("resize", function(){
+		clearTimeout(window.resizedFinished);
+	    window.resizedFinished = setTimeout(function(){
+	        resize();
+	    }, 250);
+	})
+d3.select(".fullscreen")
+	.on("click", function(d){
+		screenfull.toggle();
+		d3.select(this).classed("active", screenfull.isFullscreen);
+	})
+	.style("display", function(){ return screenfull.enabled; })
 
 var makeScreenshot = false;
 var clockDiv = d3.select(".time .clock");
@@ -182,7 +223,7 @@ else
 	// renderer.setClearColor( scene.fog.color, 1 );
 	renderer.setClearColor( 0x1E3791 );
 	// renderer.autoClearColor = false;
-	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize( width, height );
 	// renderer.setPixelRatio( window.devicePixelRatio );
 	// renderer.shadowMapCullFace = THREE.CullFaceBack;
 	container.appendChild( renderer.domElement );
@@ -206,7 +247,7 @@ light.position.set( 1, 100, 300);
 scene.add( light );
 
 
-var camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
+var camera = new THREE.PerspectiveCamera( 50, width / height, 1, 10000 );
 	camera.position.x = 0;
 	camera.position.y = -2000;
 	camera.position.z = 1200;
@@ -231,7 +272,7 @@ var zoom = d3.behavior.zoom()
     .scale(1)
     .scaleExtent([1, 5])
 	.on("zoom", function(d){
-		console.log(d3.event.scale)
+		// console.log(d3.event.scale)
   		// camera.position.x = cameraStart.x / d3.event.scale;
   		camera.position.y = cameraStart.y / (d3.event.scale);
   		camera.position.z = cameraStart.z / d3.event.scale;
@@ -248,8 +289,8 @@ var renderCanvas = d3.select(renderer.domElement)
 	.call(drag)
 	.call(zoom)
 	.on("mousemove", function(){
-		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;		
+		mouse.x = ( event.clientX / width ) * 2 - 1;
+		mouse.y = - ( event.clientY / height ) * 2 + 1;		
 
 		raycast();
 	})
@@ -404,13 +445,13 @@ function dataLoaded(error, data, bezirke, social) {
 
 	
 	var now = 0;
-	setInterval(function(){
-		// console.time("social")
-		// makeSocial(data,now);
-		// updateSocialBars(now)
-		// console.timeEnd("social")
-		now = now < 23 ? now+1 : 0;
-	}, 100);
+	// setInterval(function(){
+	// 	// console.time("social")
+	// 	// makeSocial(data,now);
+	// 	// updateSocialBars(now)
+	// 	// console.timeEnd("social")
+	// 	now = now < 23 ? now+1 : 0;
+	// }, 50);
 
 	// makeSocial(data, now);
 	makeSocialStatic(data, now);
@@ -541,9 +582,9 @@ function render(time) {
 	}
 
 }
-
+var clockSpeed = 400;
 function updateSocial(time){
-	var now = parseInt(time/1000) % 24;
+	var now = parseInt(time/clockSpeed) % 24;
 	if(now!=hour){
 		hour = now;
 		updateSocialBars(hour);
@@ -576,11 +617,13 @@ function animateSocial(){
 	dataAll.forEach(function(d){
 		if(d.cube){
 			// d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
-			d.cube.position.z += (socialHoverPos + d.cube.animateZ - d.cube.position.z) * animationSpeed;
-			// d.cube.visible = (d.cube.position.z > 1); 
+			d.cube.position.z += (d.z -10 + d.cube.animateZ - d.cube.position.z) * animationSpeed;
+			// d.cube.visible = (d.cube.position.z > 1);
+			d.cube.scale.z = d.cube.scale.x = d.cube.scale.y += (d.cube.animateZ/10 - d.cube.scale.z) * animationSpeed;
 		}
 		if(d.cube2){
-			d.cube2.position.z += (socialHoverPos + d.cube2.animateZ - d.cube2.position.z) * animationSpeed;
+			d.cube2.position.z += (d.z -10 + d.cube2.animateZ - d.cube2.position.z) * animationSpeed;
+			d.cube2.scale.z = d.cube2.scale.x = d.cube2.scale.y += (d.cube2.animateZ/10 - d.cube2.scale.z) * animationSpeed;
 			// d.cube2.visible = (d.cube2.scale.z > 1); 
 		}
 	})
@@ -622,18 +665,24 @@ function makeSocialStatic(data,hour){
 
 	var material = new THREE.MeshLambertMaterial({ 
 		color: 0xE60032,
-		color: 0xffffff,
-		opacity: 0.4,
-		wireframe: false
+		// color: 0xffffff,
+		opacity: 0.9,
+		transparent: false,
+		// wireframe: true
 	});
-	var material2 = new THREE.MeshNormalMaterial({ 
-		color: 0xffff00,
-		opacity: 0.4
+	var material2 = new THREE.MeshLambertMaterial({ 
+		color: 0xD4F65E,
+		// color: 0xffffff,
+		opacity: 0.9,
+		transparent: false,
+		// wireframe: true
 	});
+
 	var material3 = new THREE.MeshBasicMaterial({ 
 		color: 0xffffff,
 		transparent: true,
-		opacity: 0.9,
+		// wireframe: true,
+		opacity: 0.8,
 		fog: false
 	});
 
@@ -641,7 +690,7 @@ function makeSocialStatic(data,hour){
 	data.forEach(function(d){
 		//if(d.social.length == 0) return;
 		if(d.social.filter(function(d){ return d.instagram != 0; }).length > 0){
-			var cube = new THREE.Mesh( geometry, material3 );
+			var cube = new THREE.Mesh( geometry, material );
 			
 			cube.position.x = d.x;
 			cube.position.y = d.y;
@@ -655,7 +704,7 @@ function makeSocialStatic(data,hour){
 		}
 		
 		if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
-			cube = new THREE.Mesh( geometry, material3 );
+			cube = new THREE.Mesh( geometry, material2 );
 		
 			cube.position.x = d.x+10;
 			cube.position.y = d.y;
