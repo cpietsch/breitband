@@ -234,6 +234,7 @@ function d3_technologie(){
 							tooltip.position([d3.event.pageX, d3.event.pageY]);
 							tooltip.show(); 
 						})
+						.on('mouseout', tooltip.hide())
 						.attr("data-type", d.type)
 						.attr("data-short", d.short)
 						.attr("data-long", d.long)
@@ -241,7 +242,6 @@ function d3_technologie(){
 						.attr("data-i", function(d){ return i; })
 						.attr("data-speed", function(d,i){ return i; })
 						.attr("data-description", d.description)
-						.on('mouseout', tooltip.hide())
 						.style('fill', color)
 						.attr("class", "outline-circle outline-circle-"+d.short)
 						.attr("cx", function(d,i){ return x(i); })

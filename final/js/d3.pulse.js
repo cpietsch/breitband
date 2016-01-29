@@ -1,7 +1,7 @@
-/*global d3:false,console:false */
+/*global d3:false,console:false,debouncer:false */
 /*jshint unused:false*/
 function d3_pulse(){
-	var selection, hour = -1, odata, layer = [];
+	var selection, hour = -1, odata, layer = [], state=true;
 
 	function pulse(sel){
 		selection = sel;
@@ -150,15 +150,6 @@ function d3_pulse(){
 				.attr('text-anchor', 'end')
 				.text('18:00');
 
-			grid.append('circle')
-				.attr('id', 'timebutton')
-				.attr('cx', 0)
-				.attr('cy', 0)
-				.attr('r', line_width/2)
-				.on('click', function(){
-					console.log(d3.mouse(this));
-				});
-
 			//svg groups for circles
 			var species_g = {};
 			//svg groups for paths
@@ -205,25 +196,77 @@ function d3_pulse(){
 				
 			}
 
+			line_svg.append('image')
+				.attr('class', 'playbtn')
+				.style('opacity', 0)
+				.attr('x', line_width/2-28.5)
+				.attr('y', line_width/2-28.5)
+				.attr('width', 59)
+				.attr('height', 59)
+				.attr('xlink:href', 'images/play@2x.png');
+
+			line_svg.append('circle')
+				.attr('id', 'timebutton')
+				.attr('cx', 0)
+				.attr('cy', 0)
+				.attr('r', line_width/2)
+				.on('click', function(){
+					var m = d3.mouse(this);
+					var r = Math.sqrt(Math.pow(m[0],2)+Math.pow(m[1],2));
+					if(r>20){
+						var a = Math.floor(((Math.atan(m[1] / m[0])))/Math.PI*180/12);
+						if(a<0){
+							a+=7;
+						}
+						if(m[0]>0&&m[1]>0){
+							a+=6;
+						}else if(m[0]>0&&m[1]<0){
+							a+=0;
+						}else if(m[0]<0&&m[1]<0){
+							a+=18;
+						}else{
+							a+=12;
+						}
+
+						if(!state && hour === a){
+							state = true;
+							requestAnimationFrame(pulse.iterate);
+							pulse.stateUpdate();
+						}else{
+							hour = a;
+							if(!state){
+								requestAnimationFrame(pulse.iterate);
+							}
+							state = false;
+							pulse.stateUpdate();
+						}
+					}else if(!state){
+						state = true;
+						requestAnimationFrame(pulse.iterate);
+						pulse.stateUpdate();
+					}
+				})
+				.attr('transform', 'translate('+(line_width/2)+','+(line_height/2)+')');
+
 			d3.json('http://tsb.sebastianmeier.eu/static/info.json', function(err, info_data){
 				if(err){ return console.error(err); }
-
+				
 				for(var s in species){
 					var max = -Number.MAX_VALUE;
-
+					var data;
 					switch(s){
 						case 'cix':
 							var tdata = [66,48,40,32,29,27,23,19,17,16,14,14,14,15,18,20,23,28,32,37,40,45,46,49,53,54,57,60,65,69,67,71,76,74,71,77,75,78,88,74,78,84,83,87,81,74,74,72,66];
-							var data = [];
+							data = [];
 							for(var i = 0; i<tdata.length; i++){
 								data.push({x:i/2, y:tdata[i]});
 							}
 						break;
 						case 'instagram':
-							var data = pulse.reorder('instagram', info_data);
+							data = pulse.reorder('instagram', info_data);
 						break;
 						case 'twitter':
-							var data = pulse.reorder('twitter', info_data);
+							data = pulse.reorder('twitter', info_data);
 						break;
 					}
 
@@ -332,12 +375,17 @@ function d3_pulse(){
 		});
 	};
 
-	pulse.iterate = function(){
-		hour++;
-		if(hour>23){
-			hour = 0;
+	pulse.stateUpdate = function(){
+		if(state){
+			d3.select('.timetext').style('opacity', 1);
+			d3.select('.playbtn').style('opacity', 0);
+		}else{
+			d3.select('.timetext').style('opacity', 0.3);
+			d3.select('.playbtn').style('opacity', 1);
 		}
+	};
 
+	pulse.iterate = function(){
 		d3.selectAll('.animationLayer').style('display', 'none');
 		d3.select('#animationLayer_'+hour).style('display', 'block');
 
@@ -355,7 +403,14 @@ function d3_pulse(){
 
 		d3.select('.timetext').text(hour);
 		
-		requestAnimationFrame(debouncer(pulse.iterate, 200));
+		hour++;
+		if(hour>23){
+			hour = 0;
+		}
+
+		if(state){
+			requestAnimationFrame(debouncer(pulse.iterate, 200));
+		}
 	};
 
 	pulse.reorder = function(key, array){
