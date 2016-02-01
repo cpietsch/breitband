@@ -155,7 +155,7 @@ function d3_technologie(){
 				'translate('+(x((data[4].speeds.length-1))+width+100+5)+' '+(y(data[4].speeds[(data[4].speeds.length-1)])+50+6)+')' 
 			];
 
-			cabel_svg.append('defs').append('pattern')
+			svg.append('defs').append('pattern')
 				.attr('id', 'missing_pattern')
 				.attr('width', 44)
 				.attr('height', 44)
@@ -169,10 +169,12 @@ function d3_technologie(){
 
 			cabel_svg.append('path')
 				.attr('class', 'missing')
+				.attr('fill','url(#missing_pattern)')
 				.attr("d", line(data[0].speeds)+"L"+x(data[0].speeds.length-1)+",0Z");
 
 			mobile_svg.append('path')
 				.attr('class', 'missing')
+				.attr('fill','url(#missing_pattern)')
 				.attr("d", line(data[3].speeds)+"L"+(x(data[3].speeds.length-1))+",0Z");
 
 			data.forEach(function(d, index, array){
@@ -199,6 +201,7 @@ function d3_technologie(){
 				var layer = t_svg.append("g");
 
 				layer.append("path")
+					.attr('class', 'line')
 					.style('stroke', color)
 					.datum(d.speeds)
 					.attr("d", line);

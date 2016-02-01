@@ -87,13 +87,15 @@ div.white{
 
 h2{
 	font-family: "ClanOT-Medium";
-		margin: 0 0 0.3em 0;
-		font-size: 2.5em;
-		line-height: 1.2em;
+	font-weight:normal;
+	margin: 0 0 0.3em 0;
+	font-size: 2.5em;
+	line-height: 1.2em;
 }
 
 h3{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 }
 
 .storer-box{
@@ -110,8 +112,8 @@ h3{
 
 /*-------- Minimap --------*/
 
-#minimap{
-	margin-top:0px;
+#entwicklung{
+	padding-top:50px;
 }
 
 .datacol{
@@ -164,19 +166,23 @@ h3{
 	padding: 15px 0;
 	font-size:20px;
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 }
 
 .minimap text{
 	font-size:18px;
 	font-family: "ClanOT-Medium";	
+	font-weight:normal;
 }
 
 .minimap{
+	max-width:250px;
+	margin:0 auto;
 	height:300px;
 }
 
-#minimap{
-	padding-bottom: 100px;
+#bezirke{
+	padding-top: 100px;
 }
 
 /*-------- Technologien --------*/
@@ -202,16 +208,17 @@ h3{
 	font-size:12px;
 }
 
-#technologien{
-	padding-top:50px;
+#technologie{
+	padding-top:90px;
 }
 
 #technologien path.missing{
 	stroke:none;
-	fill:url('#missing_pattern');
 }
 
-#technologien path{
+#technologien path.line,
+#technologien path.domain,
+#technologien path.axis{
 	stroke:#000;
 	fill:none;
 	stroke-width:2;
@@ -229,11 +236,13 @@ h3{
 
 #technologien text.headline{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:18px;
 }
 
 #technologien text.speed-label{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:12px;
 }
 
@@ -335,9 +344,12 @@ h3{
 
 /*-------- Pulse --------*/
 
+#puls{
+	padding-top:80px;
+}
+
 #pulse{
-	padding-top:50px;
-	padding-bottom:100px;
+	padding-bottom:80px;
 }
 
 #d3_circular circle#timebutton{
@@ -356,9 +368,8 @@ h3{
 }
 
 #d3_pulse{
-	margin-top:50px;
 	width:100%;
-	height:550px;
+	height:450px;
 }
 
 #d3_circular{
@@ -398,6 +409,7 @@ h3{
 
 text.timetext{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:20px;
 }
 
@@ -502,16 +514,18 @@ path.trendarea.instagram{
 #companies-vis text{
 	font-family: "ClanOT-Medium";
 	font-size:12px;
-	font-weight:bold;
+	font-weight:normal;
 }
 
 #companies-vis text.headline{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:18px;
 }
 
 #companies-vis text.master-headline{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:24px;
 }
 
@@ -587,6 +601,7 @@ path.trendarea.instagram{
 	font-size:16px;
 	padding:20px 15px 10px 15px;
 	display: block;
+	font-weight:normal;
 }
 
 .switchrow .company-help strong{
@@ -682,11 +697,8 @@ path.trendarea.instagram{
 /*-------- Comparison --------*/
 
 #compare .chart .col{
+	margin-top:40px;
 	height:400px;
-}
-
-#compare .container{
-	padding-bottom:75px;
 }
 
 #compare-legend {
@@ -860,6 +872,10 @@ path.trendarea.instagram{
 
 /*-------- Map headline --------*/
 
+#stand{
+	padding-top:75px;
+}
+
 #map_container{
 	height:600px;
 	width:100%;
@@ -922,7 +938,7 @@ path.trendarea.instagram{
 
 #small-legend{
 	float:right;
-	margin-top:-600px;
+	margin-top:-550px;
 	font-size:12px;
 }
 
@@ -985,6 +1001,7 @@ ul.legend span span{
 	padding-top:24px;
 	display: block;
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 }
 
 #map-intro .scnd-col .small{
@@ -1051,6 +1068,7 @@ ul.legend span span{
 	font-size:12px;
 	a{
 		font-family: "ClanOT-Medium";
+		font-weight:normal;
 	}
 	p{
 		max-width:400px;
@@ -1060,6 +1078,7 @@ ul.legend span span{
 #footer .scnd-col{
 	font-size:11px;
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	.small{
 		font-family: 'ClanOT-Book';
 	}
@@ -1162,6 +1181,7 @@ ul.legend span span{
 .navbar-default .navbar-brand{
 	float:left;
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	color:rgb(30,55,145);
 	font-size:1.2em;
 	line-height:1.4em;
@@ -1277,26 +1297,6 @@ ul.legend span span{
 	}
 }
 
-/******************** Responsive *******************/
-
-@media (min-width: 768px){
-	.navbar-default .navbar-brand{
-		font-size:2em;
-		line-height:1.8em;
-		max-width:50%;
-		margin:15px 0 0 15px;
-		padding:0 0 0 0;
-	}
-
-	#minimap{
-		margin-top:50px;
-	}
-
-	.mapswitch-head{
-		padding-top: 25px;
-	}
-}
-
 /******************** Map *******************/
 
 .leaflet-google-layer{
@@ -1320,7 +1320,6 @@ ul.legend span span{
 .carousel {
 	margin-top:20px;
 	height: 350px;
-	margin-bottom: 60px;
 }
 
 .carousel-indicators .active{
@@ -1371,6 +1370,7 @@ ul.legend span span{
 
 .carousel-caption h4{
 	font-family: "ClanOT-Medium";
+	font-weight:normal;
 	font-size:18px;
 }
 
@@ -1393,13 +1393,23 @@ ul.legend span span{
 	color:rgba(0, 0, 0, 1);
 }
 
+#provider{
+	padding-top:30px;
+}
+
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
 	#compare .chart .col{
+		margin-top:0;
 		height:600px;
+	}
+
+	#d3_pulse{
+		height:550px;
+		margin-top:50px;
 	}
 }
 
@@ -1592,4 +1602,54 @@ ul.legend span span{
 
 #threeD .fullscreen.active {
 	background-image: url("img/fullscreen2.svg");
+}
+
+/******************** END *******************/
+
+#end{
+	background-color:#444444;
+	color:#fff;
+	padding:20px 0 30px 0;
+	line-height:20px;
+}
+
+#end a{
+	color:#fff;
+}
+
+.left{
+	text-align:left;
+}
+
+.right{
+	text-align:left;
+}
+
+/******************** Responsive *******************/
+
+@media (min-width: 768px){
+	.navbar-default .navbar-brand{
+		font-size:2em;
+		line-height:1.8em;
+		max-width:50%;
+		margin:15px 0 0 15px;
+		padding:0 0 0 0;
+	}
+
+	#minimap{
+		margin-top:50px;
+	}
+
+	.mapswitch-head{
+		padding-top: 25px;
+	}
+
+	#small-legend{
+		margin-top:-600px;
+	}
+
+	.right{
+		text-align:right;
+	}
+
 }
