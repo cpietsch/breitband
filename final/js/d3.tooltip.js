@@ -62,7 +62,7 @@ function d3_tooltip(){
 	};
 
 	tooltip.hide = function(){
-		//tip.style('display', 'none');
+		tip.style('display', 'none');
 	};
 
 	return tooltip;
