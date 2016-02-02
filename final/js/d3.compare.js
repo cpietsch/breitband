@@ -189,7 +189,7 @@ function d3_compare(){
 						.moveToFront();
 
 					var text = state.activeMenu ? d1.key : parent.key;
-					tooltip.content("<strong>"+text+"</strong>");
+					tooltip.content("<strong class=\"center\">"+text+"</strong>");
 					tooltip.position([tx, ty]);
 					tooltip.show(); 
 

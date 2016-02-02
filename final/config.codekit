@@ -221,6 +221,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/chrispie.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2982,
+		"inputAbbreviatedPath": "\/images\/chrispie.png",
+		"outputAbbreviatedPath": "\/images\/chrispie.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/chrispie@2x.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -228,6 +239,17 @@
 		"initialSize": 3791,
 		"inputAbbreviatedPath": "\/images\/chrispie@2x.jpg",
 		"outputAbbreviatedPath": "\/images\/chrispie@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/chrispie@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5121,
+		"inputAbbreviatedPath": "\/images\/chrispie@2x.png",
+		"outputAbbreviatedPath": "\/images\/chrispie@2x.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -1035,6 +1057,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/tsb.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 8709,
+		"inputAbbreviatedPath": "\/images\/tsb.png",
+		"outputAbbreviatedPath": "\/images\/tsb.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/tsb@2x.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1042,6 +1075,17 @@
 		"initialSize": 19673,
 		"inputAbbreviatedPath": "\/images\/tsb@2x.jpg",
 		"outputAbbreviatedPath": "\/images\/tsb@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/tsb@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 18299,
+		"inputAbbreviatedPath": "\/images\/tsb@2x.png",
+		"outputAbbreviatedPath": "\/images\/tsb@2x.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -1101,6 +1145,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/vislab.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2145,
+		"inputAbbreviatedPath": "\/images\/vislab.png",
+		"outputAbbreviatedPath": "\/images\/vislab.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/vislab@2x.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -1108,6 +1163,17 @@
 		"initialSize": 6606,
 		"inputAbbreviatedPath": "\/images\/vislab@2x.jpg",
 		"outputAbbreviatedPath": "\/images\/vislab@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/vislab@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3497,
+		"inputAbbreviatedPath": "\/images\/vislab@2x.png",
+		"outputAbbreviatedPath": "\/images\/vislab@2x.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0

@@ -1,7 +1,7 @@
 /*global d3:false */
 /*jshint unused:false*/
 function d3_tooltip(){
-	var selection,tip,innertip,height,width;
+	var selection,tip,innertip,height,width = 250;
 
 	function tooltip(sel){
 		selection = sel;
@@ -31,7 +31,6 @@ function d3_tooltip(){
 		}
 		tip.style('display','block');
 		var bb = tip.node().getBoundingClientRect();
-		width = bb.width;
 		height = bb.height;
 
 		if(!visible){
@@ -41,7 +40,21 @@ function d3_tooltip(){
 
 	tooltip.position = function(xy){
 		tip.style('left', (xy[0]-width/2-4))
-			.style('top', (xy[1]-height-12));
+			.style('top', (xy[1]-height-12))
+			.classed('right', false)
+			.classed('left', false);
+
+		if(xy[0]<width/2){
+			tip.style('left', (xy[0]-10))
+				.classed('left', true);
+		}
+
+		if(xy[0]>(window.innerWidth-width/2)){
+			tip.style('left', (xy[0]-width+8))
+				.classed('right', true);
+		}
+
+		
 	};
 
 	tooltip.show = function(){
@@ -49,7 +62,7 @@ function d3_tooltip(){
 	};
 
 	tooltip.hide = function(){
-		tip.style('display', 'none');
+		//tip.style('display', 'none');
 	};
 
 	return tooltip;

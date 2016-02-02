@@ -257,16 +257,21 @@ function d3_technologie(){
 						.on('mouseover', function(){ 
 							var o = d3.select(this); 
 							tooltip.content("<strong>"+o.attr("data-short")+"</strong><br />mit einer Geschwindigkeit von<br /> bis zu "+labels[(parseInt(o.attr("data-speed")))]+" Mbit/s ist in "+o.attr("data-d")+"%<br /> von Berlin verfügbar.");
-							tooltip.position([d3.event.pageX, d3.event.pageY]);
+							var off = (o.attr("data-type") === "mobile" && mobile) ? $('#d3_technologie svg.mobileSvg').offset() : $('#d3_technologie').offset();
+							var tx = off.left + 50 + 30 + ((o.attr("data-type") === "mobile" && mobile) ? x_mobile(parseFloat(o.attr("data-i"))) : (o.attr("data-type") === "mobile") ? (x(parseFloat(o.attr("data-i")))+width+50) : x(parseFloat(o.attr("data-i"))));
+							var ty = off.top + 50 + y(parseFloat(o.attr("data-d")));
+							tooltip.position([tx, ty]);
 							tooltip.show(); 
 						})
-						.on('mouseout', tooltip.hide())
+						.on('mouseout', function(){
+							tooltip.hide();
+						})
 						.attr("r", 3)
 						.attr("data-type", d.type)
 						.attr("data-short", d.short)
 						.attr("data-long", d.long)
 						.attr("data-d", function(d){ return d; })
-						.attr("data-i", function(d){ return i; })
+						.attr("data-i", function(d, i){ return i; })
 						.attr("data-speed", function(d,i){ return i; })
 						.attr("data-description", d.description)
 						.attr("class", "fill-circle")
@@ -286,15 +291,18 @@ function d3_technologie(){
 						.on('mouseover', function(){ 
 							var o = d3.select(this); 
 							tooltip.content("<strong>"+o.attr("data-short")+"</strong><br />mit einer Geschwindigkeit von<br /> bis zu "+labels[(parseInt(o.attr("data-speed")))]+" Mbit/s ist in "+o.attr("data-d")+"%<br /> von Berlin verfügbar.");
-							tooltip.position([d3.event.pageX, d3.event.pageY]);
+							var off = (o.attr("data-type") === "mobile" && mobile) ? $('#d3_technologie svg.mobileSvg').offset() : $('#d3_technologie').offset();
+							var tx = off.left + 50 + 30 + ((o.attr("data-type") === "mobile" && mobile) ? x_mobile(parseFloat(o.attr("data-i"))) : (o.attr("data-type") === "mobile") ? (x(parseFloat(o.attr("data-i")))+width+50) : x(parseFloat(o.attr("data-i"))));
+							var ty = off.top + 50 + y(parseFloat(o.attr("data-d")));
+							tooltip.position([tx, ty]);
 							tooltip.show(); 
 						})
-						.on('mouseout', tooltip.hide())
+						.on('mouseout', function(){ tooltip.hide(); })
 						.attr("data-type", d.type)
 						.attr("data-short", d.short)
 						.attr("data-long", d.long)
 						.attr("data-d", function(d){ return d; })
-						.attr("data-i", function(d){ return i; })
+						.attr("data-i", function(d, i){ return i; })
 						.attr("data-speed", function(d,i){ return i; })
 						.attr("data-description", d.description)
 						.style('fill', color)
