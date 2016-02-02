@@ -1,7 +1,7 @@
 /*global d3:false,colorPalletes:false,tooltip:false,console:false */
 /*jshint unused:false*/
 function d3_technologie(){
-	var selection;
+	var selection, mobile = false;
 
 	function technologie(sel){
 		selection = sel;
@@ -37,9 +37,24 @@ function d3_technologie(){
 			var fullheight = bb.height;
 			var width = (fullwidth-200)/1.5;
 			var height = fullheight-50;
+			if(fullwidth < 440){
+				mobile = true;
+				width = fullwidth-100;
+				fullheight = fullheight/2;
+				height = fullheight-50;
+			}else{
+				mobile = false;
+			}
 
 			//Create SVG
 			var svg = sel.append('svg')
+						.attr('width', fullwidth)
+						.attr('height', fullheight)
+						.append('g')
+							.attr('transform', 'translate(30 0)');
+
+			var mobileSvg = sel.append('svg')
+						.attr('class', 'mobileSvg')
 						.attr('width', fullwidth)
 						.attr('height', fullheight)
 						.append('g')
@@ -53,11 +68,21 @@ function d3_technologie(){
 				scaleRange = [scaleStep*6, scaleStep*5, scaleStep*4, scaleStep*3, scaleStep*2, scaleStep, 0],
 				x = d3.scale.linear().domain([0,5]).range([0,width]),
 				x_alt = d3.scale.ordinal().domain(["1","2","3","4","5","6"]).rangePoints([0,width]),
-				x_mobile = d3.scale.linear().domain([0,2]).range([0,width]),
-				x_alt_mobile = d3.scale.ordinal().domain(["1","2","3"]).rangePoints([0,width/2]),
-				y = d3.scale.linear().domain(scaleDomain).range(scaleRange),
+				x_mobile = d3.scale.linear().domain([0,2]).range([0,width]);
+
+			var x_alt_mobile;
+			if(mobile){
+				x_alt_mobile = d3.scale.ordinal().domain(["1","2","3"]).rangePoints([0,width]);
+			}else{
+				x_alt_mobile = d3.scale.ordinal().domain(["1","2","3"]).rangePoints([0,width/2]);
+			}
+
+			var y = d3.scale.linear().domain(scaleDomain).range(scaleRange),
 				line = d3.svg.line()
 					.x(function(d, i) { return x(i); })
+					.y(function(d) { return y(d); }),
+				line_mobile = d3.svg.line()
+					.x(function(d, i) { return x_mobile(i); })
 					.y(function(d) { return y(d); }),
 				y_axis = d3.svg.axis()
 					.scale(y)
@@ -81,10 +106,16 @@ function d3_technologie(){
 			var cabel_svg = svg.append('g').attr('transform', 'translate(50, 50)');
 				cabel_svg.append("text").attr("class", "headline").text("Leitungsgebunden").attr("transform", "translate(-5, -25)");
 
-			var mobile_svg = svg.append('g').attr('transform', 'translate('+(50+width+50)+', 50)');
-				mobile_svg.append("text").attr("class", "headline").text("Drahtlos").attr("transform", "translate(-5, -25)");
+			var mobile_svg;
+			if(mobile){
+				mobile_svg = mobileSvg.append('g').attr('transform', 'translate(50, 50)');
+			}else{
+				mobile_svg = svg.append('g').attr('transform', 'translate('+(50+width+50)+', 50)');
+			}
+			mobile_svg.append("text").attr("class", "headline").text("Drahtlos").attr("transform", "translate(-5, -25)");
 
 			var label_layer = svg.append("g");
+			var label_layer_mobile = mobile_svg.append("g");
 
 			mobile_svg.append('image')
 				.attr('class', 'technology')
@@ -103,12 +134,22 @@ function d3_technologie(){
 				.attr('y', -50);
 
 			[0,25,50,70,85,95,100].forEach(function(d, index, array){
-				cabel_svg.append('line')
-					.attr('class', 'bg')
-					.attr('x1', -10)
-					.attr('x2', width*1.5+10+50)
-					.attr('y1', y(d))
-					.attr('y2', y(d));
+				var targets = [cabel_svg];
+				if(mobile){targets.push(mobile_svg);}
+				targets.forEach(function(dd,ii, aa){
+					dd.append('line')
+						.attr('class', 'bg')
+						.attr('x1', -10)
+						.attr('x2', function(d){
+							if(mobile){
+								return width;
+							}else{
+								return width*1.5+10+50;
+							}						
+						})
+						.attr('y1', y(d))
+						.attr('y2', y(d));
+				});
 			});
 
 			var data = [{
@@ -151,8 +192,8 @@ function d3_technologie(){
 				'translate('+(x(0)+50)+' '+(y(data[0].speeds[0])+50+20)+')',
 				'translate('+(x(0)+50)+' '+(y(data[1].speeds[0])+50+20)+')',
 				'translate('+(x(0)+50)+' '+(y(data[2].speeds[0])+50-10)+')',
-				'translate('+(x((data[3].speeds.length-1))+width+100+5)+' '+(y(data[3].speeds[(data[3].speeds.length-1)])+50+6)+')', 
-				'translate('+(x((data[4].speeds.length-1))+width+100+5)+' '+(y(data[4].speeds[(data[4].speeds.length-1)])+50+6)+')' 
+				(mobile) ? 'translate('+(x_mobile((data[3].speeds.length-2))-20)+' '+(y(data[3].speeds[(data[3].speeds.length-2)])+20)+')' : 'translate('+(x((data[3].speeds.length-1))+width+100+5)+' '+(y(data[3].speeds[(data[3].speeds.length-1)])+50+6)+')', 
+				(mobile) ? 'translate('+(x_mobile((data[4].speeds.length-1))+10)+' '+(y(data[4].speeds[(data[4].speeds.length-1)])+6)+')': 'translate('+(x((data[4].speeds.length-1))+width+100+5)+' '+(y(data[4].speeds[(data[4].speeds.length-1)])+50+6)+')' 
 			];
 
 			svg.append('defs').append('pattern')
@@ -175,7 +216,7 @@ function d3_technologie(){
 			mobile_svg.append('path')
 				.attr('class', 'missing')
 				.attr('fill','url(#missing_pattern)')
-				.attr("d", line(data[3].speeds)+"L"+(x(data[3].speeds.length-1))+",0Z");
+				.attr("d", (mobile) ? line_mobile(data[3].speeds)+"L"+(x_mobile(data[3].speeds.length-1))+",0Z" : line(data[3].speeds)+"L"+(x(data[3].speeds.length-1))+",0Z");
 
 			data.forEach(function(d, index, array){
 				var color;
@@ -192,7 +233,12 @@ function d3_technologie(){
 					t_svg = mobile_svg;
 				}
 
-				label_layer.append('text')
+				var tlabel = label_layer;
+				if(mobile && index > 2){
+					tlabel = label_layer_mobile;
+				}
+
+				tlabel.append('text')
 					.text(d.short)
 					.attr('class', 'speed-label')
 					.style('fill', color)
@@ -204,7 +250,7 @@ function d3_technologie(){
 					.attr('class', 'line')
 					.style('stroke', color)
 					.datum(d.speeds)
-					.attr("d", line);
+					.attr("d", (d.type === "mobile" && mobile) ? line_mobile : line );
 
 				layer.selectAll("circle.fill-cirlce")
 					.data(d.speeds).enter().append("circle")
@@ -225,7 +271,13 @@ function d3_technologie(){
 						.attr("data-description", d.description)
 						.attr("class", "fill-circle")
 						.style('fill', color)
-						.attr("cx", function(d,i){ return x(i); })
+						.attr("cx", function(dd,i){ 
+							if(d.type === "mobile" && mobile){
+								return x_mobile(i);
+							}else{
+								return x(i);
+							}
+						})
 						.attr("cy", function(d,i){ return y(d); });
 
 				layer.selectAll("circle.outline-cirlce")
@@ -247,7 +299,13 @@ function d3_technologie(){
 						.attr("data-description", d.description)
 						.style('fill', color)
 						.attr("class", "outline-circle outline-circle-"+d.short)
-						.attr("cx", function(d,i){ return x(i); })
+						.attr("cx", function(dd,i){ 
+							if(d.type === "mobile" && mobile){
+								return x_mobile(i);
+							}else{
+								return x(i);
+							}
+						})
 						.attr("cy", function(d,i){ return y(d); });
 			});
 
@@ -262,9 +320,9 @@ function d3_technologie(){
 				.call(y_axis);
 
 			mobile_svg.append("g")
-				.attr("transform", "translate("+(width/2+10)+", 0)")
+				.attr("transform", "translate("+((mobile) ? -10 : (width/2+10))+", 0)")
 				.attr("class", "y axis")
-				.call(y_axis_mobile);
+				.call((mobile) ? y_axis : y_axis_mobile);
 
 			mobile_svg.append("g")
 				.attr("class", "x axis")

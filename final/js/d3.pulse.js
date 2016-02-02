@@ -20,13 +20,13 @@ function d3_pulse(){
 				gx_max = 235,
 				gy_min = 1,
 				gy_max = 147,
-				line_height = 200,
 				line_pad = 10,
 				cols = gx_max-gx_min,
 				rows = gy_max-gy_min,
 				width = cols*size,
 				height = rows*size,
-				line_width = 200;
+				line_height = 200,
+				line_width = 180;
 
 			var svg = selection.append('svg')
 				.attr('id', 'timemap')
@@ -210,6 +210,12 @@ function d3_pulse(){
 				.attr('cx', 0)
 				.attr('cy', 0)
 				.attr('r', line_width/2)
+				.on('mouseover', function(){
+					var m = d3.mouse(this);
+					var r = Math.sqrt(Math.pow(m[0],2)+Math.pow(m[1],2));
+					var a = Math.floor(((Math.atan(m[1] / m[0])))/Math.PI*180/12);
+					console.log(r, a);
+				})
 				.on('click', function(){
 					var m = d3.mouse(this);
 					var r = Math.sqrt(Math.pow(m[0],2)+Math.pow(m[1],2));
