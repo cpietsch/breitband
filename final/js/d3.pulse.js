@@ -200,7 +200,7 @@ function d3_pulse(){
 				.attr('class', 'playbtn')
 				.style('opacity', 0)
 				.attr('x', line_width/2-28.5)
-				.attr('y', line_width/2-28.5)
+				.attr('y', line_height/2-28.5)
 				.attr('width', 59)
 				.attr('height', 59)
 				.attr('xlink:href', 'images/play@2x.png');
@@ -210,26 +210,20 @@ function d3_pulse(){
 				.attr('cx', 0)
 				.attr('cy', 0)
 				.attr('r', line_width/2)
-				.on('mouseover', function(){
-					var m = d3.mouse(this);
-					var r = Math.sqrt(Math.pow(m[0],2)+Math.pow(m[1],2));
-					var a = Math.floor(((Math.atan(m[1] / m[0])))/Math.PI*180/12);
-					console.log(r, a);
-				})
 				.on('click', function(){
 					var m = d3.mouse(this);
 					var r = Math.sqrt(Math.pow(m[0],2)+Math.pow(m[1],2));
 					if(r>20){
-						var a = Math.floor(((Math.atan(m[1] / m[0])))/Math.PI*180/12);
+						var a = Math.floor((Math.atan(m[1] / m[0]))/(Math.PI/2)*6);
 						if(a<0){
 							a+=7;
 						}
 						if(m[0]>0&&m[1]>0){
-							a+=6;
+							a+=7;
 						}else if(m[0]>0&&m[1]<0){
 							a+=0;
 						}else if(m[0]<0&&m[1]<0){
-							a+=18;
+							a+=19;
 						}else{
 							a+=12;
 						}
@@ -409,12 +403,12 @@ function d3_pulse(){
 
 		d3.select('.timetext').text(hour);
 		
-		hour++;
-		if(hour>23){
-			hour = 0;
-		}
-
 		if(state){
+			hour++;
+			if(hour>23){
+				hour = 0;
+			}
+
 			requestAnimationFrame(debouncer(pulse.iterate, 200));
 		}
 	};
