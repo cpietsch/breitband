@@ -341,16 +341,18 @@ function d3_company(){
 							img_class += " "+companies[i].con[cc].type;
 						}
 
-						svg.append('image')
-							.attr('class', img_class)
-							.attr('data-type', i)
-							.attr('xlink:href', 'images/'+companies[i].img+'@2x.png')
-							.attr('width', 80)
-							.attr('height', ih)
-							.attr('x', -100)
-							.attr('y', iy)
-							.on('mouseover', function(){ company.highlightComp(d3.select(this).attr('data-type')); })
-							.on('mouseout', function(){ company.deHighlight(); });
+						["bw", "color"].forEach(function(dd, ii, aa){
+							svg.append('image')
+								.attr('class', img_class+" "+dd)
+								.attr('data-type', i)
+								.attr('xlink:href', 'images/'+companies[i].img+'@2x'+((dd==="bw")?"_bw":"")+'.png')
+								.attr('width', 80)
+								.attr('height', ih)
+								.attr('x', -100)
+								.attr('y', iy)
+								.on('mouseover', function(){ company.highlightComp(d3.select(this).attr('data-type')); })
+								.on('mouseout', function(){ company.deHighlight(); });
+						});					
 
 						first = false;
 					}
@@ -393,37 +395,34 @@ function d3_company(){
 			.style('stroke-width','2px')
 			.style('stroke','rgba(110,205,245,1)');
 
-		d3.selectAll('#companies image')
+		d3.selectAll('#companies image.color')
+			.style('opacity', 0);
+
+		d3.selectAll('#companies image.bw')
 			.style('opacity', 1);
 	};
 
 	company.highlight = function(t){
-		d3.selectAll('#companies image')
-			.style('opacity', 0.3);
-
-		d3.selectAll('#companies image.technology')
-			.style('opacity', 1);
-
 		d3.selectAll('#companies path.'+t)
 			.style('stroke-width','4px')
 			.style('stroke','rgba(30,55,145,1)');
 
-		d3.selectAll('#companies image.'+t)
+		d3.selectAll('#companies image.bw.'+t)
+			.style('opacity', 0);
+
+		d3.selectAll('#companies image.color.'+t)
 			.style('opacity', 1);
 	};
 
 	company.highlightComp = function(t){
-		d3.selectAll('#companies image')
-			.style('opacity', 0.3);
-
-		d3.selectAll('#companies image.technology')
-			.style('opacity', 1);
-
 		d3.selectAll('#companies path.'+t)
 			.style('stroke-width','4px')
 			.style('stroke','rgba(30,55,145,1)');
 
-		d3.selectAll('#companies image.'+t)
+		d3.selectAll('#companies image.bw.'+t)
+			.style('opacity', 0);
+
+		d3.selectAll('#companies image.color.'+t)
 			.style('opacity', 1);
 	};
 

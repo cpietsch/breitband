@@ -122,6 +122,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/airdata@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 8785,
+		"inputAbbreviatedPath": "\/images\/airdata@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/airdata@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/airdata_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4149,
+		"inputAbbreviatedPath": "\/images\/airdata_bw.png",
+		"outputAbbreviatedPath": "\/images\/airdata_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/beberlin.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -232,6 +254,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/deutschetelekabel@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6418,
+		"inputAbbreviatedPath": "\/images\/deutschetelekabel@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/deutschetelekabel@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/deutschetelekabel_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2919,
+		"inputAbbreviatedPath": "\/images\/deutschetelekabel_bw.png",
+		"outputAbbreviatedPath": "\/images\/deutschetelekabel_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/dnsnet.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -250,6 +294,28 @@
 		"initialSize": 8457,
 		"inputAbbreviatedPath": "\/images\/dnsnet@2x.png",
 		"outputAbbreviatedPath": "\/images\/dnsnet@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/dnsnet@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6208,
+		"inputAbbreviatedPath": "\/images\/dnsnet@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/dnsnet@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/dnsnet_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3034,
+		"inputAbbreviatedPath": "\/images\/dnsnet_bw.png",
+		"outputAbbreviatedPath": "\/images\/dnsnet_bw.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -298,6 +364,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/eplus@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3545,
+		"inputAbbreviatedPath": "\/images\/eplus@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/eplus@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/eplus_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2201,
+		"inputAbbreviatedPath": "\/images\/eplus_bw.png",
+		"outputAbbreviatedPath": "\/images\/eplus_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/eu.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -331,6 +419,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/eusanet_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3210,
+		"inputAbbreviatedPath": "\/images\/eusanet_bw.png",
+		"outputAbbreviatedPath": "\/images\/eusanet_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/ewe.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -353,6 +452,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/ewe@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3991,
+		"inputAbbreviatedPath": "\/images\/ewe@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/ewe@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/ewe_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2319,
+		"inputAbbreviatedPath": "\/images\/ewe_bw.png",
+		"outputAbbreviatedPath": "\/images\/ewe_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/filiago.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -360,6 +481,17 @@
 		"initialSize": 8137,
 		"inputAbbreviatedPath": "\/images\/filiago.png",
 		"outputAbbreviatedPath": "\/images\/filiago.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/filiago_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5604,
+		"inputAbbreviatedPath": "\/images\/filiago_bw.png",
+		"outputAbbreviatedPath": "\/images\/filiago_bw.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -463,6 +595,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/o2@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2040,
+		"inputAbbreviatedPath": "\/images\/o2@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/o2@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/o2_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1471,
+		"inputAbbreviatedPath": "\/images\/o2_bw.png",
+		"outputAbbreviatedPath": "\/images\/o2_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/pattern.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -540,6 +694,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/primacom@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5053,
+		"inputAbbreviatedPath": "\/images\/primacom@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/primacom@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/primacom_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2345,
+		"inputAbbreviatedPath": "\/images\/primacom_bw.png",
+		"outputAbbreviatedPath": "\/images\/primacom_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/pulse.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -595,6 +771,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/rft@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 9356,
+		"inputAbbreviatedPath": "\/images\/rft@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/rft@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/rft_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3735,
+		"inputAbbreviatedPath": "\/images\/rft_bw.png",
+		"outputAbbreviatedPath": "\/images\/rft_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/satellite.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -628,6 +826,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/satinternet_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5320,
+		"inputAbbreviatedPath": "\/images\/satinternet_bw.png",
+		"outputAbbreviatedPath": "\/images\/satinternet_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/skydsl.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -639,6 +848,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/skydsl_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3708,
+		"inputAbbreviatedPath": "\/images\/skydsl_bw.png",
+		"outputAbbreviatedPath": "\/images\/skydsl_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/stardsl.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -646,6 +866,17 @@
 		"initialSize": 4664,
 		"inputAbbreviatedPath": "\/images\/stardsl.png",
 		"outputAbbreviatedPath": "\/images\/stardsl.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/stardsl_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4341,
+		"inputAbbreviatedPath": "\/images\/stardsl_bw.png",
+		"outputAbbreviatedPath": "\/images\/stardsl_bw.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -672,6 +903,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/swap@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 8522,
+		"inputAbbreviatedPath": "\/images\/swap@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/swap@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/swap_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3588,
+		"inputAbbreviatedPath": "\/images\/swap_bw.png",
+		"outputAbbreviatedPath": "\/images\/swap_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/telecolumbus.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -694,6 +947,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/telecolumbus@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4087,
+		"inputAbbreviatedPath": "\/images\/telecolumbus@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/telecolumbus@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/telecolumbus_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2321,
+		"inputAbbreviatedPath": "\/images\/telecolumbus_bw.png",
+		"outputAbbreviatedPath": "\/images\/telecolumbus_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/telekom.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -712,6 +987,39 @@
 		"initialSize": 2066,
 		"inputAbbreviatedPath": "\/images\/telekom@2x.png",
 		"outputAbbreviatedPath": "\/images\/telekom@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/telekom@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2067,
+		"inputAbbreviatedPath": "\/images\/telekom@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/telekom@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/telekom_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1521,
+		"inputAbbreviatedPath": "\/images\/telekom_bw.png",
+		"outputAbbreviatedPath": "\/images\/telekom_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/tooway_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4444,
+		"inputAbbreviatedPath": "\/images\/tooway_bw.png",
+		"outputAbbreviatedPath": "\/images\/tooway_bw.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -760,6 +1068,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/versatel@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5305,
+		"inputAbbreviatedPath": "\/images\/versatel@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/versatel@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/versatel_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2501,
+		"inputAbbreviatedPath": "\/images\/versatel_bw.png",
+		"outputAbbreviatedPath": "\/images\/versatel_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/vislab.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -800,6 +1130,28 @@
 		"initialSize": 12199,
 		"inputAbbreviatedPath": "\/images\/vodafone@2x.png",
 		"outputAbbreviatedPath": "\/images\/vodafone@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/vodafone@2x_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 8952,
+		"inputAbbreviatedPath": "\/images\/vodafone@2x_bw.png",
+		"outputAbbreviatedPath": "\/images\/vodafone@2x_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/vodafone_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4114,
+		"inputAbbreviatedPath": "\/images\/vodafone_bw.png",
+		"outputAbbreviatedPath": "\/images\/vodafone_bw.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
