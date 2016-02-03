@@ -6,6 +6,9 @@ function threeD(){
 	function threed(){
 	}
 
+	d3.select('.company-help').on('click',function(){ d3.select('.company-help').style('display','none'); });
+	d3.select('.infobtn').on('click',function(){ d3.select('.company-help').style('display','block'); });
+
 	d3.select(".fullscreen")
 		.on("click", function(d){
 			screenfull.toggle();

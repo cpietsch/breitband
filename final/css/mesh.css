@@ -37,6 +37,82 @@ svg {
   z-index: 100;
   top: 0; }
 
+/*----- INFO -----*/
+div.red {
+  background-color: #e60032;
+  color: #fff; }
+
+.company-help {
+  background-image: url("../images/map_close.png");
+  background-size: 39px 42px;
+  background-position: top right;
+  background-repeat: no-repeat;
+  width: 100%;
+  max-width: 320px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 102; }
+
+.infobtn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background-color: #e60032;
+  color: #fff;
+  font-family: "ClanOT-Medium";
+  font-size: 30px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 101; }
+
+.company-help span.image.image-interactive {
+  float: left;
+  width: 40px;
+  height: 60px;
+  background-size: 40px 60px;
+  background-image: url("../images/interactive.png");
+  display: block;
+  margin: 40px 15px 25px 20px; }
+
+.company-help span.image {
+  float: left;
+  width: 25px;
+  height: 25px;
+  background-size: 50px 25px;
+  display: block;
+  margin: -6px 10px 0 20px;
+  background-position: top right; }
+
+span.image.image-fullscreen {
+  background-image: url("../images/btn_fullscreen_open.gif"); }
+
+span.image.image-screenshot {
+  background-image: url("../images/btn_snapshot.gif"); }
+
+span.image.image-instagram {
+  background-image: url("../images/btn_instagram.gif"); }
+
+span.image.image-twitter {
+  background-image: url("../images/btn_twitter.gif"); }
+
+.company-help strong {
+  font-family: "ClanOT-Medium";
+  font-size: 16px;
+  padding: 20px 15px 10px 15px;
+  display: block;
+  font-weight: normal; }
+
+.company-help p {
+  display: block;
+  padding: 10px 15px;
+  font-style: italic; }
+
 /*----- CLOCK -----*/
 .time {
   position: absolute;
@@ -136,4 +212,10 @@ svg {
     background-image: url("../images/btn_twitter@2x.gif"); }
 
   .instagram {
-    background-image: url("../images/btn_instagram@2x.gif"); } }
+    background-image: url("../images/btn_instagram@2x.gif"); }
+
+  .company-help span.image.image-interactive {
+    background-image: url("../images/interactive@2x.png"); }
+
+  .company-help {
+    background-image: url("../images/map_close@2x.png"); } }
