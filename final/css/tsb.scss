@@ -1448,7 +1448,6 @@ ul.legend span span{
 	color:#000;
 	margin:0 auto;
 	text-align:left;
-	padding-bottom:60px;
 }
 
 .carousel-caption p{
@@ -1584,6 +1583,10 @@ ul.legend span span{
 }
 
 @media (min-width: 515px) {
+	.carousel-caption {
+		padding-bottom:60px;
+	}
+
 	#d3_technologie{
 		height:300px;
 	}
