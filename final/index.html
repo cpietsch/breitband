@@ -371,7 +371,7 @@
 					<div class="company-help red">
 						<strong>Es tut uns leid.</strong>
 						<p class="nowebgl">Aber es scheint so, als ob Ihr Browser kein WebGL unterstützt. Bitte aktualisieren Sie Ihren Browser.</p>
-						<p class="ismobile">Leider wird diese Technologie nicht von Ihrem Gerät unterstüzt. Sollten Sie ein Smartphone nutzen probieren Sie unsere <a href="">Standalone Version &raquo;</a></p>
+						<p class="ismobile">Leider wird diese Technologie nicht von Ihrem Gerät unterstützt. Sollten Sie ein Smartphone nutzen probieren Sie unsere <a href="">Standalone Version &raquo;</a></p>
 					</div>
 				</div>
 			</div>
@@ -603,11 +603,7 @@
 
 			if ( Detector.webgl) {
 				if(!isMobile){
-					//threeD();
-					d3.select("#hasGL").remove();
-					d3.select("#noGL").style("display", "block");
-					d3.select(".nowebgl").style("display", "none");
-					d3.select(".ismobile").style("display", "block");
+					threeD();
 				}else{
 					d3.select("#hasGL").remove();
 					d3.select(".nowebgl").style("display", "none");

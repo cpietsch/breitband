@@ -1,3 +1,5 @@
+/*global d3:false,console:false,THREE:false,screenfull:false,TWEEN:false,saveAs */
+/*jshint unused:false*/
 function threeD(){
 	var centroids = [{c:[-164.94678225444946,-63.029871437100326],n:"Mitte"},{c:[52.778130057326905,103.42041724165729],n:"Friedrichshain-Kreuzberg"},{c:[94.44270055577594,-432.5721103772772],n:"Pankow"},{c:[-499.09505521863184,119.66473570559107],n:"Charlottenburg-Wilmersdorf"},{c:[-818.1448708597577,-22.566868616095963],n:"Spandau"},{c:[-607.8190923800062,498.97261500635307],n:"Steglitz-Zehlendorf"},{c:[-113.29687363849465,462.53109998602974],n:"Tempelhof-Schöneberg"},{c:[145.7122760209756,463.22536731944496],n:"Neukölln"},{c:[691.0693806464119,528.9735270041073],n:"Treptow-Köpenick"},{c:[578.0995751704685,4.466256221793847],n:"Marzahn-Hellersdorf"},{c:[337.0342485538481,-74.80341059918459],n:"Lichtenberg"},{c:[-425.4280684254382,-423.6349448086686],n:"Reinickendorf"}];
 
@@ -46,7 +48,7 @@ function threeD(){
 		camera.aspect =  width / height;
 		camera.updateProjectionMatrix();
 		renderer.setSize( width, height );
-	}
+	};
 
 	var bb = d3.select('#container').node().getBoundingClientRect(),
 		width = bb.width,
@@ -109,7 +111,7 @@ function threeD(){
 			mouse.x = ( event.clientX / width ) * 2 - 1;
 			mouse.y = - ( event.clientY / height ) * 2 + 1;		
 
-			if(!state.active) raycast();
+			if(!state.active){ raycast(); }
 		});
 
 	var state = { active: null, twitter: false, instagram: false };
@@ -158,7 +160,7 @@ function threeD(){
 		var xymap = [];
 
 		data.forEach(function(d,i){
-			p = projection([d.longitude, d.latitude])
+			var p = projection([d.longitude, d.latitude]);
 			d.x = parseInt(p[0]);
 			d.y = -parseInt(p[1]);
 			d.xr = d.x+Math.random();
@@ -172,7 +174,7 @@ function threeD(){
 			d.social = [];
 			d.cube = null;
 
-			if(!xymap[d.xx]) xymap[d.xx]=[];
+			if(!xymap[d.xx]){ xymap[d.xx]=[]; }
 			xymap[d.xx][d.yy] = d;
 		});
 
@@ -206,9 +208,9 @@ function threeD(){
 		
 
 		renderCanvas.on("click", function(){
-			if (d3.event.defaultPrevented) return;
+			if (d3.event.defaultPrevented){ return; }
 
-			if(state.active == INTERSECTED){
+			if(state.active === INTERSECTED){
 				state.active = INTERSECTED = null;
 
 				meshBezirke.forEach(function(d){
@@ -218,18 +220,15 @@ function threeD(){
 					d.intersected = false;
 				});
 
-				var tween = new TWEEN.Tween(scene3.position)
+				var tween1 = new TWEEN.Tween(scene3.position)
 				    .to({ x: 0, y: 0 }, 1000)
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
 
-				console.log(zoom.scale());
-
-				var tween = new TWEEN.Tween({ scale: zoom.scale() })
+				var tween2 = new TWEEN.Tween({ scale: zoom.scale() })
 				    .to({ scale: 1 }, 1000)
 				    .onUpdate(function(d){
 				    	zoom.scale(this.scale).event(renderCanvas);
-				    	console.log(zoom.scale());
 				    })
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
@@ -239,17 +238,15 @@ function threeD(){
 			if(INTERSECTED){
 				var geocenter = INTERSECTED.geometry.boundingBox.center().negate();
 
-				var tween = new TWEEN.Tween(scene3.position)
+				var tween3 = new TWEEN.Tween(scene3.position)
 				    .to({ x: geocenter.x, y: geocenter.y }, 1000)
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
 
-				 console.log(zoom.scale());
-				var tween = new TWEEN.Tween({ scale: zoom.scale() })
+				var tween4 = new TWEEN.Tween({ scale: zoom.scale() })
 				    .to({ scale: 3 }, 1000)
 				    .onUpdate(function(d){
 				    	zoom.scale(this.scale).event(renderCanvas);
-				    	console.log(zoom.scale());
 				    })
 				    .easing(TWEEN.Easing.Quadratic.InOut)
 				    .start();
@@ -261,14 +258,14 @@ function threeD(){
 
 				state.active = INTERSECTED;
 			}
-		})
+		});
 
 		var now = 0;
 		makeSocialStatic(data, now);
 		makeCenters();
 		animate();
 		
-	};
+	}
 
 	var objects = [];
 
@@ -309,7 +306,7 @@ function threeD(){
 
 		if ( intersects.length > 0 ) {
 
-			if ( INTERSECTED != intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
+			if ( INTERSECTED !== intersects[ 0 ].object && intersects[ 0 ].object.hasOwnProperty("bezirk") ) {
 
 				if ( INTERSECTED ){
 					INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
@@ -347,7 +344,7 @@ function threeD(){
 
 	function animate( time ) {
 
-		//requestAnimationFrame( animate );
+		requestAnimationFrame( animate );
 		TWEEN.update();
 		render(time);
 
@@ -372,7 +369,7 @@ function threeD(){
 					d.cube2.visible = false;
 				}
 			}
-		})
+		});
 	}
 
 	function render(time) {
@@ -404,15 +401,13 @@ function threeD(){
 	var clockSpeed = 400;
 	function updateSocial(time){
 		var now = parseInt(time/clockSpeed) % 24;
-		if(now!=hour){
+		if(now!==hour){
 			hour = now;
 			updateSocialBars(hour);
 		}
 	}
 
 	function updateSocialBars(hour){
-		// console.log(hour);
-
 		clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
 
 		dataAll.forEach(function(d){
@@ -422,13 +417,13 @@ function threeD(){
 			var diff = (socialHoverPos-d.z);
 
 			if(social){
-				if(state.instagram) zInstagram = diff + zSocial(social.instagram);
-				if(state.twitter) zTwitter = diff + zSocial(social.twitter);
+				if(state.instagram){ zInstagram = diff + zSocial(social.instagram); }
+				if(state.twitter){ zTwitter = diff + zSocial(social.twitter); }
 			}
 
-			if(d.cube) d.cube.animateZ = zInstagram;
-			if(d.cube2) d.cube2.animateZ = zTwitter;	
-		})	
+			if(d.cube){ d.cube.animateZ = zInstagram; }
+			if(d.cube2){ d.cube2.animateZ = zTwitter; }
+		});	
 	}
 
 	var animationSpeed = 0.05;
@@ -451,14 +446,13 @@ function threeD(){
 	function update_labels(objects) {
 		for ( var i = 0; i < objects.length; i ++ ) {
 			var v = new THREE.Vector3().setFromMatrixPosition( objects[i].matrixWorld ).project(camera);
-			console.log(v);
 			objects[i].domlabel.style.display = 'block';
-			objects[i].domlabel.style.transform = "translate("+(((v.x + 1) / 2 * width))+"px,"+((-v.y + 1) / 2 * height)+"px)"
+			objects[i].domlabel.style.transform = "translate("+(((v.x + 1) / 2 * width))+"px,"+((-v.y + 1) / 2 * height)+"px)";
 		}
 	}
 
 	function socialHour(d, type, hour){
-		var s = d.filter(function(d){ return d.hour == hour})[0];
+		var s = d.filter(function(d){ return d.hour === hour;})[0];
 		return s ? zSocial(s[type]) : 0;
 	}
 
@@ -494,29 +488,25 @@ function threeD(){
 
 
 		data.forEach(function(d){
-			//if(d.social.length == 0) return;
-			if(d.social.filter(function(d){ return d.instagram != 0; }).length > 0){
-				var cube = new THREE.Mesh( geometry, material );
+			var cube;
+			if(d.social.filter(function(d){ return d.instagram !== 0; }).length > 0){
+				cube = new THREE.Mesh( geometry, material );
 				
 				cube.position.x = d.x;
 				cube.position.y = d.y;
-				// cube.position.z = socialHoverPos;
 				cube.position.z = d.z;
-				// cube.scale.z = 0.1;
 				cube.visible = true;
 
 				d.cube = cube;
 				scene3.add(cube);
 			}
 			
-			if(d.social.filter(function(d){ return d.twitter != 0; }).length > 0){
+			if(d.social.filter(function(d){ return d.twitter !== 0; }).length > 0){
 				cube = new THREE.Mesh( geometry, material2 );
 			
 				cube.position.x = d.x+10;
 				cube.position.y = d.y;
-				// cube.position.z = socialHoverPos;
 				cube.position.z = d.z;
-				// cube.scale.z = 0.1;
 				cube.visible = true;
 
 				d.cube2 = cube;
@@ -534,12 +524,12 @@ function threeD(){
 		var triangles = delaunay.triangles(selection);
 		var geometryMesh = new THREE.Geometry();
 
-		geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z) });
+		geometryMesh.vertices = selection.map(function(d,i){ d.id = i; return new THREE.Vector3(d.x,d.y,d.z); });
 
 		triangles.forEach(function(d){
 			var xdist = (Math.abs(d[0].x-d[1].x)+Math.abs(d[1].x-d[2].x)+Math.abs(d[0].x-d[2].x))/3;
 			var ydist = (Math.abs(d[0].y-d[1].y)+Math.abs(d[1].y-d[2].y)+Math.abs(d[0].y-d[2].y))/3;
-			if(xdist > 20 || ydist > 20) return; // hacky oh boy
+			if(xdist > 20 || ydist > 20){ return; } // hacky oh boy 
 
 			geometryMesh.faces.push( new THREE.Face3( d[0].id, d[1].id, d[2].id ) );
 		});
