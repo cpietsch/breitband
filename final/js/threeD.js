@@ -72,8 +72,8 @@ function threeD(){
 	var container = document.getElementById( 'container' );
 
 	var renderer = new THREE.WebGLRenderer( {antialias:true, preserveDrawingBuffer: true } );
-		//renderer.setClearColor( 0x1E3791 );
-		renderer.setClearColor( 0xFFFFFF );
+		renderer.setClearColor( 0x1E3791 );
+	//	renderer.setClearColor( 0xFFFFFF );
 		renderer.setSize( width, height );
 		container.appendChild( renderer.domElement );
 
