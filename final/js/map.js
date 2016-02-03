@@ -2,7 +2,7 @@
 /*jshint unused:false*/
 function stateMap(){
 
-	var map = false, info;
+	var map = false, info, infostate = false;
 
 	function statemap(){}
 
@@ -67,7 +67,10 @@ function stateMap(){
 				var container = L.DomUtil.create('div', 'leaflet-brain-btn leaflet-bar leaflet-control leaflet-control-custom');
 
 				container.onclick = function(){
-					map.removeControl(info);					
+					if(infostate){
+						map.removeControl(info);					
+						infostate = false;
+					}
 					if(!brainToggle) {
 						map.removeLayer(brainLayer);
 					} else {
@@ -92,7 +95,8 @@ function stateMap(){
 				container.innerHTML = '<div id="map_info" class="red company-help"><strong>Berlin im Detail</strong><p><span class="image image-interactive"></span>Erkunden Sie die Berliner Breitbandlandschaft oder nutzen Sie den Button oben rechts um sich das BRAIN-Netz anzeigen zu lassen.</p></div>';
 
 				container.onclick = function(){
-					map.removeControl(info);					
+					map.removeControl(info);
+					infostate = false;				
 				};
 
 				return container;
@@ -101,6 +105,7 @@ function stateMap(){
 		
 		info = new InfoControl();
 		map.addControl(info);
+		infostate = true;
 
 		var brainConnections = [
 			[1,37,44],

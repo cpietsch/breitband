@@ -352,7 +352,7 @@
 
 		<section id="perspektive">
 			<div id="threeD">
-				<!--<div id="hasGL">
+				<div id="hasGL">
 					<div id="container"></div>
 					<div id="interface"></div>
 					<div id="labels"></div>
@@ -368,10 +368,12 @@
 					</div>
 				</div>
 				<div id="noGL">
-					<img src="img/breitband.png">
-					<h1>Bitte benutze einen aktuellen Browser um die interaktive Landschaft zu betrachten</h1>
-				</div>-->
-				<!--<iframe src="../mesh/web/mesh18.html" style="width:100%; height:500px;"></iframe>-->
+					<div class="company-help red">
+						<strong>Es tut uns leid.</strong>
+						<p class="nowebgl">Aber es scheint so, als ob Ihr Browser kein WebGL unterstützt. Bitte aktualisieren Sie Ihren Browser.</p>
+						<p class="ismobile">Leider wird diese Technologie nicht von Ihrem Gerät unterstüzt. Sollten Sie ein Smartphone nutzen probieren Sie unsere <a href="">Standalone Version &raquo;</a></p>
+					</div>
+				</div>
 			</div>
 		</section>
 
@@ -423,58 +425,76 @@
 						<div class="col col-xs-12 col-sm-6">
 							<h3>Daten &amp; Entwicklung</h3>
 							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+								Im folgenden geben wir Einblicke in die Entwicklung der Visualisierungen und der zugrundeliegenden Daten.
 							</p>
 						</div>
 					</div>
 					<div class="row subrow">
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
-							<img src="images/data_ministerium.png" alt="Die Quellen" />
-							<h4>Die Quellen</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="">Link &raquo;</a>
-							</p>
-						</div>
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
+						<div class="col cols-xs-12 col-sm-5 col-md-4">
 							<img src="images/data_conversion_bw.png" alt="Die Karte" />
-							<h4>Die Karte</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="http://www.zukunft-breitband.de/">Breitbandatlas &raquo;</a>
-							</p>
+							<img src="images/data_ministerium.png" alt="Die Quellen" />
 						</div>
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
-							<img src="images/data_social.png" alt="Der Puls" />
-							<h4>Der Puls</h4>
+						<div class="col hidden-xs col-sm-1"></div>
+						<div class="col col-xs-12 col-sm-6 col-md-7">
+							<h4>Datenquellen</h4>
 							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="">B-CIX &raquo;</a>
+								Der Fokus dieses Projektes liegt auf der Sichtbarmachung der Verfügbarkeit von diversen Breitband-Geschwindigkeiten und Technologien im Großraum Berlin. Die Basisdaten der Visualisierungen stammen aus dem Breitbandatlas, welcher im Auftrag des Bundesministeriums für Verkehr und digitale Infrastruktur vom TÜV Rheinland erstellt wurde. Zum besseren Verständnis, haben wir die Daten des Breitbandatlas auf die Berliner Gebäudedaten gemapped, letztere sind über den Berliner FIS-Broker frei verfügbar (re_hausumringe). Neben den flächendeckenden Daten des Breitbandatlas, werden in regelmäßigen Abständen PDFs zu den einzelnen Bezirken Berlins veröffentlich. Diese PDFs, sind wie in vielen Fällen, nicht direkt maschinenlesbar und bedürfen einer Überarbeitung. Die gesäuberten Daten, sind im Github Repo (s.u.) verfügbar.
 							</p>
+							<ul>
+								<li><a href="http://www.zukunft-breitband.de/">Breitbandatlas &raquo;</a></li>
+								<li><a href="">TÜV Rheinland &raquo;</a></li>
+								<li><a href="">FIS-Broker &raquo;</a></li>
+							</ul>
 						</div>
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
+					</div>
+					<div class="row subrow">
+						<div class="col cols-xs-12 col-sm-5 col-md-4">
 							<img src="images/data_brain.png" alt="BRAIN" />
-							<h4>BRAIN</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="">BRAIN-Kernnetz &raquo;</a>
-							</p>
 						</div>
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
-							<img src="images/data_map.png" alt="Gebäudedaten" />
-							<h4>Gebäudedaten</h4>
+						<div class="col hidden-xs col-sm-1"></div>
+						<div class="col col-xs-12 col-sm-6 col-md-7">
+							<h4>Highspeed Netzwerk</h4>
 							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="">FIS-Broker &raquo;</a>
+								Neben den Daten zum Breitband in Berliner Haushalten, finden sich darüber hinaus Daten zum sogenannten Highspeed Netz BRAIN in den Visualisierungen. BRAIN ist ein Verbund wissenschaftlicher und behördlicher Einrichtungen in Berlin und Potsdam, welche über ein Hochgeschwindigkeitsnetzwerk miteinander verbunden sind, um so beispielsweise den Datenaustausch zwischen Institutionen und Standorten zu optimieren. BRAIN stellt, neben Echtzeitinformationen zum aktuell Status des Netzwerks, einen groben Netzwerkplan der angeschlossenen Institutionen zur Verfügung. Im Rahmen des Projektes haben wir, soweit möglich diesen Plan georeferenziert. Die resultierenden Daten sind ebenfalls im Repo enthalten.
 							</p>
+							<ul>
+								<li><a href="">BRAIN-Kernnetz &raquo;</a></li>
+							</ul>
 						</div>
-						<div class="col cols-xs-12 col-sm-6 col-md-4">
+					</div>
+					<div class="row subrow">
+						<div class="col cols-xs-12 col-sm-5 col-md-4">
+							<img src="images/data_map.png" alt="Berlin" />
+							<img src="images/data_social.png" alt="Twitter und Instagram" />
+						</div>
+						<div class="col hidden-xs col-sm-1"></div>
+						<div class="col col-xs-12 col-sm-6 col-md-7">
+							<h4>Social Media</h4>
+							<p>
+								Das Breitbandnetzwerk und das Mobilfunknetz stellen die digitalen Adern der Hauptstadt dar. Jeden Tag werden Gigabytes an Daten durch dieses Netz geleitet. Von Emails, Suchanfragen über Video Streaming bis hin zu Social Media. Wir haben auf Grund der verfügbaren Datenlage, letzteres als anschauliches Beispiel gewählt um den täglichen Datenverkehr zu visualisieren. Wir nutzen hierzu die frei Verfügbaren APIs von Twitter und Instagram. Da über die APIs keine absoluten, sondern nur relative Werte ermittelt werden können, geben wir keine genauen Zahlen der Tweets und Bilder an, sonder statt dessen nur Trends. Aus Datenschutz Gründen speichern wir keine detaillierten Informationen, sondern generieren nur ein grobes Mapping der geteilten Tweets und Bilder. Um nicht gegen Bestimmungen der zur Verfügung stellenden Firmen zu verstoßen, können wir die Rohdaten nicht zur Verfügung stellen. Um eine weitere Referenz für den Nutzungstrend zu haben, errechneten wir eine durchschnittliche Nutzung des Internetknotenpunktes BCIX. BCIX stell sowohl echtzeit als auch historische Daten über den Datendurchsatz am Standort Berlin auf Ihrer Website zur Verfügung.
+							</p>
+							<ul>
+								<li><a href="">Twitter API &raquo;</a></li>
+								<li><a href="">Instagram API &raquo;</a></li>
+								<li><a href="">BCIX &raquo;</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row subrow">
+						<div class="col cols-xs-12 col-sm-5 col-md-4">
 							<img src="images/data_github.png" alt="Github" />
-							<h4>OpenSource</h4>
+						</div>
+						<div class="col hidden-xs col-sm-1"></div>
+						<div class="col col-xs-12 col-sm-6 col-md-7">
+							<h4>OpenSource &amp; OpenData</h4>
 							<p>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.<br />
-								<a href="">Github &raquo;</a>
+								OpenSource und OpenData verbindet der Gedanke durch das Bereitstellen von Wissen und Technologien Innovation zu fördern. Das Veröffentlichen von behördlichen, industriellen oder wissenschaftlichen Datensätzen ist dabei nur der erste Schritt. Um das Wissen und die Erkenntnisse einem möglichst breiten zugänglich zu machen, bedarf es Visualisierungs- und Kommunikationskonzepte, welche die Daten veranschaulichen und zur Exploration und Beschäftigung einladen. In diesem Sinne stellen wir nicht nur die von uns gentutzen Datensätze (soweit möglich) zur Verfügung, sondern auch den Code der hinter den Visualisierungen steckt, mit der Hoffnung weitere Visualisierungsprojekte anzustoßen und so den Schatz Berlin Datensätze zugänglich zu machen.
 							</p>
+							<ul>
+								<li><a href="">TSB Github Repo &raquo;</a></li>
+								<li><a href="">OpenData Berlin &raquo;</a></li>
+								<li><a href="">Artikel: Open Data in der Praxis &raquo;</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -520,7 +540,7 @@
 		<script src='js/min/d3.pulse-min.js'></script>
 		<script src='js/min/d3.company-min.js'></script>
 		<script src='js/min/d3.compare-min.js'></script>
-		<script src='js/d3.technologie.js'></script>
+		<script src='js/min/d3.technologie-min.js'></script>
 		<script type="text/javascript">
 			var minimap, tooltip, company, pulse, compare, technologie, map;
 
@@ -581,12 +601,22 @@
 
 		<script type="text/javascript">
 
-			/*if ( Detector.webgl) {
-				threeD();
+			if ( Detector.webgl) {
+				if(!isMobile){
+					//threeD();
+					d3.select("#hasGL").remove();
+					d3.select("#noGL").style("display", "block");
+					d3.select(".nowebgl").style("display", "none");
+					d3.select(".ismobile").style("display", "block");
+				}else{
+					d3.select("#hasGL").remove();
+					d3.select(".nowebgl").style("display", "none");
+					d3.select("#noGL").style("display", "block");
+				}
 			} else {
 				d3.select("#hasGL").remove();
 				d3.select("#noGL").style("display", "block");
-			}*/
+			}
 
 		</script>
 	</body>

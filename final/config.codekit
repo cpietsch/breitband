@@ -716,6 +716,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/nogl.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 200627,
+		"inputAbbreviatedPath": "\/images\/nogl.jpg",
+		"outputAbbreviatedPath": "\/images\/nogl.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/nogl_mobile.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 70208,
+		"inputAbbreviatedPath": "\/images\/nogl_mobile.jpg",
+		"outputAbbreviatedPath": "\/images\/nogl_mobile.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/o2.png": {
 		"fileType": 32768,
 		"ignore": 0,
