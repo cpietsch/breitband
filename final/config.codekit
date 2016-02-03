@@ -188,6 +188,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/btn_network.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1545,
+		"inputAbbreviatedPath": "\/images\/btn_network.png",
+		"outputAbbreviatedPath": "\/images\/btn_network.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/btn_network@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2349,
+		"inputAbbreviatedPath": "\/images\/btn_network@2x.png",
+		"outputAbbreviatedPath": "\/images\/btn_network@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/cable.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -250,6 +272,83 @@
 		"initialSize": 5121,
 		"inputAbbreviatedPath": "\/images\/chrispie@2x.png",
 		"outputAbbreviatedPath": "\/images\/chrispie@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_brain.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 10148,
+		"inputAbbreviatedPath": "\/images\/data_brain.png",
+		"outputAbbreviatedPath": "\/images\/data_brain.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_conversion.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 130232,
+		"inputAbbreviatedPath": "\/images\/data_conversion.png",
+		"outputAbbreviatedPath": "\/images\/data_conversion.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_conversion_bw.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 64854,
+		"inputAbbreviatedPath": "\/images\/data_conversion_bw.png",
+		"outputAbbreviatedPath": "\/images\/data_conversion_bw.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_github.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5245,
+		"inputAbbreviatedPath": "\/images\/data_github.png",
+		"outputAbbreviatedPath": "\/images\/data_github.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_map.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 15057,
+		"inputAbbreviatedPath": "\/images\/data_map.png",
+		"outputAbbreviatedPath": "\/images\/data_map.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_ministerium.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 10403,
+		"inputAbbreviatedPath": "\/images\/data_ministerium.png",
+		"outputAbbreviatedPath": "\/images\/data_ministerium.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/data_social.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6080,
+		"inputAbbreviatedPath": "\/images\/data_social.png",
+		"outputAbbreviatedPath": "\/images\/data_social.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -591,6 +690,28 @@
 		"initialSize": 11849,
 		"inputAbbreviatedPath": "\/images\/investitionsbank@2x.jpg",
 		"outputAbbreviatedPath": "\/images\/investitionsbank@2x.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/map_close.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1073,
+		"inputAbbreviatedPath": "\/images\/map_close.png",
+		"outputAbbreviatedPath": "\/images\/map_close.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/map_close@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1483,
+		"inputAbbreviatedPath": "\/images\/map_close@2x.png",
+		"outputAbbreviatedPath": "\/images\/map_close@2x.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0

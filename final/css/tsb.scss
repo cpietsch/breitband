@@ -901,6 +901,15 @@ path.trendarea.instagram{
 	width:100%;
 }
 
+#map_info.company-help{
+	cursor:pointer;
+	background-image:url('../images/map_close.png');
+	background-size:39px 42px;
+	background-position:top right;
+	background-repeat:no-repeat;
+	margin:0;
+}
+
 #map{
 	border-bottom:2px solid rgba(0,0,0,0.8);
 	border-top:2px solid rgba(0,0,0,0.8);
@@ -1267,6 +1276,10 @@ ul.legend span span{
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) { 
 
+	#map_info.company-help{
+		background-image:url('../images/map_close@2x.png');
+	}
+
 	.carousel .image-wireless{
 		background-image:url('../images/wireless@2x.png');
 	}
@@ -1284,7 +1297,7 @@ ul.legend span span{
 	}
 
 	.leaflet-brain-btn{
-		background-image:url('../images/btn_network@2x.gif');
+		background-image:url('../images/btn_network@2x.png');
 	}
 
 	.image-brain{
@@ -1343,10 +1356,45 @@ ul.legend span span{
 }
 
 .leaflet-brain-btn{
-	background-image:url('../images/btn_network.gif');
-	background-size:30px 30px;
+	background-image:url('../images/btn_network.png');
+	background-size:50px 50px;
+	background-repeat:no-repeat;
+	background-position:center;
 	cursor: pointer;
 }
+
+#map .leaflet-right.leaflet-top .leaflet-brain-btn.leaflet-control{
+	margin-top:0;
+	margin-right:0;
+	border-radius:0;
+	width:50px;
+	height:50px;
+	background-color:rgb(230,0,50);
+	box-shadow:none;
+}
+
+#map .leaflet-right.leaflet-bottom .leaflet-info-btn.leaflet-control{
+	margin-bottom:0;
+	margin-right:0;
+	border-radius:0;
+	background-color:transparent;
+	box-shadow:none;
+}
+
+#map .leaflet-right.leaflet-bottom .leaflet-info-btn.leaflet-control strong{
+	font-size:18px;
+	font-family: "ClanOT-Medium";
+}
+
+#map .leaflet-right.leaflet-bottom .leaflet-info-btn.leaflet-control p{
+	font-size:14px;
+	font-style:italic;
+}
+
+#map .leaflet-right.leaflet-bottom{
+	margin-bottom:50px !important;
+}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
@@ -1420,6 +1468,7 @@ ul.legend span span{
 	background-image:none;
 }
 
+.carousel-control:focus,
 .carousel-control{
 	color:rgba(0, 0, 0, 0.7);
 }
@@ -1487,6 +1536,26 @@ ul.legend span span{
 
 #background{
 	padding:70px 0;
+}
+
+#background .subrow .col{
+	padding-top:50px;
+	padding-bottom:50px;
+	h4{
+		padding-top:20px;
+	}
+	a{
+		font-family:"ClanOT-Medium";
+		text-decoration:underline;
+		color:#fff;
+		display:block;
+		padding-top:10px;
+	}
+	img, p{
+		width:100%;
+		height:auto;
+		max-width:360px;
+	}
 }
 
 /******************** THREEJS *******************/
@@ -1689,7 +1758,7 @@ ul.legend span span{
 	.navbar-default .navbar-brand{
 		font-size:2em;
 		line-height:1.8em;
-		max-width:50%;
+		max-width:440px;
 		margin:15px 0 0 15px;
 		padding:0 0 0 0;
 	}
