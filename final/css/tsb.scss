@@ -1522,10 +1522,10 @@ ul.legend span span{
 	height:500px;
 }
 
-#threeD #hasGL #container{
+#threeD #hasGL iframe{
 	width:100%;
 	height:100%;
-	float:left;
+	border:none;
 }
 
 #noGL{
@@ -1544,156 +1544,6 @@ ul.legend span span{
 	font-family:"ClanOT-Medium";
 }
 
-#threeD .menu {
-    position: absolute;
-    left: 41%;
-    top: 10px;
-}
-
-#threeD .menu * {
-    cursor: pointer;
-    /* background: rgba(30, 55, 145, 0.43); */
-    float: left;
-    position: relative;
-    padding: 12px;
-    margin: 20px;
-    border: 1px solid rgb(255, 255, 255);
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-#threeD .menu .active {
-    background: #FFF;
-    color: #051344;
-}
-
-#threeD #info {
-	position: absolute;
-	top: 0px; width: 100%;
-	padding: 5px;
-}
-
-#threeD .axis path,
-#threeD .axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-
-#threeD .x.axis path {
-	fill:none;
-	stroke:#000;
-	shape-rendering: crispEdges;
-}
-
-#threeD .line {
-	fill: none;
-	stroke-width: 1px;
-	opacity: 0.6;
-}
-
-#threeD .bars {
-	opacity: 0.8;
-}
-
-#threeD #interface {
-	background: rgba(0, 0, 0, 0.6);
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	z-index: 100;
-	font-size: 10px;
-	overflow-y:scrolls;
-	height:100%;
-}
-
-#threeD #interface>div {
-	padding: 3px;
-	margin: 3px;
-	clear: both;
-	cursor: pointer;
-}
-
-#threeD #interface .color {
-	float: left;
-	width: 10px;
-	height: 10px;
-	margin-top: 2px;
-	margin-right: 6px;
-}
-
-#threeD #interface .name {
-	float: left;
-	padding-right: 30px;
-}
-
-#threeD #interface .num {
-	float: right;
-}
-
-#threeD svg {
-	position: absolute;
-	opacity: 0.5;
-	z-index: 100;
-	top:0;
-}
-
-#threeD #labels {
-	width:100%;
-	height:500px;
-	float:left;
-	margin-top:-500px;
-}
-
-#threeD #labels span {
-    position: relative;
-    left: -50%;
-}
-
-#threeD #labels div {
-	pointer-events:none;
-	white-space: nowrap;
-	color: #FFF;
-	text-shadow: 0 0 1px #000, 0 0 2px #000, 0 0 5px #000, 0 0 10px #000;
-	font-weight: bold;
-	text-shadows:-3px -3px 1px rgba(255, 255, 255, 0.4), -3px -2px 1px rgba(255, 255, 255, 0.4), -3px -1px 1px rgba(255, 255, 255, 0.4), -3px 0px 1px rgba(255, 255, 255, 0.4), -3px 1px 1px rgba(255, 255, 255, 0.4), -3px 2px 1px rgba(255, 255, 255, 0.4), -3px 3px 1px rgba(255, 255, 255, 0.4), -2px -3px 1px rgba(255, 255, 255, 0.4), -2px -2px 1px rgba(255, 255, 255, 0.4), -2px -1px 1px rgba(255, 255, 255, 0.4), -2px 0px 1px rgba(255, 255, 255, 0.4), -2px 1px 1px rgba(255, 255, 255, 0.4), -2px 2px 1px rgba(255, 255, 255, 0.4), -2px 3px 1px rgba(255, 255, 255, 0.4), -1px -3px 1px rgba(255, 255, 255, 0.4), -1px -2px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.4), -1px 0px 1px rgba(255, 255, 255, 0.4), -1px 1px 1px rgba(255, 255, 255, 0.4), -1px 2px 1px rgba(255, 255, 255, 0.4), -1px 3px 1px rgba(255, 255, 255, 0.4), 0px -3px 1px rgba(255, 255, 255, 0.4), 0px -2px 1px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(255, 255, 255, 0.4), 0px 2px 1px rgba(255, 255, 255, 0.4), 0px 3px 1px rgba(255, 255, 255, 0.4), 1px -3px 1px rgba(255, 255, 255, 0.4), 1px -2px 1px rgba(255, 255, 255, 0.4), 1px -1px 1px rgba(255, 255, 255, 0.4), 1px 0px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(255, 255, 255, 0.4), 1px 2px 1px rgba(255, 255, 255, 0.4), 1px 3px 1px rgba(255, 255, 255, 0.4), 2px -3px 1px rgba(255, 255, 255, 0.4), 2px -2px 1px rgba(255, 255, 255, 0.4), 2px -1px 1px rgba(255, 255, 255, 0.4), 2px 0px 1px rgba(255, 255, 255, 0.4), 2px 1px 1px rgba(255, 255, 255, 0.4), 2px 2px 1px rgba(255, 255, 255, 0.4), 2px 3px 1px rgba(255, 255, 255, 0.4), 3px -3px 1px rgba(255, 255, 255, 0.4), 3px -2px 1px rgba(255, 255, 255, 0.4), 3px -1px 1px rgba(255, 255, 255, 0.4), 3px 0px 1px rgba(255, 255, 255, 0.4), 3px 1px 1px rgba(255, 255, 255, 0.4), 3px 2px 1px rgba(255, 255, 255, 0.4), 3px 3px 1px rgba(255, 255, 255, 0.4);
-}
-
-#threeD .time {
-	font-family: courier;
-	position: absolute;
-	z-index: 100;
-	left: 30px;
-	top: 30px;
-}
-
-#threeD .time .clock {
-	font-size: 30px;
-}
-
-#threeD .time .date {
-	font-size: 15px;
-}
-
-#threeD .fullscreen {
-	cursor: pointer;
-	background-image: url("img/fullscreen.svg");
-	width: 10px;
-	height: 10px;
-	padding: 5px;
-	position: absolute;
-	top: 30px;
-	right: 30px;
-	background-size: contain;
-}
-
-#threeD .fullscreen:hover {
-	opacity: 0.8;
-}
-
-#threeD .fullscreen.active {
-	background-image: url("img/fullscreen2.svg");
-}
 
 /******************** END *******************/
 
