@@ -1,78 +1,64 @@
+@font-face {
+  font-family: 'ClanOT-Medium';
+  font-weight: 400;
+  src: url("../fonts/clanot-medium-webfont.eot");
+  src: url("../fonts/clanot-medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/clanot-medium-webfont.woff") format("woff"), url("../fonts/clanot-medium-webfont.ttf") format("truetype"), url("../fonts/clanot-medium-webfont.svg#clanot_medium") format("svg"); }
+@font-face {
+  font-family: 'ClanOT-Book';
+  font-weight: 400;
+  src: url("../fonts/clanot-book-webfont.eot");
+  src: url("../fonts/clanot-book-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/clanot-book-webfont.woff") format("woff"), url("../fonts/clanot-book-webfont.ttf") format("truetype"), url("../fonts/clanot-book-webfont.svg#clanot_book") format("svg"); }
+@font-face {
+  font-family: 'TSB';
+  src: url("../fonts/TSB.eot?-9pwax");
+  src: url("../fonts/TSB.eot?#iefix-9pwax") format("embedded-opentype"), url("../fonts/TSB.woff?-9pwax") format("woff"), url("../fonts/TSB.ttf?-9pwax") format("truetype"), url("../fonts/TSB.svg?-9pwax#TSB") format("svg");
+  font-weight: 400; }
+/*
+font-family: "ClanOT-Medium";
+font-family: "ClanOT-Book";
+*/
 body {
-  color: #fff;
-  font-family: Helvetica Neue, Helvetica;
-  font-size: 11px;
-  background-color: #050505;
+  color: #000;
+  font-family: "ClanOT-Book";
+  font-size: 12px;
+  background-color: #fff;
   margin: 0px;
   overflow: hidden; }
 
-#info {
-  position: absolute;
-  top: 0px;
+#container {
   width: 100%;
-  padding: 5px; }
-
-a {
-  color: #0080ff; }
-
-svg {
-  font: 10px sans-serif; }
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges; }
-
-.x.axis path {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges; }
-
-.line {
-  fill: none;
-  stroke-width: 1px;
-  opacity: 0.6; }
-
-.bars {
-  opacity: 0.8; }
-
-#interface {
-  background: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  z-index: 100;
-  font-size: 10px;
-  overflow-y: scrolls;
   height: 100%; }
 
-#interface > div {
-  padding: 3px;
-  margin: 3px;
-  clear: both;
-  cursor: pointer; }
-
-#interface .color {
-  float: left;
-  width: 10px;
-  height: 10px;
-  margin-top: 2px;
-  margin-right: 6px; }
-
-#interface .name {
-  float: left;
-  padding-right: 30px; }
-
-#interface .num {
-  float: right; }
-
 svg {
+  font-family: "ClanOT-Book";
+  font-size: 12px;
   position: absolute;
   opacity: 0.5;
   z-index: 100;
   top: 0; }
 
+/*----- CLOCK -----*/
+.time {
+  position: absolute;
+  display: none;
+  z-index: 100;
+  left: 50%;
+  top: 30px; }
+
+.time .clock, .time .date {
+  text-align: center;
+  width: 150px;
+  float: left;
+  clear: both;
+  margin-left: -75px; }
+
+.time .clock {
+  font-size: 30px; }
+
+.time .date {
+  font-size: 15px; }
+
+/*----- LABELS -----*/
 #labels {
   top: 0;
   left: 0;
@@ -90,74 +76,64 @@ svg {
   font-weight: bold;
   text-shadows: -3px -3px 1px rgba(255, 255, 255, 0.4), -3px -2px 1px rgba(255, 255, 255, 0.4), -3px -1px 1px rgba(255, 255, 255, 0.4), -3px 0px 1px rgba(255, 255, 255, 0.4), -3px 1px 1px rgba(255, 255, 255, 0.4), -3px 2px 1px rgba(255, 255, 255, 0.4), -3px 3px 1px rgba(255, 255, 255, 0.4), -2px -3px 1px rgba(255, 255, 255, 0.4), -2px -2px 1px rgba(255, 255, 255, 0.4), -2px -1px 1px rgba(255, 255, 255, 0.4), -2px 0px 1px rgba(255, 255, 255, 0.4), -2px 1px 1px rgba(255, 255, 255, 0.4), -2px 2px 1px rgba(255, 255, 255, 0.4), -2px 3px 1px rgba(255, 255, 255, 0.4), -1px -3px 1px rgba(255, 255, 255, 0.4), -1px -2px 1px rgba(255, 255, 255, 0.4), -1px -1px 1px rgba(255, 255, 255, 0.4), -1px 0px 1px rgba(255, 255, 255, 0.4), -1px 1px 1px rgba(255, 255, 255, 0.4), -1px 2px 1px rgba(255, 255, 255, 0.4), -1px 3px 1px rgba(255, 255, 255, 0.4), 0px -3px 1px rgba(255, 255, 255, 0.4), 0px -2px 1px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(255, 255, 255, 0.4), 0px 2px 1px rgba(255, 255, 255, 0.4), 0px 3px 1px rgba(255, 255, 255, 0.4), 1px -3px 1px rgba(255, 255, 255, 0.4), 1px -2px 1px rgba(255, 255, 255, 0.4), 1px -1px 1px rgba(255, 255, 255, 0.4), 1px 0px 1px rgba(255, 255, 255, 0.4), 1px 1px 1px rgba(255, 255, 255, 0.4), 1px 2px 1px rgba(255, 255, 255, 0.4), 1px 3px 1px rgba(255, 255, 255, 0.4), 2px -3px 1px rgba(255, 255, 255, 0.4), 2px -2px 1px rgba(255, 255, 255, 0.4), 2px -1px 1px rgba(255, 255, 255, 0.4), 2px 0px 1px rgba(255, 255, 255, 0.4), 2px 1px 1px rgba(255, 255, 255, 0.4), 2px 2px 1px rgba(255, 255, 255, 0.4), 2px 3px 1px rgba(255, 255, 255, 0.4), 3px -3px 1px rgba(255, 255, 255, 0.4), 3px -2px 1px rgba(255, 255, 255, 0.4), 3px -1px 1px rgba(255, 255, 255, 0.4), 3px 0px 1px rgba(255, 255, 255, 0.4), 3px 1px 1px rgba(255, 255, 255, 0.4), 3px 2px 1px rgba(255, 255, 255, 0.4), 3px 3px 1px rgba(255, 255, 255, 0.4); }
 
-.time {
-  font-family: courier;
-  position: absolute;
-  z-index: 100;
-  left: 30px;
-  top: 30px; }
-
-.time .clock {
-  font-size: 30px; }
-
-.time .date {
-  font-size: 15px; }
-
-.fullscreen {
-  cursor: pointer;
-  background-color: black;
-  background-image: url("img/fullscreen.svg");
-  width: 10px;
-  height: 10px;
-  padding: 5px;
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  background-size: contain; }
-
-.fullscreen:hover {
-  opacity: 0.8; }
-
-.fullscreen.active {
-  background-image: url("img/fullscreen2.svg"); }
-
+/*----- MENU -----*/
 .menu {
   position: absolute;
-  left: 41%;
-  top: 20px; }
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 0; }
 
-.menu * {
-  border-radius: 2px;
-  cursor: pointer;
-  /* background: rgba(30, 55, 145, 0.43); */
-  float: left;
-  position: relative;
-  padding: 10px;
-  margin: 8px;
-  border: 1px solid white;
-  text-transform: uppercase;
-  font-weight: bold; }
+.menu li {
+  list-style: none;
+  margin: 0 0 10px 0;
+  padding: 0; }
 
-/*.menu *:hover {
-    background: #FFF;
-    color: #051344;
-}*/
-.menu .active {
-  background: #FFF;
-  color: #051344; }
+.menu li a {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-size: 100px 50px;
+  background-repeat: no-repeat;
+  background-position: top right;
+  cursor: pointer; }
+  .menu li a:hover {
+    background-position: top left; }
 
-#container {
-  width: 100%;
-  height: 100%; }
+.fullscreen {
+  background-image: url("../images/btn_fullscreen_open.gif"); }
 
-#noGL {
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: absolute; }
+.fullscreen.active {
+  background-image: url("../images/btn_fullscreen_close.gif"); }
 
-#noGL h1 {
-  position: absolute;
-  z-index: 100;
-  top: 50%;
-  left: 20%; }
+.screenshot {
+  background-image: url("../images/btn_snapshot.gif");
+  margin-bottom: 40px; }
+
+.twitter {
+  background-image: url("../images/btn_twitter.gif"); }
+
+.instagram {
+  background-image: url("../images/btn_instagram.gif"); }
+
+.menu li a.twitter, .menu li a.instagram {
+  background-position: top left; }
+  .menu li a.twitter:hover, .menu li a.twitter.active, .menu li a.instagram:hover, .menu li a.instagram.active {
+    background-position: top right; }
+
+/*----- RETINA IMAGES -----*/
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .fullscreen {
+    background-image: url("../images/btn_fullscreen_open@2x.gif"); }
+
+  .fullscreen.active {
+    background-image: url("../images/btn_fullscreen_close@2x.gif"); }
+
+  .screenshot {
+    background-image: url("../images/btn_snapshot@2x.gif"); }
+
+  .twitter {
+    background-image: url("../images/btn_twitter@2x.gif"); }
+
+  .instagram {
+    background-image: url("../images/btn_instagram@2x.gif"); } }

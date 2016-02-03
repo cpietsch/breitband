@@ -17,12 +17,14 @@ function threeD(){
 		.on("click", function(d){
 			state.instagram = !state.instagram;
 			d3.select(this).classed("active", state.instagram);
+			threed.updateSocialStatus();
 		});
 
 	d3.select(".twitter")
 		.on("click", function(d){
 			state.twitter = !state.twitter;
 			d3.select(this).classed("active", state.twitter);
+			threed.updateSocialStatus();
 		});
 
 	d3.select(".menu .screenshot")
@@ -33,6 +35,14 @@ function threeD(){
 	var makeScreenshot = false;
 	var clockDiv = d3.select(".time .clock");
 
+	threed.updateSocialStatus = function(){
+		if(!state.twitter && !state.instagram){
+			d3.select('.time').style('display', 'none');
+		}else{
+			d3.select('.time').style('display', 'block');
+		}
+	};
+
 	threed.resize = function(){
 		var bb = d3.select('#container').node().getBoundingClientRect();
 
@@ -42,6 +52,14 @@ function threeD(){
 		camera.aspect =  width / height;
 		camera.updateProjectionMatrix();
 		renderer.setSize( width, height );
+	};
+
+	threed.play = function(){
+		console.log("play");
+	};
+
+	threed.pause = function(){
+		console.log("pause");
 	};
 
 	var bb = d3.select('#container').node().getBoundingClientRect(),
@@ -132,14 +150,7 @@ function threeD(){
 	var mouse = new THREE.Vector2();
 	var INTERSECTED;
 
-	/*var grid = new THREE.GridHelper(10000, 50);
-		grid.position.set( 0,0,0 );
-		grid.rotation.x = Math.PI/2;
-		grid.setColors( new THREE.Color(0x4988EE), new THREE.Color(0x4988EE) );
-		scene3.add(grid);*/
-
 	var dataAll;
-
 
 	d3.csv('data/50mbit.csv', function(err, data){
 		d3.csv('data/dataNEW.csv', function(err, social){

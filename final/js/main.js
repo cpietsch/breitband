@@ -1,4 +1,4 @@
-/*global d3:false */
+/*global d3:false,iframeY:true,windowHeight:true */
 /*jshint unused:false*/
 var colorPalletes = {
 	red:[

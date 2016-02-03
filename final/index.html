@@ -353,7 +353,7 @@
 		<section id="perspektive">
 			<div id="threeD">
 				<div id="hasGL">
-					<iframe src="" allowfullscreen></iframe>
+					<iframe src="" id="meshframe" allowfullscreen></iframe>
 				</div>
 				<div id="noGL">
 					<div class="company-help red">
@@ -529,8 +529,9 @@
 		<script src='js/min/d3.company-min.js'></script>
 		<script src='js/min/d3.compare-min.js'></script>
 		<script src='js/min/d3.technologie-min.js'></script>
+		<script src="js/three/Detector.js"></script>
 		<script type="text/javascript">
-			var minimap, tooltip, company, pulse, compare, technologie, map;
+			var minimap, tooltip, company, pulse, compare, technologie, map, threeactive = false;
 
 			$(document).ready(function() {
 				$('#sidr-btn').sidr({
@@ -564,6 +565,20 @@
 				map = new stateMap();
 				map.init();
 
+				if ( Detector.webgl) {
+					if(!isMobile){
+						$('#hasGL iframe').attr('src', 'mesh.html');
+						threeactive = true;
+					}else{
+						d3.select("#hasGL").remove();
+						d3.select(".nowebgl").style("display", "none");
+						d3.select("#noGL").style("display", "block");
+					}
+				} else {
+					d3.select("#hasGL").remove();
+					d3.select("#noGL").style("display", "block");
+				}
+
 				$(window).resize(debouncer(function(e){
 					map.resize();
 					minimap.resize();
@@ -571,22 +586,22 @@
 					compare.resize();
 					technologie.resize();
 				}));
+
+				$(window).scroll(debouncer(function(e){
+					if(threeactive){
+						var o = $('#meshframe').offset();
+						var iframeY = o.top;
+						var windowHeight = window.innerHeight;
+						var st = $(window).scrollTop();
+						if((st+windowHeight)>iframeY && st<iframeY){
+							document.getElementById("meshframe").contentWindow.threed.play();
+						}else{
+							document.getElementById("meshframe").contentWindow.threed.pause();
+						}
+					}
+				}));
 			});
-		</script>
-		<script src="js/three/Detector.js"></script>
-		<script type="text/javascript">
-			if ( Detector.webgl) {
-				if(!isMobile){
-					$('#hasGL iframe').attr('src', 'mesh.html');
-				}else{
-					d3.select("#hasGL").remove();
-					d3.select(".nowebgl").style("display", "none");
-					d3.select("#noGL").style("display", "block");
-				}
-			} else {
-				d3.select("#hasGL").remove();
-				d3.select("#noGL").style("display", "block");
-			}
+
 		</script>
 	</body>
 </html>
