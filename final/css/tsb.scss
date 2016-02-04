@@ -1410,7 +1410,7 @@ ul.legend span span{
 /* Carousel base class */
 .carousel {
 	margin-top:20px;
-	height: 350px;
+	height: 400px;
 }
 
 .carousel-indicators .active{
@@ -1466,7 +1466,7 @@ ul.legend span span{
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-	height: 350px;
+	height: 400px;
 	background-color:#f5f5f5;
 }
 
@@ -1601,6 +1601,14 @@ ul.legend span span{
 }
 
 @media (min-width: 768px) {
+	.carousel {
+		height: 350px;
+	}
+
+	.carousel .item {
+		height: 350px;
+	}
+
 	#technologien .data p{
 		padding-right:50px;
 		padding-left:0;
@@ -1654,6 +1662,16 @@ ul.legend span span{
 
 }
 
+@media (min-width: 992px) {
+	.carousel {
+		height: 400px;
+	}
+
+	.carousel .item {
+		height: 400px;
+	}
+}
+
 @media (min-width: 1024px) {
 	#compare .chart .col{
 		height:540px;
@@ -1663,5 +1681,13 @@ ul.legend span span{
 @media (min-width: 1200px) {
 	#compare .chart .col{
 		height:520px;
+	}
+
+	.carousel {
+		height: 350px;
+	}
+
+	.carousel .item {
+		height: 350px;
 	}
 }

@@ -97,11 +97,11 @@ function d3_technologie(){
 				x_axis = d3.svg.axis()
 					.scale(x_alt)
 					.orient("bottom")
-					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; if(d === 1){ r += " Mbit/s";} return r;}),
+					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; /*if(parseInt(d) === 1){ r += " Mbit/s";}*/ return r;}),
 				x_axis_mobile = d3.svg.axis()
 					.scale(x_alt_mobile)
 					.orient("bottom")
-					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; if(d === 3){ r += " Mbit/s";} return r;});
+					.tickFormat(function(d, i){ var r = "≥"+labels[parseInt(d)-1]; if(parseInt(d) === 3){ r += " Mbit/s";} return r;});
 
 			var cabel_svg = svg.append('g').attr('transform', 'translate(50, 50)');
 				cabel_svg.append("text").attr("class", "headline").text("Leitungsgebunden").attr("transform", "translate(-5, -25)");
