@@ -108,6 +108,11 @@ span.image.image-twitter {
   display: block;
   font-weight: normal; }
 
+.company-help p.legend {
+  font-family: "ClanOT-Medium";
+  display: block;
+  text-align: center; }
+
 .company-help p {
   display: block;
   padding: 10px 15px;
