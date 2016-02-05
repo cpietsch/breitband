@@ -43,6 +43,7 @@ function threeD(){
 		}else{
 			d3.select('.time').style('display', 'block');
 		}
+		toggleSocial();
 	};
 
 	threed.resize = function(){
@@ -96,8 +97,8 @@ function threeD(){
 
 	var camera = new THREE.PerspectiveCamera( 50, width / height, 1, 10000 );
 		camera.position.x = 0;
-		camera.position.y = -2000;
-		camera.position.z = 1200;
+		camera.position.y = -1500;
+		camera.position.z = 1000;
 		camera.lookAt(scene.position);	
 
 	var drag = d3.behavior.drag()
@@ -141,7 +142,7 @@ function threeD(){
 
 	var centerCoord = [13.413215, 52.521918];
 	var projection = d3.geo.mercator()
-		.scale(240000)
+		.scale(200000)
 		.center(centerCoord)
 		.translate([0,0]);
 
