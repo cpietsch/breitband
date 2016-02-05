@@ -150,6 +150,7 @@ span.image.image-twitter {
   left: -50%; }
 
 #labels div {
+  position: absolute;
   pointer-events: none;
   white-space: nowrap;
   color: #FFF;
@@ -224,3 +225,5 @@ span.image.image-twitter {
 
   .company-help {
     background-image: url("../images/map_close@2x.png"); } }
+
+/*# sourceMappingURL=mesh.css.map */

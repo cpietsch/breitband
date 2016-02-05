@@ -34,6 +34,11 @@ function threeD(){
 			makeScreenshot = true;
 		});
 
+	// d3.select("body").on("contextmenu", function(data, index) {
+	//  	makeScreenshot = true;
+	//  	d3.event.preventDefault();
+	// });
+
 	var makeScreenshot = false;
 	var clockDiv = d3.select(".time .clock");
 
@@ -47,6 +52,7 @@ function threeD(){
 	};
 
 	threed.resize = function(){
+		console.log("resize")
 		var bb = d3.select('#container').node().getBoundingClientRect();
 
 		width = bb.width;
@@ -97,8 +103,8 @@ function threeD(){
 
 	var camera = new THREE.PerspectiveCamera( 50, width / height, 1, 10000 );
 		camera.position.x = 0;
-		camera.position.y = -1500;
-		camera.position.z = 1000;
+		camera.position.y = -1800;
+		camera.position.z = 1100;
 		camera.lookAt(scene.position);	
 
 	var drag = d3.behavior.drag()
@@ -132,7 +138,7 @@ function threeD(){
 			if(!state.active){ raycast(); }
 		});
 
-	var state = { play: true, active: null, twitter: false, instagram: false };
+	var state = { play: false, active: null, twitter: false, instagram: false };
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -142,7 +148,7 @@ function threeD(){
 
 	var centerCoord = [13.413215, 52.521918];
 	var projection = d3.geo.mercator()
-		.scale(200000)
+		.scale(240000)
 		.center(centerCoord)
 		.translate([0,0]);
 
@@ -447,11 +453,11 @@ function threeD(){
 				// d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
 				d.cube.position.z += (d.z -10 + d.cube.animateZ - d.cube.position.z) * animationSpeed;
 				// d.cube.visible = (d.cube.position.z > 1);
-				d.cube.scale.z = d.cube.scale.x = d.cube.scale.y += (d.cube.animateZ/10 - d.cube.scale.z) * animationSpeed;
+				d.cube.scale.z = d.cube.scale.x = d.cube.scale.y += (d.cube.animateZ/20 - d.cube.scale.z) * animationSpeed;
 			}
 			if(d.cube2){
 				d.cube2.position.z += (d.z -10 + d.cube2.animateZ - d.cube2.position.z) * animationSpeed;
-				d.cube2.scale.z = d.cube2.scale.x = d.cube2.scale.y += (d.cube2.animateZ/10 - d.cube2.scale.z) * animationSpeed;
+				d.cube2.scale.z = d.cube2.scale.x = d.cube2.scale.y += (d.cube2.animateZ/20 - d.cube2.scale.z) * animationSpeed;
 				// d.cube2.visible = (d.cube2.scale.z > 1); 
 			}
 		});
@@ -459,10 +465,21 @@ function threeD(){
 
 	function update_labels(objects) {
 		for ( var i = 0; i < objects.length; i ++ ) {
-			var v = new THREE.Vector3().setFromMatrixPosition( objects[i].matrixWorld ).project(camera);
+			var pos = toScreenXY( objects[i] );
+			
 			objects[i].domlabel.style.display = 'block';
-			objects[i].domlabel.style.transform = "translate("+(((v.x + 1) / 2 * width))+"px,"+((-v.y + 1) / 2 * height)+"px)";
+			objects[i].domlabel.style.transform = "translate("+pos.x+"px,"+pos.y+"px)"
 		}
+	}
+
+	function toScreenXY(mesh){
+
+	    var v = new THREE.Vector3().setFromMatrixPosition( mesh.matrixWorld ).project(camera)
+
+	    var left = (v.x + 1) / 2 * width;
+	    var top = (-v.y + 1) / 2 * height;
+
+	    return {x: left, y:top };
 	}
 
 	function socialHour(d, type, hour){

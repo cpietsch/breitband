@@ -99,6 +99,7 @@ svg {
     left: -50%;
 }
 #labels div {
+	position: absolute;
 	pointer-events:none;
 	white-space: nowrap;
 	color: #FFF;
@@ -568,6 +569,7 @@ function mesh(){
 
 		bezirke.features.forEach(function(bezirk,i){
 			var centroid = geoPath.centroid(bezirk.geometry);
+			console.log(centroid,bezirk.properties.Name)
 
 			var geometry = new THREE.SphereGeometry( 10, 10, 10 );
 			var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
