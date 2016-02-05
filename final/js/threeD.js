@@ -3,8 +3,7 @@
 function threeD(){
 	var centroids = [{c:[-164.94678225444946,-63.029871437100326],n:"Mitte"},{c:[52.778130057326905,103.42041724165729],n:"Friedrichshain-Kreuzberg"},{c:[94.44270055577594,-432.5721103772772],n:"Pankow"},{c:[-499.09505521863184,119.66473570559107],n:"Charlottenburg-Wilmersdorf"},{c:[-818.1448708597577,-22.566868616095963],n:"Spandau"},{c:[-607.8190923800062,498.97261500635307],n:"Steglitz-Zehlendorf"},{c:[-113.29687363849465,462.53109998602974],n:"Tempelhof-Schöneberg"},{c:[145.7122760209756,463.22536731944496],n:"Neukölln"},{c:[691.0693806464119,528.9735270041073],n:"Treptow-Köpenick"},{c:[578.0995751704685,4.466256221793847],n:"Marzahn-Hellersdorf"},{c:[337.0342485538481,-74.80341059918459],n:"Lichtenberg"},{c:[-425.4280684254382,-423.6349448086686],n:"Reinickendorf"}];
 
-	function threed(){
-	}
+	function threed() {}
 
 	d3.select('.company-help').on('click',function(){ d3.select('.company-help').style('display','none'); });
 	d3.select('.infobtn').on('click',function(){ d3.select('.company-help').style('display','block'); });
@@ -59,10 +58,13 @@ function threeD(){
 
 	threed.play = function(){
 		console.log("play");
+		state.play = true;
+		animate();
 	};
 
 	threed.pause = function(){
 		console.log("pause");
+		state.play = false;
 	};
 
 	var bb = d3.select('#container').node().getBoundingClientRect(),
@@ -129,7 +131,7 @@ function threeD(){
 			if(!state.active){ raycast(); }
 		});
 
-	var state = { active: null, twitter: false, instagram: false };
+	var state = { play: false, active: null, twitter: false, instagram: false };
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -352,9 +354,11 @@ function threeD(){
 
 	function animate( time ) {
 
-		requestAnimationFrame( animate );
-		TWEEN.update();
-		render(time);
+		if(state.play){
+			requestAnimationFrame( animate );
+			TWEEN.update();
+			render(time);
+		}
 
 	}
 
@@ -381,6 +385,7 @@ function threeD(){
 	}
 
 	function render(time) {
+		// console.log("render")
 
 		// TWEEN.update();
 		scene2.rotation.z += 0.001;
