@@ -73,10 +73,11 @@ function threeD(){
 
 	var container = document.getElementById( 'container' );
 
-	var renderer = new THREE.WebGLRenderer( {antialias:true, preserveDrawingBuffer: true } );
+	var renderer = new THREE.WebGLRenderer( {antialias:true, preserveDrawingBuffer: false } );
 		renderer.setClearColor( 0x1E3791 );
 	//	renderer.setClearColor( 0xFFFFFF );
 		renderer.setSize( width, height );
+		// renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 		container.appendChild( renderer.domElement );
 
 	var scene = new THREE.Scene();
@@ -110,8 +111,7 @@ function threeD(){
 	var cameraStart = new THREE.Vector3().copy(camera.position);
 
 	var zoom = d3.behavior.zoom()
-	    .scale(1.5)
-	    .scaleExtent([1.5, 5])
+	    .scaleExtent([1, 5])
 		.on("zoom", function(d){
 	  		camera.position.y = cameraStart.y / (d3.event.scale);
 	  		camera.position.z = cameraStart.z / d3.event.scale;
@@ -131,7 +131,7 @@ function threeD(){
 			if(!state.active){ raycast(); }
 		});
 
-	var state = { play: false, active: null, twitter: false, instagram: false };
+	var state = { play: true, active: null, twitter: false, instagram: false };
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -141,7 +141,7 @@ function threeD(){
 
 	var centerCoord = [13.413215, 52.521918];
 	var projection = d3.geo.mercator()
-		.scale(200000)
+		.scale(240000)
 		.center(centerCoord)
 		.translate([0,0]);
 
