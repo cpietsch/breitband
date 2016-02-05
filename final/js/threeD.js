@@ -280,7 +280,8 @@ function threeD(){
 		var now = 0;
 		makeSocialStatic(data, now);
 		makeCenters();
-		animate();
+		// animate();
+		render();
 		
 	}
 
