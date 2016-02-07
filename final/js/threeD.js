@@ -132,8 +132,10 @@ function threeD(){
 		.call(drag)
 		.call(zoom)
 		.on("mousemove", function(){
-			mouse.x = ( event.clientX / width ) * 2 - 1;
-			mouse.y = - ( event.clientY / height ) * 2 + 1;		
+			var m = d3.mouse(this);
+			// console.log(m, event)
+			mouse.x = ( m[0] / width ) * 2 - 1;
+			mouse.y = - ( m[1] / height ) * 2 + 1;		
 
 			if(!state.active){ raycast(); }
 		});
