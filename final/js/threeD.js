@@ -8,13 +8,6 @@ function threeD(){
 	d3.select('.company-help').on('click',function(){ d3.select('.company-help').style('display','none'); });
 	d3.select('.infobtn').on('click',function(){ d3.select('.company-help').style('display','block'); });
 
-	d3.select(".fullscreen")
-		.on("click", function(d){
-			screenfull.toggle();
-			d3.select(this).classed("active", screenfull.isFullscreen);
-		})
-		.style("display", function(){ return screenfull.enabled; });
-
 	d3.select(".instagram")
 		.on("click", function(d){
 			state.instagram = !state.instagram;
@@ -52,7 +45,6 @@ function threeD(){
 	};
 
 	threed.resize = function(){
-		console.log("resize")
 		var bb = d3.select('#container').node().getBoundingClientRect();
 
 		width = bb.width;
@@ -64,15 +56,23 @@ function threeD(){
 	};
 
 	threed.play = function(){
-		console.log("play");
-		state.play = true;
-		animate();
+		if(!state.play){
+			state.play = true;
+			animate();
+		}
 	};
 
 	threed.pause = function(){
-		console.log("pause");
 		state.play = false;
 	};
+
+	d3.select(".fullscreen")
+		.on("click", function(d){
+			screenfull.toggle();
+			threed.play();
+			d3.select(this).classed("active", screenfull.isFullscreen);
+		})
+		.style("display", function(){ return screenfull.enabled; });
 
 	var bb = d3.select('#container').node().getBoundingClientRect(),
 		width = bb.width,
@@ -140,7 +140,7 @@ function threeD(){
 			if(!state.active){ raycast(); }
 		});
 
-	var state = { play: false, active: null, twitter: false, instagram: false };
+	var state = { fullscreen:false, play: false, active: null, twitter: false, instagram: false };
 
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
@@ -364,7 +364,7 @@ function threeD(){
 
 	function animate( time ) {
 
-		if(state.play){
+		if(state.play || screenfull.isFullscreen){
 			requestAnimationFrame( animate );
 			TWEEN.update();
 			render(time);
@@ -421,6 +421,7 @@ function threeD(){
 		}
 
 	}
+
 	var clockSpeed = 400;
 	function updateSocial(time){
 		var now = parseInt(time/clockSpeed) % 24;
@@ -471,13 +472,13 @@ function threeD(){
 			var pos = toScreenXY( objects[i] );
 			
 			objects[i].domlabel.style.display = 'block';
-			objects[i].domlabel.style.transform = "translate("+pos.x+"px,"+pos.y+"px)"
+			objects[i].domlabel.style.transform = "translate("+pos.x+"px,"+pos.y+"px)";
 		}
 	}
 
 	function toScreenXY(mesh){
 
-	    var v = new THREE.Vector3().setFromMatrixPosition( mesh.matrixWorld ).project(camera)
+	    var v = new THREE.Vector3().setFromMatrixPosition( mesh.matrixWorld ).project(camera);
 
 	    var left = (v.x + 1) / 2 * width;
 	    var top = (-v.y + 1) / 2 * height;
@@ -605,6 +606,17 @@ function threeD(){
 	    var dataView = new DataView(arrayBuffer);
 	    var blob = new Blob([dataView], { type: mimeString });
 	    return blob;
+	}
+
+	try {
+		if((window.self !== window.top)){
+			//In iframe
+		}else{
+			state.play = true;
+			animate();
+		}
+	} catch (e) {
+		//In iframe
 	}
 
 	return threed;
