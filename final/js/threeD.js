@@ -35,6 +35,7 @@ function threeD(){
 	var makeScreenshot = false;
 	var clockDiv = d3.select(".time .clock");
 
+
 	threed.updateSocialStatus = function(){
 		if(!state.twitter && !state.instagram){
 			d3.select('.time').style('display', 'none');
@@ -94,6 +95,12 @@ function threeD(){
 	scene.add(scene2);
 	scene2.add(scene3);
 
+	var today = new Date(),
+		yesterday = new Date();
+	yesterday.setDate(today.getDate() - 1);
+
+	d3.select('.date').text(((yesterday.getDate()<10) ? "0" : "")+yesterday.getDate()+"."+((yesterday.getMonth()<10) ? "0" : "")+yesterday.getMonth()+"."+yesterday.getFullYear());
+
 
 	scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
 
@@ -145,8 +152,7 @@ function threeD(){
 	var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 	var z = d3.scale.linear().range([1,50]).domain([0, 5]);
-	var zSocial = d3.scale.log().range([1,200]).domain([1,50]);
-	var colorSocial = d3.scale.log().range(["#fff","#ddd"]).domain([1,200]);
+	var zSocialTweets, zSocialInstagram;
 
 	var centerCoord = [13.413215, 52.521918];
 	var projection = d3.geo.mercator()
@@ -167,7 +173,7 @@ function threeD(){
 	var dataAll;
 
 	d3.csv('data/50mbit.csv', function(err, data){
-		d3.csv('data/dataNEW.csv', function(err, social){
+		d3.csv('http://tsb.sebastianmeier.eu/static/data.csv', function(err, social){
 			dataLoaded(data, social);
 		});
 	});
@@ -211,6 +217,9 @@ function threeD(){
 
 			dd.social[d.hour] = { twitter: d.twitter, instagram: d.instagram };
 		});
+
+		zSocialTweets = d3.scale.linear().range([100,150]).domain([0,d3.max(social, function(d){ return d.twitter; })]);
+		zSocialInstagram = d3.scale.linear().range([100,150]).domain([0,d3.max(social, function(d){ return d.instagram; })]);
 
 		var dataBezirke = d3.nest()
 			.key(function(d){ return d.bezirk; })
@@ -441,8 +450,8 @@ function threeD(){
 			var diff = (socialHoverPos-d.z);
 
 			if(social){
-				if(state.instagram){ zInstagram = diff + zSocial(social.instagram); }
-				if(state.twitter){ zTwitter = diff + zSocial(social.twitter); }
+				if(state.instagram){ zInstagram = diff + zSocialInstagram(social.instagram); }
+				if(state.twitter){ zTwitter = diff + zSocialTweets(social.twitter); }
 			}
 
 			if(d.cube){ d.cube.animateZ = zInstagram; }
@@ -486,11 +495,6 @@ function threeD(){
 	    return {x: left, y:top };
 	}
 
-	function socialHour(d, type, hour){
-		var s = d.filter(function(d){ return d.hour === hour;})[0];
-		return s ? zSocial(s[type]) : 0;
-	}
-
 	var socialHoverPos = 60;
 
 	function makeSocialStatic(data,hour){
@@ -499,24 +503,19 @@ function threeD(){
 		geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
 
 		var material = new THREE.MeshLambertMaterial({ 
-			color: 0xE60032,
-			// color: 0xffffff,
+			color: 0x4DAF4A,
 			opacity: 0.9,
 			transparent: false,
-			// wireframe: true
 		});
 		var material2 = new THREE.MeshLambertMaterial({ 
-			color: 0xD4F65E,
-			// color: 0xffffff,
+			color: 0xE60032,
 			opacity: 0.9,
 			transparent: false,
-			// wireframe: true
 		});
 
 		var material3 = new THREE.MeshBasicMaterial({ 
 			color: 0xffffff,
 			transparent: true,
-			// wireframe: true,
 			opacity: 0.8,
 			fog: false
 		});
@@ -612,6 +611,7 @@ function threeD(){
 		if((window.self !== window.top)){
 			//In iframe
 		}else{
+			//Not in iframe so play from beginning
 			state.play = true;
 			animate();
 		}
