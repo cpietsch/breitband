@@ -1149,6 +1149,8 @@ ul.legend span span{
 	}
 	a{
 		color:#fff;
+		clear:left;
+		    display: block;
 	}
 	span.image{
 		margin:0 5px 5px 0;
@@ -1231,11 +1233,11 @@ ul.legend span span{
 }
 
 .image-chrispie{
-	width:43px;
-	height:37px;
+	width:83px;
+	height:27px;
 	float:left;
-	background-size:43px 37px;
-	background-image:url('../images/chrispie.png');
+	background-size:83px 27px;
+	background-image:url('../images/CRSP.png');
 }
 
 /*---------- Bootstrap modifications ----------*/
@@ -1362,7 +1364,7 @@ ul.legend span span{
 	}
 
 	.image-chrispie{
-		background-image:url('../images/chrispie@2x.png');
+		background-image:url('../images/CRSP@2x.png');
 	}
 
 	#pulse h3 span.image{
