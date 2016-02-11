@@ -1528,7 +1528,7 @@
 		},
 	"\/js\/bootstrap.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/bootstrap.min.js",
 		"outputAbbreviatedPath": "\/js\/min\/bootstrap.min-min.js",
@@ -1545,12 +1545,23 @@
 		"outputAbbreviatedPath": "\/js\/min\/breitband-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
+		"outputStyle": 0,
+		"syntaxCheckerStyle": 1
+		},
+	"\/js\/breitband.mesh.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/breitband.mesh.js",
+		"outputAbbreviatedPath": "\/js\/min\/breitband.mesh-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
 		"syntaxCheckerStyle": 1
 		},
 	"\/js\/canvas-toBlob.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/canvas-toBlob.js",
 		"outputAbbreviatedPath": "\/js\/min\/canvas-toBlob-min.js",
@@ -1627,7 +1638,7 @@
 		},
 	"\/js\/d3.v3.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/d3.v3.min.js",
 		"outputAbbreviatedPath": "\/js\/min\/d3.v3.min-min.js",
@@ -1638,7 +1649,7 @@
 		},
 	"\/js\/FileSaver.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/FileSaver.js",
 		"outputAbbreviatedPath": "\/js\/min\/FileSaver-min.js",
@@ -1660,7 +1671,7 @@
 		},
 	"\/js\/jquery-1.11.3.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/jquery-1.11.3.min.js",
 		"outputAbbreviatedPath": "\/js\/min\/jquery-1.11.3.min-min.js",
@@ -1693,7 +1704,7 @@
 		},
 	"\/js\/leaflet.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/leaflet.js",
 		"outputAbbreviatedPath": "\/js\/min\/leaflet-min.js",
@@ -1730,6 +1741,28 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/map.js",
 		"outputAbbreviatedPath": "\/js\/min\/map-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/js\/min\/breitband-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/min\/breitband-min.js",
+		"outputAbbreviatedPath": "\/js\/min\/min\/breitband-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/js\/min\/breitband.mesh-min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/min\/breitband.mesh-min.js",
+		"outputAbbreviatedPath": "\/js\/min\/min\/breitband.mesh-min-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -1869,7 +1902,7 @@
 		},
 	"\/js\/screenfull.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/screenfull.min.js",
 		"outputAbbreviatedPath": "\/js\/min\/screenfull.min-min.js",
@@ -1880,7 +1913,7 @@
 		},
 	"\/js\/three\/d3-threeD.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/d3-threeD.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/d3-threeD-min.js",
@@ -1891,7 +1924,7 @@
 		},
 	"\/js\/three\/Detector.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/Detector.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/Detector-min.js",
@@ -2078,7 +2111,7 @@
 		},
 	"\/js\/three\/renderers\/Projector.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/renderers\/Projector.js",
 		"outputAbbreviatedPath": "\/js\/three\/renderers\/min\/Projector-min.js",
@@ -2562,7 +2595,7 @@
 		},
 	"\/js\/three\/three-text2d.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/three-text2d.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/three-text2d-min.js",
@@ -2573,7 +2606,7 @@
 		},
 	"\/js\/three\/three.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/three.min.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/three.min-min.js",
@@ -2595,7 +2628,7 @@
 		},
 	"\/js\/three\/THREEx.GeometryUtils.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/THREEx.GeometryUtils.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/THREEx.GeometryUtils-min.js",
@@ -2617,7 +2650,7 @@
 		},
 	"\/js\/three\/tween.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/three\/tween.min.js",
 		"outputAbbreviatedPath": "\/js\/three\/min\/tween.min-min.js",
@@ -2639,7 +2672,7 @@
 		},
 	"\/js\/topojson.v1.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/js\/topojson.v1.min.js",
 		"outputAbbreviatedPath": "\/js\/min\/topojson.v1.min-min.js",
