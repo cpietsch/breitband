@@ -1091,6 +1091,16 @@ ul.legend span span{
 	padding:50px 0;
 }
 
+/* Hiding the loading tiles */
+
+.leaflet-layer .leaflet-tile-container{
+	display:none;
+}
+
+.leaflet-layer .leaflet-tile-container:last-child{
+	display:block;
+}
+
 /*-------- Footer --------*/
 
 #footer{
