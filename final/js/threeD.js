@@ -32,8 +32,7 @@ function threeD(){
 	//  	d3.event.preventDefault();
 	// });
 
-	var makeScreenshot = false;
-	var clockDiv = d3.select(".time .clock");
+	
 
 
 	threed.updateSocialStatus = function(){
@@ -79,6 +78,8 @@ function threeD(){
 		width = bb.width,
 		height = bb.height;
 
+	var makeScreenshot = false;
+	var clockDiv = d3.select(".time .clock");
 	var container = document.getElementById( 'container' );
 
 	var renderer = new THREE.WebGLRenderer( {antialias:true, preserveDrawingBuffer: false } );
@@ -103,7 +104,7 @@ function threeD(){
 
 
 	scene.add( new THREE.HemisphereLight( 0xffffff, 0x1E3791 ) );
-
+	var loaded = false;
 	var light = new THREE.DirectionalLight( 0xffffff, 1 );
 	light.position.set( 1, 100, 300);
 	scene.add( light );
@@ -153,6 +154,7 @@ function threeD(){
 
 	var z = d3.scale.linear().range([1,50]).domain([0, 5]);
 	var zSocialTweets, zSocialInstagram;
+	var zSocial = d3.scale.log().range([1,200]).domain([1,50]);
 
 	var centerCoord = [13.413215, 52.521918];
 	var projection = d3.geo.mercator()
@@ -218,8 +220,8 @@ function threeD(){
 			dd.social[d.hour] = { twitter: d.twitter, instagram: d.instagram };
 		});
 
-		zSocialTweets = d3.scale.linear().range([100,150]).domain([0,d3.max(social, function(d){ return d.twitter; })]);
-		zSocialInstagram = d3.scale.linear().range([100,150]).domain([0,d3.max(social, function(d){ return d.instagram; })]);
+		zSocialTweets = d3.scale.linear().range([100,300]).domain([0,d3.max(social, function(d){ return d.twitter; })]);
+		zSocialInstagram = d3.scale.linear().range([100,300]).domain([0,d3.max(social, function(d){ return d.instagram; })]);
 
 		var dataBezirke = d3.nest()
 			.key(function(d){ return d.bezirk; })
@@ -294,6 +296,7 @@ function threeD(){
 		// animate();
 		render();
 		
+		loaded = true;
 	}
 
 	var objects = [];
@@ -404,9 +407,10 @@ function threeD(){
 	}
 
 	function render(time) {
+		if(!loaded) return;
+
 		// console.log("render")
 
-		// TWEEN.update();
 		scene2.rotation.z += 0.001;
 
 		update_labels(objects);
@@ -450,6 +454,8 @@ function threeD(){
 			var diff = (socialHoverPos-d.z);
 
 			if(social){
+				// if(state.instagram){ zInstagram = diff + zSocial(social.instagram); }
+				// if(state.twitter){ zTwitter = diff + zSocial(social.twitter); }
 				if(state.instagram){ zInstagram = diff + zSocialInstagram(social.instagram); }
 				if(state.twitter){ zTwitter = diff + zSocialTweets(social.twitter); }
 			}
@@ -504,9 +510,12 @@ function threeD(){
 
 		var material = new THREE.MeshLambertMaterial({ 
 			color: 0x4DAF4A,
+			color: 0xFFFA81,
+			color: 0xECE200,
 			opacity: 0.9,
 			transparent: false,
 		});
+		window.material = material;
 		var material2 = new THREE.MeshLambertMaterial({ 
 			color: 0xE60032,
 			opacity: 0.9,
