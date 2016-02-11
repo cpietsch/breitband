@@ -172,7 +172,7 @@ function threeD(){
 	var mouse = new THREE.Vector2();
 	var INTERSECTED;
 
-	var dataAll;
+	var dataAll, dataMin = [];
 
 	d3.csv('data/50mbit.csv', function(err, data){
 		d3.csv('http://tsb.sebastianmeier.eu/static/data.csv', function(err, social){
@@ -219,6 +219,18 @@ function threeD(){
 			d.hour *= 1;
 
 			dd.social[d.hour] = { twitter: d.twitter, instagram: d.instagram };
+		});
+
+		data.forEach(function(d,i){
+			var hasSocial = false;
+			d.social.forEach(function(d,i){
+				if(d.twitter > 0 || d.instagram > 0){
+					hasSocial = true;
+				}
+			});
+			if(hasSocial){
+				dataMin.push(d);	
+			}
 		});
 
 		zSocialTweets = d3.scale.linear().range([100,300]).domain([0,d3.max(social, function(d){ return d.twitter; })]);
@@ -389,7 +401,7 @@ function threeD(){
 	var hour = 0;
 
 	function toggleSocial(){
-		dataAll.forEach(function(d){
+		dataMin.forEach(function(d){
 			if(d.cube){
 				if(state.instagram){
 					d.cube.visible = true;
@@ -408,7 +420,7 @@ function threeD(){
 	}
 
 	function render(time) {
-		if(!loaded) return;
+		if(!loaded){ return; }
 
 		// console.log("render")
 
@@ -448,7 +460,7 @@ function threeD(){
 	function updateSocialBars(hour){
 		clockDiv.text((hour < 10 ? "0"+hour : hour) + ":00");
 
-		dataAll.forEach(function(d){
+		dataMin.forEach(function(d){
 			var social = d.social[hour];
 			var zInstagram = 0.2;
 			var zTwitter = 0.2;
@@ -468,7 +480,7 @@ function threeD(){
 
 	var animationSpeed = 0.05;
 	function animateSocial(){
-		dataAll.forEach(function(d){
+		dataMin.forEach(function(d){
 			if(d.cube){
 				// d.cube.scale.z += (d.cube.animateZ - d.cube.scale.z)*0.1;
 				d.cube.position.z += (d.z -10 + d.cube.animateZ - d.cube.position.z) * animationSpeed;
@@ -510,8 +522,8 @@ function threeD(){
 		geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,0.5));
 
 		var material = new THREE.MeshLambertMaterial({ 
-			color: 0x4DAF4A,
-			color: 0xFFFA81,
+			//color: 0x4DAF4A,
+			//color: 0xFFFA81,
 			color: 0xECE200,
 			opacity: 0.9,
 			transparent: false,
