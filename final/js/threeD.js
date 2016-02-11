@@ -27,14 +27,6 @@ function threeD(){
 			makeScreenshot = true;
 		});
 
-	// d3.select("body").on("contextmenu", function(data, index) {
-	//  	makeScreenshot = true;
-	//  	d3.event.preventDefault();
-	// });
-
-	
-
-
 	threed.updateSocialStatus = function(){
 		if(!state.twitter && !state.instagram){
 			d3.select('.time').style('display', 'none');
@@ -524,13 +516,15 @@ function threeD(){
 		var material = new THREE.MeshLambertMaterial({ 
 			//color: 0x4DAF4A,
 			//color: 0xFFFA81,
-			color: 0xECE200,
+			//color: 0xECE200,
+			color: 0xff9000,
 			opacity: 0.9,
 			transparent: false,
 		});
 		window.material = material;
 		var material2 = new THREE.MeshLambertMaterial({ 
-			color: 0xE60032,
+			//color: 0xE60032,
+			color: 0x59840e,
 			opacity: 0.9,
 			transparent: false,
 		});
