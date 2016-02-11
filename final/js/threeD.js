@@ -11,6 +11,8 @@ function threeD(){
 	d3.select(".instagram")
 		.on("click", function(d){
 			state.instagram = !state.instagram;
+			if(state.twitter){state.twitter = false;}
+			d3.select('.twitter').classed("active", false);
 			d3.select(this).classed("active", state.instagram);
 			threed.updateSocialStatus();
 		});
@@ -18,6 +20,8 @@ function threeD(){
 	d3.select(".twitter")
 		.on("click", function(d){
 			state.twitter = !state.twitter;
+			if(state.instagram){state.instagram = false;}
+			d3.select('.instagram').classed("active", false);
 			d3.select(this).classed("active", state.twitter);
 			threed.updateSocialStatus();
 		});
@@ -517,14 +521,14 @@ function threeD(){
 			//color: 0x4DAF4A,
 			//color: 0xFFFA81,
 			//color: 0xECE200,
-			color: 0xff9000,
+			color: 0xE60032,
 			opacity: 0.9,
 			transparent: false,
 		});
 		window.material = material;
 		var material2 = new THREE.MeshLambertMaterial({ 
-			//color: 0xE60032,
-			color: 0x59840e,
+			color: 0xE60032,
+			//color: 0x59840e,
 			opacity: 0.9,
 			transparent: false,
 		});
