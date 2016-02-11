@@ -373,6 +373,28 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/CRSP.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1691,
+		"inputAbbreviatedPath": "\/images\/CRSP.png",
+		"outputAbbreviatedPath": "\/images\/CRSP.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/images\/CRSP@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 3589,
+		"inputAbbreviatedPath": "\/images\/CRSP@2x.png",
+		"outputAbbreviatedPath": "\/images\/CRSP@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/data_brain.png": {
 		"fileType": 32768,
 		"ignore": 0,

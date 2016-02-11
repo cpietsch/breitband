@@ -200,6 +200,7 @@ function threeD(){
 			// d.social = d3.range(24).map(function(d){ return { instagram: 0, twitter: 0}});
 			d.social = [];
 			d.cube = null;
+			d.cube2 = null;
 
 			if(!xymap[d.xx]){ xymap[d.xx]=[]; }
 			xymap[d.xx][d.yy] = d;
